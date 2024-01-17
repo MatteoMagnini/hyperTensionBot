@@ -61,13 +61,13 @@ class GetVersionCommand(distutils.cmd.Command):
 
 
 setup(
-    name='HyperTensionBot',  # Required
+    name='hyperTensionBot',  # Required
     version=version,
     description='Telegram bot for hypertension check',  # Optional
-    license='MIT License',
+    license='Apache 2.0 License',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/MatteoMagnini/HyperTensionBot',
+    url='https://github.com/MatteoMagnini/hyperTensionBot',
     author=[
          'Matteo Magnini',
          'Gianluca Aguzzi',
@@ -95,10 +95,10 @@ setup(
     zip_safe = False,
     platforms = "Independant",
     project_urls={  # Optional
-        'Bug Reports': 'https://github.com/MatteoMagnini/HyperTensionBot/issues',
+        'Bug Reports': 'https://github.com/MatteoMagnini/hyperTensionBot/issues',
         # 'Funding': 'https://donate.pypi.org',
         # 'Say Thanks!': 'http://saythanks.io/to/example',
-        'Source': 'https://github.com/MatteoMagnini/HyperTensionBot',
+        'Source': 'https://github.com/MatteoMagnini/hyperTensionBot',
     },
     cmdclass={
         'get_project_version': GetVersionCommand
