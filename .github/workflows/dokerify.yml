@@ -8,7 +8,7 @@ on:
       - version/*
   workflow_dispatch:
 env:
-  PROJECT_NAME: HyperTensionBot
+  PROJECT_NAME: hyper-tension-bot
   WORKFLOW: dockerify
   RETRY_TIME: 5m
   MAX_RETRIES: 3
@@ -40,4 +40,4 @@ jobs:
         shell: bash
 
       - name: Push Image on Docker Hub
-        run: docker push pikalab/HyperTensionBot:${{ steps.get-version.outputs.version }}
+        run: docker push pikalab/${{env.PROJECT_NAME}}:${{ steps.get-version.outputs.version }}
