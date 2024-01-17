@@ -1,6 +1,6 @@
 name: dockerify
 on:
-  workflow_run:
+  push:
     types:
       - completed
     branches:
@@ -17,7 +17,6 @@ env:
 jobs:
   dockerify:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Dockerify
     steps:
       - name: Docker Login
