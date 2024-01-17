@@ -36,7 +36,7 @@ jobs:
       - name: Create Docker Image
         run: |
           cd src/HyperTensionBot.Server
-          ../../.github/scripts/retry.sh "docker build ."
+          ../../.github/scripts/retry.sh "docker build -t pikalab/${{env.PROJECT_NAME}}:${{ steps.get-version.outputs.version }} ."
         shell: bash
 
       - name: Push Image on Docker Hub
