@@ -1,0 +1,1293 @@
+Sentence	Label
+quali sono i trattamenti disponibili per l’ipertensione?	Generale
+Vorrei vedere tutte le informazioni che ho dato in passato.	Richiesta
+La frequenza è 140	inserDatiFreq
+Qual è la media delle mie misurazioni degli ultimi dodici mesi?	Richiesta
+Ho avuto mal di testa frequenti.	Generale
+Bevo alcol solo occasionalmente	inserDatiGener
+Media pressione scorsa settimana	Richiesta
+Non ho paura della mia ipertensione.	Umore
+Ciao, assistente! Spero che tu possa darmi qualche consiglio utile per la mia ipertensione oggi.	Generale
+la mia frequenza cardiaca attuale è 68 battiti al minuto.	inserDatiFreq
+ecco i dati registrati. Pressione 120/80 e frequenza 77	inserDatiTot
+hai mai provato a dipingere?	Generale
+come l’asma può influenzare la mia vita quotidiana?	Generale
+I valori della mia pressione sono 120/80	inserDatiPress
+come si misura la pressione?	Generale
+come l’età può influenzare l’ipertensione?	Generale
+Ho paura che la mia ipertensione possa peggiorare.	Umore
+Il mio polso è di 120 battiti al minuto	inserDatiFreq
+Mi si è rotta l'auto, cosa posso fare?	Generale
+Vorrei vedere un riepilogo di tutte le informazioni che ho inserito in passato.	Richiesta
+mi sento bene avendo tutti i miei dati sotto controllo	Umore
+Ho appena misurato la mia frequenza cardiaca, è 75 battiti al minuto.	inserDatiFreq
+ok la pressione è 134 76	inserDatiPress
+Ho misurato i miei dati: sistolica 120, diastolica 80 e frequenza cardiaca 75	inserDatiTot
+Vorrei dare un’occhiata alle ultime letture della frequenza cardiaca che ho inserito nell’ultimo mese.	Richiesta
+Mi sento bene e infatti le misurazioni lo confermano	Umore
+Ho avuto problemi di udito.	Generale
+Sono un fruttariano	inserDatiGener
+non sono sereno date le mie ultime misurazioni	Umore
+Qual è la mia media di pressione sanguigna e frequenza cardiaca di quest’anno?	Richiesta
+Potrei controllare le ultime misurazioni che ho registrato?	Richiesta
+come il sale può influenzare la mia pressione sanguigna?	Generale
+Ho una storia familiare di cancro	inserDatiGener
+Potrei vedere l’ultima misurazione del ritmo cardiaco che ho registrato?	Richiesta
+Fortunatamente mi sento stabile.	Umore
+Ho notato che la mia frequenza è di 73 bpm.	inserDatiFreq
+ciao, assistente! spero che tu possa darmi qualche suggerimento su come gestire la mia ipertensione.	Generale
+Ho avuto un attacco di panico ieri sera.	inserDatiGener
+la mia pressione oggi è 120/80.	inserDatiPress
+La mia pressione sanguigna è 120/80.	inserDatiPress
+no, non hai capito	Generale
+Mi ricordi l'ultima misurazione fatta sulla frequenza	Richiesta
+Media pressione ultime due settimane	Richiesta
+Mi piace mangiare tanti dolci	Generale
+mi daresti l'andamento di pressione nell'ultima settimana?	Richiesta
+Ho appena fatto una lettura e la mia pressione sanguigna e frequenza cardiaca sono di 125/80 mmHg e 72 bpm.	inserDatiTot
+La mia pressione oggi è 120/80 e la mia frequenza cardiaca è 75 bpm.	inserDatiTot
+Ho un forte mal di testa, cosa posso fare?	Generale
+Vorrei vedere le letture della pressione che ho registrato nell’ultima settimana.	Richiesta
+A B	inserDatiPress
+ho fatto nuove misurazioni, posso inviartele?	Generale
+Dammi la lista dei miei dati	Richiesta
+Qual è la mia media di frequenza cardiaca di oggi?	Richiesta
+Qual è la mia media di pressione sanguigna di ieri?	Richiesta
+La mia ultima misurazione mostra una frequenza cardiaca di 70 bpm.	inserDatiFreq
+ho rimediato una frattura, come dovrei fare per guarire il prima possibile?	Generale
+La mia frequenza cardiaca più recente è di 71 bpm.	inserDatiFreq
+posso registrare la mia frequenza cardiaca di oggi?	Generale
+Hai mai pensato di fare un viaggio in mongolfiera?	Generale
+come la genetica può influenzare il mio rischio di cancro?	Generale
+ho fatto delle misurazioni e quello che ho rilevato è una pressione di 130/90	inserDatiPress
+Ho avuto un po’ di affanno dopo una breve passeggiata, dovrei preoccuparmi?	Umore
+Battito cardiaco: 65	inserDatiFreq
+Fornisci tutte le mie misurazioni sulla frequenza cardiaca?	Richiesta
+Pressione sanguigna: 130/80, ho un battito di 265	inserDatiTot
+Sto cercando di ridurre lo stress attraverso tecniche di rilassamento come lo yoga e la meditazione.	inserDatiGener
+Mi spieghi come fare	Generale
+Ho notato che la mia pressione sanguigna scende quando dormo bene.	inserDatiGener
+Ho accompagnato i miei figli a scuola.	Generale
+Media frequenza scorsa settimana	Richiesta
+Sono esposto al fumo di terza mano a casa	inserDatiGener
+quale è la tua canzone preferita al momento?	Generale
+ecco le mie misurazioni. Pressione 110/80	inserDatiPress
+come la razza può influenzare l’ipertensione?	Generale
+Mi piacerebbe controllare le ultime letture della pressione che ho registrato.	Richiesta
+100	inserDatiFreq
+Posso inserire i dati della mia pressione sanguigna di ieri?	Generale
+come il fumo può influenzare le mie malattie cardiache?	Generale
+Quali sono le opzioni di trattamento farmacologico per l’ansia?	Generale
+Potresti spiegarmi come l’ipertensione può influenzare la mia salute?	Generale
+Media frequenza ultimi sei mesi	Richiesta
+la mia pressione sanguigna attuale è 125/80 e la mia frequenza cardiaca è 68.	inserDatiTot
+Potresti mostrarmi le mie misurazioni della frequenza cardiaca dell’ultimo mese?	Richiesta
+Arrivederci, assistente! Grazie per avermi aiutato a gestire la mia ipertensione oggi.	Generale
+Quali sono i sintomi della depressione?	Generale
+ho notato che la mia pressione sanguigna aumenta quando sono stressato.	inserDatiGener
+Sono un fumatore passivo	inserDatiGener
+Qual è la mia media di frequenza cardiaca della scorsa settimana?	Richiesta
+Mi sento molto debole, cosa mi consigli?	Umore
+Ho una storia familiare di malattie renali	inserDatiGener
+come il clima può influenzare l’ipertensione?	Generale
+addio, assistente! grazie per avermi fornito informazioni preziose sulla mia ipertensione.	Generale
+Qual è il tuo museo d’arte preferito?	Generale
+hai mai provato a fare yoga?	Generale
+Ho 45 anni e non ho mai fatto attività fisica.	inserDatiGener
+La mia ultima misurazione mostra una pressione sanguigna di 135/85 mmHg.	inserDatiPress
+mi fornisci un grafico contenente tutti i dati sulla pressione e sulla frequenza	Richiesta
+La mia pressione è 140/70	inserDatiPress
+sono molto rilassato riguardo alla mia ipertensione.	Umore
+Mi piacerebbe controllare i dati che ho registrato nell’ultima settimana.	Richiesta
+ho notato che la mia pressione sanguigna aumenta quando sono nervoso.	inserDatiGener
+Media frequenza ultimi dodici mesi	Richiesta
+Media pressione ultime quattro settimane	Richiesta
+Valori pressione: 110/70, frequenza del polso: 65	inserDatiTot
+Qual è la mia media di pressione sanguigna e frequenza cardiaca degli ultimi dodici mesi?	Richiesta
+Pressione: 120/70 mmHg	inserDatiPress
+Potresti mostrarmi le mie misurazioni della pressione sanguigna dell’ultima settimana?	Richiesta
+Desidero consultare tutte le mie letture della frequenza cardiaca.	Richiesta
+Ho l’asma	inserDatiGener
+quale è la tua band preferita?	Generale
+La mia pressione sanguigna è 110/75, ho un battito di 100	inserDatiTot
+Salve, come puoi aiutarmi?	Generale
+Ho un’allergia al glutine	inserDatiGener
+il mio andamento medio è regolare?	Richiesta
+misurazioni della pressione sanguigna dell’ultima settimana in un grafico	Richiesta
+La mia pressione sistolica è 110 e la diastolica è 75	inserDatiPress
+La mia frequenza cardiaca è di 70 bpm, secondo l’ultima misurazione.	inserDatiFreq
+Sono vegetariano	inserDatiGener
+Vorrei vedere un elenco di tutte le informazioni che ho fornito finora.	Richiesta
+Sono un po’ preoccupato, la mia pressione sanguigna è stata instabile ultimamente.	Umore
+voglio inserirti i dati relativi alla mia pressione.	Generale
+come la contraccezione ormonale può influenzare l’ipertensione?	Generale
+Potrei controllare le ultime misurazioni della pressione che ho registrato nell’ultimo mese?	Richiesta
+come l’esercizio fisico può aiutare a gestire il mio diabete?	Generale
+Posso avere un riassunto delle informazioni che ho fornito?	Richiesta
+Ho appena controllato il battito, è 155 bpm	inserDatiFreq
+Dammi le medie	Richiesta
+Qual è la mia media di pressione sanguigna del mese scorso?	Richiesta
+ho paura che la mia ipertensione possa causare problemi di respirazione.	Umore
+I miei valori di pressione: 130/80	inserDatiPress
+Qual è la mia media di frequenza cardiaca degli ultimi 365 giorni?	Richiesta
+Qual è la mia media di pressione sanguigna e frequenza cardiaca degli ultimi 30 giorni?	Richiesta
+Potrei vedere le ultime misurazioni della frequenza che ho registrato nell’ultimo mese?	Richiesta
+come il caffè può influenzare l’ipertensione?	Generale
+come una dieta sana può aiutare a gestire il mio peso?	Generale
+come lo stress può influenzare l’ipertensione?	Generale
+hai mai provato a fare paracadutismo?	Generale
+Ho iniziato a meditare per aiutare a gestire lo stress.	inserDatiGener
+puoi fornirmi tutti i dati registrati sulla pressione e sulla frequenza?	Richiesta
+mi sento molto sereno riguardo alla mia ipertensione.	Umore
+Ho il diabete	inserDatiGener
+la mia pressione sanguigna è 120/80.	inserDatiPress
+Ho fatto le analisi del sangue e ho il valore X fuori range	Generale
+Potrei vedere le ultime misurazioni della pressione che ho registrato?	Richiesta
+Bevo alcol solo con moderazione per evitare picchi di pressione sanguigna.	inserDatiGener
+we, assistente! Spero tu possa aiutarmi oggi con la mia ipertensione.	Generale
+Mi sento molto rilassato e la mia pressione sanguigna è ottima.	Umore
+La pressione è 145/95, battito cardiaco: 135	inserDatiTot
+Mi piacerebbe esaminare tutte le letture che ho registrato.	Richiesta
+come il caffè può influenzare il mio sonno?	Generale
+Vorrei dare un’occhiata alle misurazioni che ho fatto nell’ultimo mese.	Richiesta
+Hai mai provato a fare surf?	Generale
+Desidero consultare le mie letture più recenti.	Richiesta
+Qual è la mia media di pressione sanguigna di oggi?	Richiesta
+Mi sento molto preoccupato per la mia pressione alta.	Umore
+Sto cercando di dormire almeno 8 ore a notte per mantenere la mia pressione sanguigna sotto controllo.	inserDatiGener
+Qual è la mia media di frequenza cardiaca di questa settimana?	Richiesta
+vorrei registrare i miei sintomi di oggi.	Generale
+la mia pressione sanguigna è 130/80 e il mio battito cardiaco è 72.	inserDatiTot
+Potresti mostrarmi le mie misurazioni della pressione dell’ultimo mese?	Richiesta
+Potresti aggiungere le mie recenti letture della pressione arteriosa al mio profilo?	Generale
+Ho avuto un episodio di mancanza di respiro ieri.	inserDatiGener
+La pressione è 130/70, battito cardiaco: 295	inserDatiTot
+Posso vedere un riassunto dei miei dati inseriti su di me in passato?	Richiesta
+posso aggiungere i dati della mia pressione sanguigna dell’anno scorso?	Generale
+Media dei miei dati	Richiesta
+Qual è il miglior modo per effettuare una corretta misurazione delle pressione?	Generale
+Qual è il tuo sport preferito?	Generale
+La mia pressione sanguigna è 130/85.	inserDatiPress
+Potresti mostrarmi tutte le mie misurazioni della frequenza cardiaca?	Richiesta
+Mi piacerebbe esaminare i dati sulla frequenza cardiaca che ho registrato nell’ultimo mese.	Richiesta
+Ho la pelle molto secca	Generale
+Qual è la mia ultima statistica registrata?	Richiesta
+Mi sento molto sereno riguardo alla mia ipertensione.	Umore
+Frequenza del polso: 70 bpm	inserDatiFreq
+Pressione: 130/70 mmHg	inserDatiPress
+La mia pressione oggi è 130/90 e la mia frequenza cardiaca è 90 bpm.	inserDatiTot
+Posso avere la media delle mie misurazioni degli ultimi nove mesi?	Richiesta
+Ho avuto problemi di vista.	Generale
+Posso vedere un riassunto di tutte le informazioni che ho fornito in passato?	Richiesta
+Pressione sistolica 135, diastolica 80	inserDatiPress
+Ho un lavoro fisicamente attivo	inserDatiGener
+Voglio i dati sulla pressione	Richiesta
+Sono molto preoccupato per i miei livelli di pressione sanguigna.	Umore
+ho iniziato una nuova dieta ricca di fibre.	inserDatiGener
+Media pressione questo mese	Richiesta
+posso registrare i dati della mia frequenza cardiaca del prossimo anno?	Generale
+La mia pressione stamattina era alta	Umore
+come la razza può influenzare il mio rischio di malattie cardiache?	Generale
+Pressione 120/80, frequenza cardiaca: 72 bpm	inserDatiTot
+120 su 80	inserDatiPress
+sono molto calmo riguardo alla mia pressione alta.	Umore
+I miei valori di pressione sono 134 67	inserDatiPress
+Vorrei dare un’occhiata alle ultime letture della pressione che ho inserito nell’ultima settimana.	Richiesta
+La mia pressione sanguigna è 140/90 e il mio battito cardiaco è 75.	inserDatiTot
+Potresti mostrarmi le mie misurazioni della pressione dell’ultima settimana?	Richiesta
+Se ho un paziente iperteso, aumenta molto il mio rischio di sviluppare ipertensione?	Generale
+Vorrei vedere le letture più recenti della pressione che ho registrato.	Richiesta
+Qual è la mia ultima misurazione visualizzata in un grafico?	Richiesta
+Ho smesso di bere bevande energetiche da un mese.	inserDatiGener
+Qual è la mia media di frequenza cardiaca del mese scorso?	Richiesta
+Qual è la mia media di pressione sanguigna delle ultime 24 ore?	Richiesta
+posso registrare i dati della mia frequenza cardiaca di quest’anno?	Generale
+ho paura che la mia pressione alta possa causare problemi alla vista.	Umore
+Ho iniziato una nuova dieta ricca di frutta e verdura.	inserDatiGener
+Dammi i dati	Richiesta
+Sono una persona sbadata	Generale
+Pressione misurata: 140/85, frequenza cardiaca: 275	inserDatiTot
+Ho due fratelli	inserDatiGener
+ho paura che la mia ipertensione possa causare problemi di memoria.	Umore
+Potrei vedere le ultime misurazioni del ritmo cardiaco che ho registrato nell’ultima settimana?	Richiesta
+Sono sempre stanca e affannata	inserDatiGener
+Qual è il tuo genere di film preferito?	Generale
+Ho appena fatto la misurazione, la pressione è 130/70, ho un battito di 235	inserDatiTot
+Vorrei vedere le letture della pressione che ho registrato nell’ultimo mese.	Richiesta
+Sono molto pacifico riguardo alla mia ipertensione.	Umore
+Ho una pressione di 120/80, battito cardiaco: 110	inserDatiTot
+Ho iniziato a fare esercizio fisico regolarmente.	inserDatiGener
+Ho qualche misura di pressione alta ogni tanto, ma immagino sia normale	Umore
+Ho una pressione di 120/80	inserDatiPress
+Mi piacerebbe esaminare i dati più recenti che ho registrato.	Richiesta
+Qual è la mia media di pressione sanguigna e frequenza cardiaca degli ultimi sei mesi?	Richiesta
+Qual è la mia media di frequenza cardiaca degli ultimi 7 giorni?	Richiesta
+Come l’ipertensione può influenzare la mia vita quotidiana?	Generale
+vorrei registrare la mia ultima frequenza	Generale
+Sono molto calmo riguardo alla mia ipertensione.	Umore
+Sono un donatore di organi registrato	inserDatiGener
+Posso avere un elenco di tutte le informazioni che ho inserito in passato?	Richiesta
+posso registrare i dettagli del mio consumo di tabacco?	Generale
+a presto, assistente! spero che tu possa continuare ad aiutarmi a gestire la mia ipertensione.	Generale
+100 70	inserDatiPress
+Pressione sanguigna registrata: 140/90	inserDatiPress
+Ho un battito di 170 bpm	inserDatiFreq
+L'ipertensione ha conseguenze sui polmoni?	Generale
+Ecco i miei dati di oggi: la mia pressione sanguigna è 135/85 e la mia frequenza cardiaca è 72.	inserDatiTot
+La pressione sistolica è 125 e la diastolica è 75, frequenza del polso: 260	inserDatiTot
+Qual è la media delle mie misurazioni degli ultimi 7 giorni?	Richiesta
+Media frequenza ultime due settimane	Richiesta
+Vorrei vedere tutte le misurazioni che ho inserito.	Richiesta
+ho smesso di fumare da un mese.	inserDatiGener
+ho appena fatto un controllo, il mio polso è 70.	inserDatiFreq
+Qual è l'andamento dei miei dati nella settimana	Richiesta
+Vorrei rivedere i dati più recenti che ho inserito.	Richiesta
+Qual è la mia media di pressione sanguigna degli ultimi 30 giorni?	Richiesta
+Voglio la media dei dati registrati sulla frequenza	Richiesta
+Desidero visualizzare tutti i miei dati sulla frequenza.	Richiesta
+Non mi sento molto bene, la mia frequenza cardiaca è più alta del solito.	Umore
+Pressione 120 80	inserDatiPress
+ho appena misurato la mia frequenza cardiaca, è 75 battiti al minuto.	inserDatiFreq
+Frequenza cardiaca di 100	inserDatiFreq
+Potresti mostrarmi le mie misurazioni della frequenza cardiaca dell’ultima settimana in un grafico?	Richiesta
+posso aggiungere i dati della mia pressione sanguigna del prossimo anno?	Generale
+Pressione: 145/95 mmHg	inserDatiPress
+Vorrei vedere un elenco di tutte le informazioni che ho dato.	Richiesta
+buonasera, assistente! spero che tu possa darmi qualche consiglio su come rilassarmi per gestire la mia ipertensione.	Generale
+Frequenza del polso: 105 bpm	inserDatiFreq
+Qual è la mia media di frequenza cardiaca delle ultime tre settimane?	Richiesta
+Vorrei vedere tutte le informazioni che ho dato finora.	Richiesta
+Mi piacerebbe esaminare i dati sulla pressione che ho registrato nell’ultimo mese.	Richiesta
+Frequenza cardiaca in arrivo... X bpm.	inserDatiFreq
+Vorrei dare un’occhiata alle letture che ho inserito negli ultimi 7 giorni.	Richiesta
+ho smesso di bere caffè da una settimana.	inserDatiGener
+Qual è la mia media di pressione sanguigna degli ultimi 365 giorni?	Richiesta
+Dammi i dati sulla pressione	Richiesta
+Ho avuto un episodio di sudorazione eccessiva la scorsa notte.	inserDatiGener
+Qual è la media delle mie misurazioni degli ultimi 365 giorni?	Richiesta
+Ciao, come stai?	Generale
+posso aggiungere i dati della mia pressione sanguigna di questa mattina?	Generale
+La mia pressione sanguigna è 130/80 e il mio battito cardiaco è 72.	inserDatiTot
+sono molto stressato a causa della mia pressione alta.	Umore
+Qual è la mia media di pressione sanguigna delle ultime quattro settimane?	Richiesta
+ho appena controllato, la mia pressione è 140/85 e la mia frequenza cardiaca è 75.	inserDatiTot
+ho misurato la frequenza ed è di 80	inserDatiFreq
+La mia frequenza cardiaca oggi è 75 bpm.	inserDatiFreq
+Qual è la mia media di pressione sanguigna e frequenza cardiaca degli ultimi tre anni?	Richiesta
+Frequenza cardiaca: 210 bpm	inserDatiFreq
+Sono un fumatore	inserDatiGener
+Qual è la mia ultima misurazione della frequenza cardiaca visualizzata?	Richiesta
+Frequenza del polso: 225 bpm	inserDatiFreq
+Mi piacerebbe esaminare i dati sulla pressione che ho registrato negli ultimi 7 giorni.	Richiesta
+Parliamo del tempo, che ne pensi?	Generale
+Potrei controllare le ultime misurazioni della frequenza cardiaca che ho registrato nell’ultimo mese?	Richiesta
+Ho appena controllato il battito, è 275 bpm	inserDatiFreq
+Dammi il grafico con andamento di pressione arteriosa nell'ultima settimana	Richiesta
+ti fornisco i dati relativi alle mie ultime misurazioni. Pressione 120/85 e frequenza 80 bpm	inserDatiTot
+Pressione sanguigna attuale: 135/85	inserDatiPress
+Mi piacerebbe esaminare i dati sulla frequenza che ho registrato nell’ultima settimana.	Richiesta
+Qual è il tuo compositore classico preferito?	Generale
+Come posso prevenire le malattie cardiache?	Generale
+Ho appena fatto un controllo, la mia pressione è 135/85 e il mio polso è 70.	inserDatiTot
+Come si fa	Generale
+Sono un nuotatore professionista	inserDatiGener
+Mi sento un po’ stanco e ho notato che la mia pressione sanguigna è più alta del solito.	Umore
+Fumo molto	inserDatiGener
+Come l’asma può influenzare la mia vita quotidiana?	Generale
+come il colesterolo può influenzare l’ipertensione?	Generale
+Quant è importante tenere sotto traccia l'ipertensione?	Generale
+Il mio battito cardiaco è 80 battiti al minuto.	inserDatiFreq
+Ho notato che sto dormendo meglio da quando ho iniziato la nuova dieta.	Umore
+non sono stressato per la mia pressione alta.	Umore
+non ho paura della mia pressione alta.	Umore
+Quali sono stati i valori sulla frequenza cardiaca nell'ultimo mese	Richiesta
+Pressione 100 70 Frequenza 110	inserDatiTot
+ciao, assistente! sono pronto per un altro giorno di successi nella gestione della mia ipertensione.	Generale
+Pressione sistolica 135, diastolica 80, ho un battito di 250	inserDatiTot
+Quali sono le possibili conseguenze associate all'ipertensione?	Generale
+Dammi i dati della frequenza cardiaca nell’ultimo mese	Richiesta
+Pressione sanguigna registrata: 125/75	inserDatiPress
+Desidero visualizzare le mie letture dell’ultimo mese.	Richiesta
+La pressione è 145/95	inserDatiPress
+Posso vedere un riassunto di tutte le informazioni che ho fornito finora?	Richiesta
+I miei valori di pressione: 130/80, battito cardiaco: 85	inserDatiTot
+Posso vedere un riassunto di tutte le informazioni che ho fornito?	Richiesta
+Bevo molta acqua ogni giorno	inserDatiGener
+Vorrei dare un’occhiata alle ultime letture della frequenza cardiaca che ho inserito negli ultimi sette giorni.	Richiesta
+vorrei aggiungere i dettagli del mio consumo di caffeina.	Generale
+Vorrei vedere le letture della frequenza che ho registrato negli ultimi sette giorni.	Richiesta
+La mia pressione sanguigna è 125/80 e la mia frequenza cardiaca è 68.	inserDatiTot
+la mia pressione oggi è 134 76	inserDatiPress
+Vorrei rivedere le letture che ho inserito nell’ultima settimana.	Richiesta
+Dammi le informazioni personali	Richiesta
+Ho misurato la frequenza ed è 80 bpm.	inserDatiFreq
+Che tipo di musica ti piace ascoltare?	Generale
+Pressione: 120/80 mmHg	inserDatiPress
+Pratico yoga ogni giorno	inserDatiGener
+Pressione sanguigna: 125/75, ho un battito di 80	inserDatiTot
+qual è il tuo periodo storico preferito?	Generale
+La mia pressione sanguigna è X/Y e il mio battito cardiaco è 75.	inserDatiTot
+Ho notato che il mio livello di stress è aumentato ultimamente.	inserDatiGener
+Sono molto nervoso per la mia ipertensione.	Umore
+La mia pressione sistolica è 125 e la diastolica è 75, frequenza del polso: 200	inserDatiTot
+Pressione sanguigna registrata: 125/75, frequenza del polso: 140	inserDatiTot
+come la gravidanza può influenzare l’ipertensione?	Generale
+sono molto tranquillo riguardo alla mia pressione alta.	Umore
+Vorrei dare un’occhiata alle ultime letture della pressione che ho inserito.	Richiesta
+non ho nervosismo per la mia ipertensione.	Umore
+Ho paura che la mia pressione alta possa causare problemi seri.	Umore
+Qual è la mia media di frequenza cardiaca degli ultimi sei mesi?	Richiesta
+Vorrei rivedere i dati più recenti sulla pressione che ho inserito.	Richiesta
+Cosa causa l’ipertensione?	Generale
+Fammi il resoconto dell'ultima settimana	Richiesta
+quali sono i sintomi dell’ipertensione?	Generale
+Vorrei vedere tutte le letture della pressione che ho registrato.	Richiesta
+che tipo di musica ti piace ascoltare?	Generale
+La mia frequenza è 80	inserDatiFreq
+ho appena controllato, la mia pressione è 140/85.	inserDatiPress
+Potrei controllare tutte le misurazioni della pressione che ho registrato?	Richiesta
+vorrei la mia frequenza cardiaca media dell'ultima settimana	Richiesta
+Vorrei rivedere tutte le letture che ho inserito.	Richiesta
+La mia frequenza cardiaca oggi è 72 battiti al minuto.	inserDatiFreq
+Mi piacerebbe esaminare i dati più recenti sulla pressione che ho registrato.	Richiesta
+non sono stressato per la mia ipertensione.	Umore
+Pressione sistolica 120, diastolica 80	inserDatiPress
+La mia pressione è 120/70	inserDatiPress
+Dammi il valor medio di pressione nell'ultima settimana	Richiesta
+Ho fatto un incidente da giovane.	inserDatiGener
+Quali sono i fattori di rischio per l’ipertensione?	Generale
+A presto, assistente! Spero tu possa continuare ad aiutarmi a gestire la mia ipertensione.	Generale
+Potresti mostrarmi con un immagine le misurazioni della frequenza cardiaca dell’ultima settimana?	Richiesta
+Media frequenza ultimi 30 giorni	Richiesta
+Dammi dati sulla frequenza	Richiesta
+quali sono i rischi per la salute associati all’ipertensione?	Generale
+ho avuto un episodio di nausea questa mattina.	inserDatiGener
+Il mio polso è di 240 battiti al minuto	inserDatiFreq
+mi sento molto rilassato riguardo alla mia ipertensione.	Umore
+120 78	inserDatiPress
+Soffro di ansia	inserDatiGener
+quali sono i fattori di rischio per l’osteoporosi?	Generale
+mostra i dati su frequenza e pressione più recenti	Richiesta
+Frequenza cardiaca misurata: 200 bpm	inserDatiFreq
+Posso inserire i dati della mia pressione sanguigna di questo mese?	Generale
+Sto cercando di limitare la caffeina per evitare picchi di pressione sanguigna.	inserDatiGener
+Posso avere la media delle mie misurazioni di ieri?	Richiesta
+vorrei le letture su frequenza e pressione delle ultime due settimane	Richiesta
+Hai mai provato a fare sci di fondo?	Generale
+Ho appena controllato il battito, è 215 bpm	inserDatiFreq
+Bevo alcol regolarmente	inserDatiGener
+ultima misurazione della frequenza cardiaca	Richiesta
+Voglio la media dei miei dati registrati	Richiesta
+quale è la tua città preferita in italia?	Generale
+Qual è la mia media di pressione sanguigna e frequenza cardiaca di ieri?	Richiesta
+Mi sento un po’ debole e la mia pressione sanguigna è alta, dovrei andare al pronto soccorso?	Umore
+Posso vedere la media delle mie misurazioni degli ultimi 30 giorni?	Richiesta
+posso inserire i dettagli sulla mia condizione fisica?	Generale
+La frequenza cardiaca è 80	inserDatiFreq
+Sono rilassato e la mia pressione sanguigna è rimasta costante per tutta la settimana.	Umore
+Pressione sanguigna registrata: 110/75, ho un battito di 220	inserDatiTot
+Ho 4 figli	inserDatiGener
+sono molto preoccupato per i miei livelli di pressione sanguigna.	Umore
+Media pressione ultime 24 ore	Richiesta
+Ho notato che la mia pressione sanguigna scende quando sono felice.	inserDatiGener
+Pressione sanguigna attuale: 130/80, ho un battito di 205	inserDatiTot
+Qual è la mia media di pressione sanguigna e frequenza cardiaca degli ultimi 365 giorni?	Richiesta
+Come posso gestire il mio diabete?	Generale
+Mi sento molto bene oggi, la mia pressione sanguigna è stabile.	Umore
+Qual è la mia media di pressione sanguigna degli ultimi dodici mesi?	Richiesta
+La mia frequenza cardiaca attuale è 68 battiti al minuto.	inserDatiFreq
+Ho notato che la mia pressione sanguigna e frequenza cardiaca sono di 135/80 mmHg e 73 bpm.	inserDatiTot
+Non bevo alcol	inserDatiGener
+ho paura che la mia pressione alta possa causare problemi di sonno.	Umore
+ho avuto un episodio di mancanza di respiro ieri.	inserDatiGener
+I valori della mia pressione sono 120/80, ho un battito di 290	inserDatiTot
+Mi piace la carbonara	Generale
+Pressione arteriosa misurata: 110/70	inserDatiPress
+Qual è il tuo piatto italiano preferito?	Generale
+Buonanotte, è bello fare affidamento su di te	Generale
+Pressione sanguigna: 110/70, frequenza cardiaca: 185	inserDatiTot
+Pressione misurata: 130/70, frequenza del polso: 115	inserDatiTot
+Posso avere un riepilogo di tutte le generalità che ho dato finora?	Richiesta
+Desidero visualizzare tutti i miei dati sulla pressione.	Richiesta
+ho iniziato a prendere un nuovo farmaco per l’ipertensione.	inserDatiGener
+Desidero consultare le mie letture del battito cardiaco dell’ultima settimana.	Richiesta
+Frequenza cardiaca: 270 bpm	inserDatiFreq
+Mostra in un grafico le misurazioni della frequenza cardiaca dell’ultimo mese	Richiesta
+Qual è la media delle mie misurazioni di questa settimana?	Richiesta
+ho notato che la mia pressione sanguigna scende quando sono felice.	inserDatiGener
+Vorrei vedere un elenco di tutte le informazioni che ho fornito in passato.	Richiesta
+Dammi l'ultimo dato sulla frequenza cardiaca	Richiesta
+Desidero consultare tutte le mie letture della pressione.	Richiesta
+buongiorno, assistente! sono pronto per affrontare la mia ipertensione con il tuo aiuto.	Generale
+posso inserire i dettagli del mio consumo di alcol?	Generale
+Mi piacerebbe esaminare tutti i dati sulla frequenza  che ho registrato.	Richiesta
+78 120 80	inserDatiTot
+90	inserDatiFreq
+Ho un’allergia alle noci	inserDatiGener
+Qual è la mia media di pressione sanguigna e frequenza cardiaca delle ultime 24 ore?	Richiesta
+come il sesso può influenzare l’ipertensione?	Generale
+La mia pressione sanguigna attuale è 110/75	inserDatiPress
+Posso vedere un riassunto dei miei dati inseriti recentemente?	Richiesta
+Qual è la mia media di pressione sanguigna e frequenza cardiaca di questo mese?	Richiesta
+Qual è la mia media di pressione sanguigna di questo mese?	Richiesta
+Che libro stai leggendo al momento?	Generale
+Mi piace mangiare la pizza	Generale
+130 90 95	inserDatiTot
+Frequenza del polso: 130 bpm	inserDatiFreq
+Ho un battito di 110 bpm	inserDatiFreq
+Frequenza del polso: 165 bpm	inserDatiFreq
+Ho registrato un valore di frequenza cardiaca di 75 bpm oggi.	inserDatiFreq
+Media frequenza ultime tre settimane	Richiesta
+Non ho paura della mia pressione alta.	Umore
+hai mai visitato la torre eiffel?	Generale
+La mia pressione sistolica è 140 e la diastolica è 90, battito cardiaco: 120	inserDatiTot
+Mi piacerebbe controllare le ultime letture che ho registrato.	Richiesta
+ho paura che la mia ipertensione possa peggiorare.	Umore
+Qual è la mia media di pressione sanguigna e frequenza cardiaca degli ultimi 7 giorni?	Richiesta
+ho mal di testa posso misurare la pressione?	Generale
+Frequenza cardiaca: 90 bpm	inserDatiFreq
+Potrei vedere tutte le misurazioni che ho fatto?	Richiesta
+Frequenza del polso: 250 bpm	inserDatiFreq
+Sono molto stressato a causa della mia ipertensione.	Umore
+Posso vedere la media delle mie misurazioni del mese scorso?	Richiesta
+posso inserire i dati della mia pressione sanguigna del mese scorso?	Generale
+Qual è la mia media di pressione sanguigna delle ultime due settimane?	Richiesta
+Ho misurato la pressione: 140/90, battito cardiaco: 80	inserDatiTot
+Desidero consultare tutte le mie letture registrate.	Richiesta
+alla prossima, assistente! sono entusiasta di continuare a lavorare con te sulla mia ipertensione.	Generale
+Vorrei vedere un riepilogo dei miei dati personali.	Richiesta
+Mostrami la frequenza nell'ultima settimana	Richiesta
+la mia pressione sanguigna è 130/80 e il mio battito cardiaco è 70.	inserDatiTot
+Ho bisogno di documentare le mie ultime letture della pressione sanguigna.	Generale
+Qual è la media delle mie misurazioni dell’anno scorso?	Richiesta
+Ho bisogno di inserire i miei ultimi valori di pressione arteriosa.	Generale
+Ho una storia familiare di malattie cardiache	inserDatiGener
+ho fatto una misurazione sulla frequenza: 80 bpm	inserDatiFreq
+Mi sento stanco tutto il tempo.	Generale
+ecco i miei valori 120 80 75	inserDatiTot
+Ho un’allergia ai frutti di mare	inserDatiGener
+Vorrei vedere tutte le informazioni che ho condiviso in passato.	Richiesta
+La mia pressione sanguigna è X/Y e la mia frequenza cardiaca è 68.	inserDatiTot
+Vorrei sapere se l'andamento della mia pressione è stabile nel tempo	Richiesta
+che agitazione! non capisco perchè la misurazioni sulla frequenza mostrano risultati anomali	Umore
+Qual è la media delle mie misurazioni degli ultimi tre anni?	Richiesta
+Qual è la mia ultima misurazione della pressione?	Richiesta
+I miei battiti al minuto sono 205	inserDatiFreq
+Posso avere un elenco di tutte le informazioni che ho fornito recentemente?	Richiesta
+Addio, assistente! Grazie per avermi fornito informazioni preziose sulla mia ipertensione.	Generale
+Posso registrare i dati della mia frequenza cardiaca di stasera?	Generale
+ho paura che la mia pressione alta possa causare un ictus.	Umore
+Ho appena controllato il battito, è 95 bpm	inserDatiFreq
+ho appena fatto un controllo, la mia pressione è 135/85 e il mio polso è 70.	inserDatiTot
+Ho iniziato una nuova dieta per ridurre il sale.	inserDatiGener
+Frequenza cardiaca: 72 bpm	inserDatiFreq
+ho appena fatto un controllo, la mia pressione è 135/85.	inserDatiPress
+Si è rotto il ginocchio	Generale
+Quali sono i rischi per la salute associati all’ipertensione?	Generale
+arrivederci, assistente! sono grato per il tuo aiuto nel mio viaggio con l’ipertensione.	Generale
+La mia pressione è 135/85	inserDatiPress
+Vorrei vedere le misurazioni più recenti che ho registrato.	Richiesta
+Ho appena finito di fare una lunga passeggiata, è stata rilassante.	Generale
+Vorrei vedere un riepilogo di tutte le informazioni che ho inserito recentemente.	Richiesta
+110 frequenza	inserDatiFreq
+Media frequenza questo mese	Richiesta
+Battito cardiaco: 245 bpm	inserDatiFreq
+posso registrare i dati della mia frequenza cardiaca dell’anno scorso?	Generale
+Sono un corridore maratoneta	inserDatiGener
+Ho appena misurato la mia pressione, è 130/85 e il mio battito cardiaco è 75.	inserDatiTot
+La mia frequenza cardiaca oggi è ...bpm.	inserDatiFreq
+Media frequenza ultimi 365 giorni	Richiesta
+Posso registrare i dati della mia frequenza cardiaca di questa settimana?	Generale
+Desidero visualizzare i miei dati sulla frequenza cardiaca degli ultimi sette giorni.	Richiesta
+Sai che oggi ho visto un film molto bello?	Generale
+Mi dici quelle quali sono state le informazioni che ti ho fornito su di me?	Richiesta
+Potrei vedere le ultime misurazioni della pressione che ho registrato nell’ultimo mese?	Richiesta
+la mia frequenza cardiaca è 68 battiti al minuto.	inserDatiFreq
+sono molto nervoso per la mia pressione alta.	Umore
+Dammi le mie misurazioni sulla pressione dell’ultima settimana?	Richiesta
+Quali sono i miei dati più recenti sulla pressione sanguigna?	Richiesta
+Pressione sanguigna attuale: 135/85, frequenza del polso: 285	inserDatiTot
+Ho smesso di fumare da un anno per migliorare la mia salute cardiovascolare.	inserDatiGener
+Frequenza cardiaca: 295 bpm	inserDatiFreq
+Qual è la mia media di frequenza cardiaca degli ultimi 30 giorni?	Richiesta
+Potrei vedere le misurazioni che ho registrato nell’ultimo mese?	Richiesta
+Ho appena controllato e la mia pressione sanguigna è di 130/75 mmHg.	inserDatiPress
+Il mio battito cardiaco è 75 bpm	inserDatiFreq
+Qual è l'ultimo dato sulla pressione sanguigna?	Richiesta
+la mia pressione sanguigna è 130/85 e il mio battito cardiaco è 70.	inserDatiTot
+Soffro di stress cronico	inserDatiGener
+La mia pressione sanguigna è 140/90.	inserDatiPress
+Potresti mostrarmi le mie ultime misurazioni della pressione?	Richiesta
+Non riesco a respirare	Umore
+I valori della mia pressione sono 135/80, frequenza cardiaca: 130	inserDatiTot
+Ho appena misurato la mia frequenza cardiaca e il valore è 72 bpm.	inserDatiFreq
+come l’alcol può influenzare l’ipertensione?	Generale
+come il fumo può influenzare l’ipertensione?	Generale
+Hola	Generale
+buonasera, assistente! spero che tu possa aiutarmi a capire meglio la mia ipertensione.	Generale
+Sono sottopeso	inserDatiGener
+Vorrei rivedere le letture che ho inserito nelle 4 settimane precedenti.	Richiesta
+ho avuto un episodio di tachicardia la scorsa notte.	inserDatiGener
+Vorrei vedere tutte le informazioni che ho condiviso finora.	Richiesta
+Qual è la mia media di pressione sanguigna e frequenza cardiaca degli ultimi nove mesi?	Richiesta
+ho appena controllato, la mia frequenza cardiaca è 75 battiti al minuto.	inserDatiFreq
+Il mio battito cardiaco è 195 bpm	inserDatiFreq
+sono tornata	Generale
+ho iniziato una nuova dieta ricca di frutta e verdura.	inserDatiGener
+Pressione sistolica 135, diastolica 80	inserDatiPress
+potresti indicarmi tutti i dati registrati sulla pressione e sulla frequenza?	Richiesta
+Potrei controllare le misurazioni che ho registrato nelle ultime 4 settimane?	Richiesta
+ho paura che la mia pressione alta possa causare problemi di appetito.	Umore
+Faccio esercizio fisico regolarmente	inserDatiGener
+Qual è la media delle mie misurazioni degli ultimi sei mesi?	Richiesta
+Mi piacerebbe sapere cosa fare per tenere la pressione sotto controllo	Generale
+Ho tutti i dolori del mondo	Generale
+Qual è la mia media di pressione sanguigna degli ultimi due anni?	Richiesta
+quali cambiamenti nello stile di vita posso fare per gestire il mio colesterolo alto?	Generale
+qual è il tuo sport preferito?	Generale
+Qual è la mia media di frequenza cardiaca delle ultime quattro settimane?	Richiesta
+La pressione sistolica è 140 e la diastolica è 90	inserDatiPress
+ho iniziato a fare yoga per aiutare a gestire lo stress.	inserDatiGener
+Posso vedere un riepilogo dei miei dati personali inseriti?	Richiesta
+Qual è la mia media di pressione sanguigna delle ultime tre settimane?	Richiesta
+come la menopausa può influenzare il mio peso?	Generale
+Mi dai la media sulla pressione	Richiesta
+Ho smesso di bere caffè da una settimana.	inserDatiGener
+mi sento molto preoccupato per la mia pressione alta.	Umore
+Qual è il tuo periodo storico preferito?	Generale
+Quali sono le mie misurazioni della pressione dell’ultimo mese?	Richiesta
+Qual è la mia media di pressione sanguigna e frequenza cardiaca di questa settimana?	Richiesta
+Ue, assistente! Sono pronto per un altro giorno di monitoraggio della mia pressione sanguigna.	Generale
+voglia sia i dati sulla frequenza che sulla pressione	Richiesta
+Sono riuscito a fare una lunga passeggiata oggi senza affaticarmi.	Umore
+Una volta a settimana mangio la pizza	Generale
+Ho iniziato a fare passeggiate regolari per aiutare a gestire la mia ipertensione.	inserDatiGener
+Sono un po’ nervoso, la mia pressione sanguigna è più bassa del solito.	Umore
+Media pressione anno scorso	Richiesta
+buongiorno, assistente! spero che tu sia pronto ad aiutarmi a gestire la mia ipertensione oggi.	Generale
+Hai mai visitato il Grand Canyon?	Generale
+Mi mangio le pellicine	Generale
+posso aggiungere i dati della mia pressione sanguigna di questa settimana?	Generale
+come il clima può influenzare la mia artrite?	Generale
+Potresti mostrarmi tutti i miei dati?	Richiesta
+come l’ambiente può influenzare l’ipertensione?	Generale
+Quali sono le opzioni di trattamento farmacologico per l’ipertensione?	Generale
+buongiorno, assistente! spero che tu sia carico di energia per aiutarmi con la mia ipertensione oggi.	Generale
+ho smesso di bere bevande energetiche da un mese.	inserDatiGener
+Vorrei vedere tutte le informazioni che ho dato recentemente.	Richiesta
+Quando sono a rischio ipertensione?	Generale
+Ho l’artrite	inserDatiGener
+Ho appena finito di fare una corsa, sono pieno di energie.	Generale
+buonasera, assistente! sono pronto per rilassarmi e riflettere sulla mia giornata con l’ipertensione.	Generale
+Mi sento molto male, cosa dovrei fare?	Umore
+I valori della mia pressione sono 120/70, battito cardiaco: 210	inserDatiTot
+La mia pressione è 130/80	inserDatiPress
+Ho appena controllato, la mia pressione è 140/85.	inserDatiPress
+Ho notato che la mia pressione sanguigna è di 135/80 mmHg.	inserDatiPress
+Come viene diagnosticato il cancro al seno?	Generale
+La mia ultima lettura della pressione sanguigna e della frequenza cardiaca era di 130/85 mmHg e 68 bpm.	inserDatiTot
+Media frequenza ultimi due anni	Richiesta
+Voglio la media dei dati registrati sulla pressione	Richiesta
+posso aggiungere i dati della mia pressione sanguigna di quest’anno?	Generale
+Vorrei rivedere tutti i dati sulla pressione che ho inserito.	Richiesta
+Valori pressione: 110/70	inserDatiPress
+ho paura che la mia ipertensione possa causare danni ai miei reni.	Umore
+Pressione 130 90 frequenza 96	inserDatiTot
+La mia pressione sanguigna attuale è 110/75, ho un battito di 160	inserDatiTot
+Ho iniziato a fare yoga per aiutare a gestire lo stress.	inserDatiGener
+buon pomeriggio, assistente! spero che tu possa aiutarmi a monitorare la mia ipertensione.	Generale
+ho avuto un episodio di vertigini questa mattina.	inserDatiGener
+Ho paura che la mia pressione alta possa causare un ictus.	Umore
+ho notato che la mia pressione sanguigna scende quando dormo bene.	inserDatiGener
+come il sale può influenzare l’ipertensione?	Generale
+Qual è la mia media di frequenza cardiaca degli ultimi due anni?	Richiesta
+posso inserire le mie ultime misurazioni?	Generale
+ho iniziato una nuova dieta per ridurre il sale.	inserDatiGener
+mostrarmi le misurazioni della frequenza cardiaca degli ultimi sette giorni	Richiesta
+La mia pressione sanguigna è 125/80.	inserDatiPress
+come posso prevenire le malattie cardiache?	Generale
+Vorrei rivedere i dati sulla pressione che ho inserito nell’ultimo mese.	Richiesta
+Posso aggiungere i dati della mia pressione sanguigna di questa settimana?	Generale
+Sistolica 130, diastolica 85, battito: 75	inserDatiTot
+Il mio battito cardiaco è 220 bpm	inserDatiFreq
+Sono un donatore di sangue regolare	inserDatiGener
+La mia pressione oggi è 120/80.	inserDatiPress
+Posso vedere un riassunto di tutte le informazioni che ho fornito recentemente?	Richiesta
+Buongiorno, tutto bene?	Generale
+sono preoccupato per i miei livelli di pressione sanguigna.	Umore
+Sistolica 130, diastolica 85	inserDatiPress
+Qual è la mia media di pressione sanguigna dell’anno scorso?	Richiesta
+la mia pressione sanguigna attuale è 125/80.	inserDatiPress
+Posso avere la media delle mie misurazioni delle ultime 24 ore?	Richiesta
+La mia pressione è 130/80, ho un battito di 145	inserDatiTot
+Mi piacerebbe controllare le ultime letture della frequenza cardiaca che ho registrato nell’ultimo mese.	Richiesta
+Cammino per almeno 30 minuti al giorno	inserDatiGener
+Dammi le statistiche dell'ultimo mese in un grafico	Richiesta
+110 50	inserDatiPress
+mi puoi dire a cosa serve tenere sotto controllo la pressione?	Generale
+non ho ansia per la mia pressione alta.	Umore
+La mia pressione sanguigna è di 125/75 mmHg, secondo l’ultima misurazione.	inserDatiPress
+La mia pressione sanguigna oggi è X/Y e la mia frequenza cardiaca è Z bpm.	inserDatiTot
+Vorrei rivedere tutti i dati sulla frequenza  che ho inserito.	Richiesta
+Desidero visualizzare i miei dati sulla pressione dell’ultimo mese.	Richiesta
+come l’ipertensione può influenzare la mia vita quotidiana?	Generale
+come il colesterolo può influenzare le mie malattie cardiache?	Generale
+Desidero conservare le mie recenti letture della pressione arteriosa nel mio registro sanitario.	Generale
+Qual è la mia media di pressione sanguigna e frequenza cardiaca della scorsa settimana?	Richiesta
+la mia pressione sanguigna è 140/90 e la mia frequenza cardiaca è 80 battiti al minuto.	inserDatiTot
+Il mio polso è di 80 battiti al minuto	inserDatiFreq
+La mia pressione sanguigna è 135/85.	inserDatiPress
+Ho avuto problemi di digestione.	Generale
+Dammi il valor medio di frequenza nell'ultima settimana	Richiesta
+come posso gestire il mio diabete?	Generale
+Vorrei vedere tutte le letture della frequenza cardiaca che ho registrato.	Richiesta
+ho iniziato a meditare per aiutare a gestire lo stress.	inserDatiGener
+Dati	Richiesta
+La frequenza cardiaca misurata è Z bpm.	inserDatiFreq
+Desidero consultare le registrazioni degli ultimi 7 giorni.	Richiesta
+Ho appena controllato la pressione, è 140/85, battito cardiaco: 95	inserDatiTot
+Mi piacerebbe esaminare i dati registrati negli ultimi 7 giorni	Richiesta
+sono molto ansioso per i miei livelli di pressione sanguigna.	Umore
+vorrei darti i miei valori di pressione	Generale
+Desidero consultare la mia ultima lettura del battito cardiaco.	Richiesta
+Mi piacerebbe controllare le ultime letture della pressione che ho registrato nell’ultimo mese.	Richiesta
+Bevo caffè tutti i giorni	inserDatiGener
+Qual è la mia media di pressione sanguigna di questa settimana?	Richiesta
+Media frequenza ultime 24 ore	Richiesta
+Vorrei dare un’occhiata alle ultime letture che ho inserito.	Richiesta
+ecco la frequenza: 85	inserDatiFreq
+Vorrei vedere un riepilogo di tutte le informazioni che ho inserito.	Richiesta
+Pressione arteriosa misurata: 135/85, battito cardiaco: 165	inserDatiTot
+Ho il colesterolo alto	inserDatiGener
+Media pressione ultimi due anni	Richiesta
+hai mai provato a fare surf?	Generale
+quali sono i rischi per la salute associati all’obesità?	Generale
+Potresti mostrarmi le mie letture dell’ultima settimana?	Richiesta
+ho iniziato a fare passeggiate regolari per aiutare a gestire la mia ipertensione.	inserDatiGener
+hai mai provato a fare immersioni?	Generale
+Pressione arteriosa: 135/85, frequenza cardiaca: 105	inserDatiTot
+Quando devo fare un collquio il mio cuore è infermabile.	Umore
+Qual è la mia media di frequenza cardiaca degli ultimi dodici mesi?	Richiesta
+Vorrei emmorizzare i miei dati: la pressione sanguigna è 125/80 e la mia frequenza cardiaca è 68.	inserDatiTot
+Posso avere un elenco di tutte le informazioni che ho fornito?	Richiesta
+Dammi le misurazioni della settimana in un grafico	Richiesta
+Potresti mostrarmi un sommario di tutte le mie misurazioni?	Richiesta
+pressione di A su B.	inserDatiPress
+Media pressione ultimi 365 giorni	Richiesta
+posso registrare i dati della mia frequenza cardiaca di domani?	Generale
+Pressione misurata: 140/85	inserDatiPress
+Posso aggiungere i dati della mia pressione sanguigna di domani?	Generale
+Hai mai visitato la Costa Amalfitana?	Generale
+Potrei controllare l’ultima misurazione della frequenza cardiaca che ho registrato?	Richiesta
+mi sento molto sereno riguardo alla mia pressione alta.	Umore
+Qual è un buon stile di vita che abbassa il rischio di sviluppare ipertensione?	Generale
+Ho smesso di bere alcol da due settimane.	inserDatiGener
+voglio inserire i dati sulla frequenza	Generale
+vorrei tanto medicare la ferita al braccio di mio figlio, potresti fornirmi dei consigli?	Generale
+Mi sento in forma.	Umore
+ciao, assistente! sono pronto per un altro giorno di gestione della mia ipertensione.	Generale
+ho paura che la mia pressione alta possa causare problemi di umore.	Umore
+Ho iniziato una nuova dieta ricca di fibre.	inserDatiGener
+Frequenza cardiaca: 175 bpm	inserDatiFreq
+Pressione sanguigna registrata: 140/90, ho un battito di 300	inserDatiTot
+La mia pressione è 135/85, battito cardiaco: 225	inserDatiTot
+Qual è la mia media di pressione sanguigna degli ultimi 7 giorni?	Richiesta
+Forniscimi le misurazioni sulla frequenza cardiaca nell’ultimo mese	Richiesta
+sono molto calmo riguardo alla mia ipertensione.	Umore
+Posso vedere la media delle mie misurazioni degli ultimi due anni?	Richiesta
+120 80 75	inserDatiTot
+Ho avuto un po’ di vertigini oggi, potrebbe essere legato alla mia pressione sanguigna?	Umore
+Vorrei vedere un elenco di tutte le informazioni che ho dato recentemente.	Richiesta
+Pressione misurata: 130/70	inserDatiPress
+Potresti aiutarmi a registrare le mie nuove letture della pressione sanguigna?	Generale
+Sono molto tranquillo riguardo alla mia pressione alta.	Umore
+80	inserDatiPress
+Posso vedere la media delle mie misurazioni delle ultime quattro settimane?	Richiesta
+Dammi la mia frequenza	Richiesta
+posso registrare i dati della mia frequenza cardiaca di questa mattina?	Generale
+Qual è la mia media di pressione sanguigna della scorsa settimana?	Richiesta
+ho fatto una misurazione. Frequenza 80 e pressione 130/90	inserDatiTot
+Voglio annotare le mie recenti letture della pressione sanguigna.	Generale
+come viene diagnosticata l’ipertensione?	Generale
+Vorrei dare un’occhiata a tutte le letture che ho inserito.	Richiesta
+Battito cardiaco: 125 bpm	inserDatiFreq
+arrivederci, assistente! grazie per avermi aiutato a gestire la mia ipertensione oggi.	Generale
+Ho notato che la mia pressione sanguigna aumenta quando sono nervoso.	inserDatiGener
+Mi piacerebbe controllare le ultime letture del battito cardiaco che ho registrato nell’ultima settimana.	Richiesta
+Vorrei vedere le misurazioni che ho registrato nell’ultimo mese.	Richiesta
+Sono molto ansioso per la mia ipertensione.	Umore
+Potresti mostrarmi tutte le mie misurazioni della frequenza cardiaca in un grafico?	Richiesta
+riportami le misurazioni su pressione e frequnza nell'ultima settimana	Richiesta
+Qual è la mia media di frequenza cardiaca dell’anno scorso?	Richiesta
+ciao, assistente! spero che tu possa darmi qualche consiglio utile per la mia ipertensione oggi.	Generale
+Il mio battito cardiaco è 70 battiti al minuto.	inserDatiFreq
+Potresti mostrarmi la mia ultima misurazione della frequenza cardiaca?	Richiesta
+Media pressione ultimi dodici mesi	Richiesta
+Voglio un riassunto di tutte le mie statistiche?	Richiesta
+come il diabete può influenzare la mia vista?	Generale
+vorrei la pressione media dell'ultima settimana	Richiesta
+Ho un lavoro sedentario	inserDatiGener
+Ho notato che la mia pressione sanguigna scende quando mi rilasso.	inserDatiGener
+X su Y	inserDatiPress
+Dopo un trauma quanto tempo dovrei riposare?	Generale
+Qual è la media delle mie misurazioni della scorsa settimana?	Richiesta
+Il mio battito cardiaco è 255 bpm	inserDatiFreq
+Mi sento in forma, ho fatto esercizio fisico regolarmente questa settimana.	Umore
+non sono preoccupato per la mia ipertensione.	Umore
+come il sesso può influenzare il mio rischio di osteoporosi?	Generale
+Vorrei vedere l’ultima lettura della frequenza che ho registrato.	Richiesta
+Hai visto l’ultimo film di Christopher Nolan?	Generale
+grazie delle informazioni	Generale
+Ho appena misurato la mia pressione, è 130/85.	inserDatiPress
+Mi puoi dare la ricetta di quel piatto brevemente	Generale
+La pressione è 140/85	inserDatiPress
+Posso avere un riepilogo di tutte le informazioni che ho dato recentemente?	Richiesta
+Sono preoccupato per i miei livelli di pressione sanguigna.	Umore
+Potrei vedere le ultime misurazioni della pressione che ho registrato nell’ultima settimana?	Richiesta
+Vorrei rivedere i dati sulla pressione che ho inserito negli ultimi sette giorni.	Richiesta
+Pressione sistolica 120, diastolica 70	inserDatiPress
+Oggi è freddo e la temperatura è di 10 gradi	Generale
+mostrami le statistiche sulla frequenza	Richiesta
+alla prossima, assistente! non vedo l’ora di continuare a lavorare con te sulla mia ipertensione.	Generale
+Mi sono rotta una caviglia	Generale
+La mia frequenza cardiaca è 72 battiti al minuto.	inserDatiFreq
+Quali cambiamenti nello stile di vita posso fare per gestire il mio colesterolo alto?	Generale
+Ho appena fatto la misurazione, la pressione è 140/85	inserDatiPress
+sono molto ansioso per la mia ipertensione.	Umore
+ciao, assistente! sono pronto per un altro giorno di monitoraggio della mia ipertensione.	Generale
+Mi piacerebbe controllare tutte le misurazioni che ho registrato.	Richiesta
+Frequenza cardiaca: 150 bpm	inserDatiFreq
+Forniscimi i dati della pressione sanguigna?	Richiesta
+ti do la mia pressione di oggi	Generale
+ciao, assistente! sono pronto per affrontare la mia ipertensione con il tuo aiuto.	Generale
+Ho iniziato una nuova dieta povera di grassi saturi.	inserDatiGener
+qual è la mia pressione media dell'ultimo mese?	Richiesta
+Sono esposto al fumo di seconda mano sul lavoro	inserDatiGener
+Ho iniziato una nuova dieta povera di zuccheri.	inserDatiGener
+Misurazioni della pressione dell’ultimo mese?	Richiesta
+ho iniziato a fare stretching regolare per aiutare a gestire lo stress.	inserDatiGener
+Pressione arteriosa: 135/85	inserDatiPress
+Sono pieno di energie	Umore
+sono molto pacifico riguardo alla mia pressione alta.	Umore
+Mi sento molto tranquillo riguardo alla mia pressione alta.	Umore
+quali sono le opzioni di trattamento farmacologico per l’ansia?	Generale
+Alla prossima, assistente! Non vedo l’ora di continuare a lavorare con te sulla mia ipertensione.	Generale
+La mia pressione sanguigna attuale è 125/80.	inserDatiPress
+Non ricordo le statistiche degli ultimi sette giorni	Richiesta
+La mia pressione sanguigna e frequenza cardiaca attuali sono di 140/85 mmHg e 74 bpm.	inserDatiTot
+Pressione sistolica 120, diastolica 70, frequenza del polso: 90	inserDatiTot
+Ho un dolore al petto forte	Umore
+La mia ultima misurazione mostra una pressione sanguigna e frequenza cardiaca di 135/85 mmHg e 70 bpm.	inserDatiTot
+Qual è la mia media di pressione sanguigna e frequenza cardiaca delle ultime tre settimane?	Richiesta
+buonanotte, assistente! sono pronto per riposare e ricaricarmi per un altro giorno di gestione della mia ipertensione.	Generale
+Posso inserire i dati della mia pressione sanguigna di stasera?	Generale
+sono molto stressato a causa della mia ipertensione.	Umore
+Quali sono le cause principali dell’ipertensione?	Generale
+Potresti mostrarmi le mie statistiche dell’ultima settimana?	Richiesta
+ho misurato la frequenza: 90	inserDatiFreq
+Mangio le torte tutti i giorni	inserDatiGener
+Media pressione	Richiesta
+posso registrare i dati della mia frequenza cardiaca di stasera?	Generale
+quale è il tuo parco nazionale preferito?	Generale
+La pressione oggi è 145/95, frequenza cardiaca: 75	inserDatiTot
+Qual è il tuo poeta preferito?	Generale
+Qual è il dato più recente	Richiesta
+Posso aggiungere i dati della mia pressione sanguigna di quest’anno?	Generale
+Ho appena controllato e la mia pressione sanguigna e frequenza cardiaca sono di 130/75 mmHg e 69 bpm.	inserDatiTot
+Qual è la mia ultima misurazione della pressione arteriosa che ti ho fornito?	Richiesta
+Pressione sistolica 135, diastolica 80, battito cardiaco: 70	inserDatiTot
+Posso avere un elenco di tutte le informazioni che ho inserito recentemente?	Richiesta
+Dammi le info personali registrate	Richiesta
+Vorrei vedere un elenco di tutte le informazioni che ho fornito.	Richiesta
+Desidero aggiornare il mio registro con le nuove misurazioni della pressione sanguigna.	Generale
+Mostrami con un immagine i valori sulla mia pressione?	Richiesta
+Hai mai provato a dipingere?	Generale
+ciao, assistente! sono pronto per un altro giorno di sfide con la mia ipertensione.	Generale
+ho notato che la mia pressione sanguigna scende quando mi rilasso.	inserDatiGener
+Sono di peso normale	inserDatiGener
+La pressione è 140/85, frequenza cardiaca: 215	inserDatiTot
+Potresti mostrarmi le mie misurazioni della frequenza cardiaca dell’ultima settimana?	Richiesta
+Non riesco ad andare in bagno	Generale
+Riporta le misurazioni della pressione arteriosa dell’ultima settimana graficamente	Richiesta
+Vorrei inserire le misurazioni fatte	Generale
+Voglio vedere i dati relativi alla frequenza	Richiesta
+Ho avuto un episodio di vertigini questa mattina.	inserDatiGener
+Mi piacerebbe controllare l’ultima lettura del battito cardiaco che ho registrato.	Richiesta
+Sono molto rilassato riguardo alla mia ipertensione.	Umore
+Desidero consultare i dati delle ultime 4 settimane	Richiesta
+La mia pressione quando torno a casa dalla famiglia si alza sempre	Umore
+la mia frequenza cardiaca oggi è 72 battiti al minuto.	inserDatiFreq
+Ciao, assistente! Spero che tu possa darmi qualche suggerimento su come gestire la mia ipertensione.	Generale
+Dammi le medie	Richiesta
+Ho appena misurato la mia pressione sanguigna e i valori sono 120/80 mmHg.	inserDatiPress
+Potresti mostrarmi tutte le mie misurazioni della pressione?	Richiesta
+Mi piacerebbe esaminare tutti i dati sulla pressione che ho registrato.	Richiesta
+Desidero visualizzare le mie letture dell’ultima settimana.	Richiesta
+Desidero consultare le mie letture della pressione dell’ultima settimana.	Richiesta
+90 60	inserDatiPress
+Sono contento di dirti che la mia pressione sanguigna è rimasta entro i limiti normali per tutto il mese.	Umore
+Posso vedere un riassunto dei miei dati generici finora?	Richiesta
+Pressione arteriosa misurata: 135/85	inserDatiPress
+La mia pressione sanguigna è 140/90 e la mia frequenza cardiaca è 80.	inserDatiTot
+Ho avuto un bypass gastrico	inserDatiGener
+Pressione: 120/80 mmHg, frequenza del polso: 230	inserDatiTot
+Ho avuto una settimana molto tranquilla e la mia pressione sanguigna è rimasta stabile.	Umore
+Vorrei vedere le misurazioni che ho registrato nell’ultima settimana.	Richiesta
+la mia frequenza cardiaca è 72 battiti al minuto.	inserDatiFreq
+posso inserire la mia pressione sanguigna di oggi?	Generale
+registrami questa frequenza. Il valore è di 85	inserDatiFreq
+Mostra tutte le mie misurazioni tramite un grafico?	Richiesta
+ciao, assistente! sono pronto per un altro giorno di apprendimento sulla mia ipertensione.	Generale
+Dammi i miei dati personali	Richiesta
+Ho una pressione di 135/80, ho un battito di 190	inserDatiTot
+Desidero consultare le mie letture della frequenza cardiaca delle ultime quattro settimane.	Richiesta
+Il mio battito cardiaco è 160 bpm	inserDatiFreq
+Ho avuto un raffreddore che non sembra migliorare.	Generale
+Sono un ciclista competitivo	inserDatiGener
+Quali cambiamenti nello stile di vita posso fare per gestire l’ipertensione?	Generale
+il mio battito cardiaco è 75 battiti al minuto.	inserDatiFreq
+Buonanotte, assistente! Grazie per avermi aiutato a capire meglio la mia ipertensione.	Generale
+Posso avere la media delle mie misurazioni di oggi?	Richiesta
+oggi ho mangiato un buon piatto di pasta	Generale
+Ho avuto un po’ di nausea e ho notato che la mia pressione sanguigna è bassa, cosa dovrei fare?	Umore
+Il mio battito cardiaco è 135 bpm	inserDatiFreq
+come il peso può influenzare l’ipertensione?	Generale
+Mi piacerebbe esaminare le letture che ho registrato nell’ultimo mese.	Richiesta
+I valori della mia pressione sono 120/70	inserDatiPress
+Potrei controllare le ultime misurazioni della frequenza cardiaca che ho registrato negli ultimi sette giorni?	Richiesta
+Qual è la mia media di frequenza cardiaca di questo mese?	Richiesta
+quel è la mia frequenza media dell'ultimo mese?	Richiesta
+Mostrami tutte le mie misurazioni della pressione arteriosa?	Richiesta
+ho notato che il mio livello di stress è aumentato ultimamente.	inserDatiGener
+Desidero visualizzare i miei dati più recenti sulla pressione.	Richiesta
+Vorrei registrare i miei ultimi dati sulla pressione sanguigna.	Generale
+Non sono preoccupato per la mia pressione alta.	Umore
+Quali sono le mie statistiche dell’ultimo mese?	Richiesta
+Pressione arteriosa misurata: 110/70, frequenza cardiaca: 245	inserDatiTot
+la mia pressione sanguigna è 120/80 e il mio battito cardiaco è 70.	inserDatiTot
+Qual è la tua città preferita in Italia?	Generale
+Ho appena controllato, la mia pressione è 140/85 e la mia frequenza cardiaca è 75.	inserDatiTot
+Media totale	Richiesta
+130/100	inserDatiPress
+Qual è la mia media di pressione sanguigna e frequenza cardiaca dell’anno scorso?	Richiesta
+Quali sono i dati delle ultime quattro settimane?	Richiesta
+Informazioni personali	Richiesta
+mi dici a cosa serve misurare la frequenza?	Generale
+Pressione sanguigna attuale: 130/80	inserDatiPress
+Ho appena controllato, la mia frequenza cardiaca è 75 battiti al minuto.	inserDatiFreq
+La mia pressione sanguigna attuale è 140/90	inserDatiPress
+I valori della mia pressione sono 135/80	inserDatiPress
+la mia pressione sanguigna è 125/80.	inserDatiPress
+posso inserire i dati della mia pressione sanguigna del prossimo mese?	Generale
+Dammi la lista	Richiesta
+La mia pressione sanguigna è 130/80 e il mio battito cardiaco è 70.	inserDatiTot
+Sto cercando di evitare cibi ad alto contenuto di grassi saturi per mantenere bassi i livelli di colesterolo.	inserDatiGener
+come la contraccezione ormonale può influenzare il mio ciclo mestruale?	Generale
+Il mio battito cardiaco è 280 bpm	inserDatiFreq
+La mia pressione sanguigna attuale è 140/90, battito cardiaco: 240	inserDatiTot
+Pressione: 145/95 mmHg, battito cardiaco: 255	inserDatiTot
+voglio sia i dati sulla pressione che sulla frequenza	Richiesta
+Misurando ho ottenuto una pressione sanguigna di X/Y e la frequenza cardiaca di 72.	inserDatiTot
+Pressione: 130/70 mmHg, ho un battito di 175	inserDatiTot
+La mia pressione sanguigna più recente è di 120/70 mmHg.	inserDatiPress
+dimmi le regole per misurare correttamente la pressione	Generale
+Posso avere un elenco di tutte le informazioni che ho fornito finora?	Richiesta
+Qual è la mia media di pressione sanguigna degli ultimi nove mesi?	Richiesta
+Posso vedere tutte le informazioni che ho inserito?	Richiesta
+posso inserire i dati della mia pressione sanguigna di ieri?	Generale
+non ho ansia per la mia ipertensione.	Umore
+Dammi pressione	Richiesta
+Quali sono i trattamenti disponibili per l’artrite?	Generale
+Sei stato molto preciso	Generale
+sono molto tranquillo riguardo alla mia ipertensione.	Umore
+Potrei vedere le ultime misurazioni che ho registrato?	Richiesta
+Media frequenza mese scorso	Richiesta
+la mia alimentazione non è mai stata curata.	inserDatiGener
+ho notato che la mia pressione sanguigna aumenta quando faccio esercizio fisico.	inserDatiGener
+Mi sento un po' strano, quali sono i miei dati più recenti?	Richiesta
+Pressione 120/80	inserDatiPress
+Il mio battito cardiaco è 100 bpm	inserDatiFreq
+La pressione sistolica è 140 e la diastolica è 90, battito cardiaco: 180	inserDatiTot
+Dammi i valori medi dell'ultimo mese	Richiesta
+Quali sono i sintomi dell’ipertensione?	Generale
+Posso registrare i dati della mia frequenza cardiaca di questo mese?	Generale
+Ho avuto un episodio di tachicardia la scorsa notte.	inserDatiGener
+Desidero visualizzare il mio dato più recente sulla frequenza cardiaca.	Richiesta
+Desidero visualizzare i miei dati più recenti.	Richiesta
+Il mio battito cardiaco è 72 battiti al minuto.	inserDatiFreq
+Ho una pressione di 135/80	inserDatiPress
+quali sono i sintomi della depressione?	Generale
+come la menopausa può influenzare l’ipertensione?	Generale
+come posso prevenire l’ipertensione?	Generale
+78 125	inserDatiPress
+Pressione sistolica 120, diastolica 80, frequenza del polso: 170	inserDatiTot
+Potrei vedere tutte le misurazioni della frequenza cardiaca che ho registrato?	Richiesta
+Posso registrare la mia frequenza cardiaca di oggi?	Generale
+Vorrei dare un’occhiata a tutte le letture della pressione che ho inserito.	Richiesta
+ho appena misurato la mia pressione, è 130/85.	inserDatiPress
+Buonasera, assistente! Spero che tu possa aiutarmi a capire meglio la mia ipertensione.	Generale
+ho paura che la mia pressione alta possa causare problemi di equilibrio.	Umore
+potresti ricordarmi i dati su pressione e frequenza registrati?	Richiesta
+come l’alcol può influenzare il mio fegato?	Generale
+Frequenza cardiaca misurata: 260 bpm	inserDatiFreq
+posso inserire i dati della mia pressione sanguigna di stasera?	Generale
+Vorrei vedere le letture della frequenza cardiaca che ho registrato nell’ultimo mese.	Richiesta
+ho fatto una nuova misurazione, la frequenza cardiaca è 70	inserDatiFreq
+Ho seguito il tuo consiglio e mi sento molto meglio, la mia pressione sanguigna è migliorata.	Umore
+Mostrami le statistiche	Richiesta
+Dammi dati pressione	Richiesta
+Potresti spiegarmi cosa significa avere la pressione alta?	Generale
+vorrei registrare la frequenza, è 80	inserDatiFreq
+Ho notato che la mia frequenza cardiaca è molto bassa, è normale?	Umore
+Ho una pressione di 120/70	inserDatiPress
+La mia pressione sanguigna attuale è di 140/85 mmHg.	inserDatiPress
+Media pressione ieri	Richiesta
+Frequenza cardiaca: 115 bpm	inserDatiFreq
+Ho appena fatto la misurazione, la pressione è 140/85, frequenza cardiaca: 155	inserDatiTot
+Hai mai provato a fare paracadutismo?	Generale
+Media frequenza ultimi nove mesi	Richiesta
+Dati personali	Richiesta
+posso aggiungere i dati della mia pressione sanguigna di domani?	Generale
+Oggi mi sento molto rilassato grazie.	Umore
+Media pressione	Richiesta
+Non mi sento particolarmente bene. Le ultime misurazioni mi stanno preoccupando	Umore
+hai mai visitato il museo del louvre?	Generale
+Media frequenza quest’anno	Richiesta
+Mi piacerebbe controllare tutte le letture della frequenza cardiaca che ho registrato.	Richiesta
+Potrei vedere le misurazioni che ho registrato nell’ultima settimana?	Richiesta
+Buonasera, assistente! Spero tu possa aiutarmi a capire meglio la mia ipertensione.	Generale
+Sto cercando di consumare più frutta e verdura per mantenere una dieta equilibrata.	inserDatiGener
+Media pressione ultimi 7 giorni	Richiesta
+Dammi le mie misurazioni della pressione sanguigna dell’ultimo mese in un grafico	Richiesta
+Forniscimi tutte le mie misurazioni in un grafico?	Richiesta
+Posso inserire la mia pressione sanguigna di oggi?	Generale
+Dammi tutte le mie misurazioni inerenti alla pressione in un grafico	Richiesta
+Frequenza cardiaca: 235 bpm	inserDatiFreq
+Qual è la mia media di pressione sanguigna e frequenza cardiaca delle ultime due settimane?	Richiesta
+Ho avuto problemi di sonno ultimamente.	inserDatiGener
+Quali sono i rischi per la salute associati all’obesità?	Generale
+quale è il tuo romanzo preferito?	Generale
+Dammi i dati della frequenza cardiaca nell’ultima settimana	Richiesta
+Frequenza 100	inserDatiFreq
+Pressione misurata: 145/95, battito cardiaco: 195	inserDatiTot
+Avendo sotto controllo i miei dati mi sento inarrestabile.	Umore
+Ho appena misurato la mia pressione sanguigna e la frequenza cardiaca, i valori sono 120/80 mmHg e 72 bpm.	inserDatiTot
+Quali sono i trattamenti disponibili per l’ipertensione?	Generale
+Mi piacerebbe controllare i dati registrati nell’ultimo mese.	Richiesta
+Vorrei vedere un elenco di tutte le informazioni che ho fornito recentemente.	Richiesta
+potresti farmi visualizzare le registrazioni datte sulla pressione e sulla frequenza cardiaca	Richiesta
+Pressione: 120/70 mmHg, battito cardiaco: 150	inserDatiTot
+La pressione oggi è 145/95	inserDatiPress
+addio, assistente! sono grato per il tuo sostegno nel mio viaggio con l’ipertensione.	Generale
+134 56 78	inserDatiTot
+Hai mai provato a fare yoga?	Generale
+Ho bisogno di aiuto urgentemente	Umore
+La mia pressione sanguigna è 110/75	inserDatiPress
+Faccio attività fisica regolare	inserDatiGener
+Posso avere la media delle mie misurazioni delle ultime due settimane?	Richiesta
+La mia pressione sanguigna oggi è X/Y.	inserDatiPress
+La mia pressione oggi è .../...e la mia frequenza cardiaca è ... bpm.	inserDatiTot
+non ho paura della mia ipertensione.	Umore
+voglio registrare i miei dati misurati. La pressione è di 120/80 mentre la frequenza 80bpm	inserDatiTot
+ho paura che la mia pressione alta possa causare un attacco di cuore.	Umore
+Dammi le medie dell'ultimo mese	Richiesta
+Vorrei tracciare le mie recenti misurazioni della pressione arteriosa.	Generale
+Ho una pressione di 120/70, battito cardiaco: 270	inserDatiTot
+A/B	inserDatiPress
+I miei battiti al minuto sono 145	inserDatiFreq
+Ho l’ipertensione	inserDatiGener
+Buongiorno, mi annoio	Generale
+Vorrei una torta per colazione	Generale
+La mia pressione oggi è A su B e la mia frequenza cardiaca è X bpm.	inserDatiTot
+Media pressione oggi	Richiesta
+Media pressione quest’anno	Richiesta
+Non fumo mai	inserDatiGener
+Posso avere un riepilogo di tutte le informazioni che ho dato in passato?	Richiesta
+Frequenza cardiaca misurata: 80 bpm	inserDatiFreq
+quali cambiamenti nello stile di vita posso fare per gestire l’ipertensione?	Generale
+La mia ultima lettura della pressione sanguigna era di 130/85 mmHg.	inserDatiPress
+Media frequenza	Richiesta
+Ho iniziato a prendere un nuovo farmaco per l’ipertensione.	inserDatiGener
+Qual è la mia media di pressione sanguigna e frequenza cardiaca di oggi?	Richiesta
+sono molto nervoso per i miei livelli di pressione sanguigna.	Umore
+La mia frequenza cardiaca attuale è di 74 bpm.	inserDatiFreq
+Media pressione ultime tre settimane	Richiesta
+Media pressione ultimi 30 giorni	Richiesta
+come la genetica può influenzare l’ipertensione?	Generale
+Qual è la mia media di frequenza cardiaca degli ultimi tre anni?	Richiesta
+hai mai pensato di fare un viaggio in mongolfiera?	Generale
+Ho iniziato a seguire una dieta a basso contenuto di sale per aiutare a controllare la mia pressione sanguigna.	inserDatiGener
+ho iniziato una nuova dieta povera di grassi saturi.	inserDatiGener
+Hai mai visitato il Colosseo?	Generale
+Pressione misurata è di 135/85 e la mia frequenza cardiaca è 72.	inserDatiTot
+come il diabete può influenzare l’ipertensione?	Generale
+A presto, assistente! Spero che tu possa continuare ad aiutarmi a gestire la mia ipertensione.	Generale
+La pressione è 130 95 mentre la frequenza è 96	inserDatiTot
+Media pressione ultimi tre anni	Richiesta
+come viene diagnosticato il cancro al seno?	Generale
+Desidero visualizzare i miei dati sulla pressione dell’ultima settimana.	Richiesta
+Ultima misurazione	Richiesta
+Ue, assistente! Spero tu possa darmi qualche suggerimento su come gestire la mia ipertensione.	Generale
+Buon pomeriggio, assistente! Spero che tu possa aiutarmi a monitorare la mia ipertensione.	Generale
+la mia pressione sanguigna è 140/90 e il mio battito cardiaco è 75.	inserDatiTot
+è possibile fornirti le misurazioni su pressione e frequenza?	Generale
+ho iniziato a fare esercizio fisico regolarmente.	inserDatiGener
+La mia pressione sistolica è 140 e la diastolica è 90	inserDatiPress
+posso registrare i dati della mia frequenza cardiaca di ieri?	Generale
+Frequenza del polso: 190 bpm	inserDatiFreq
+Ho appena fatto un controllo, la mia pressione è 135/85.	inserDatiPress
+posso inserire i dati della mia pressione sanguigna e della mia frequenza cardiaca di oggi?	Generale
+Qual è la mia media di frequenza cardiaca delle ultime 24 ore?	Richiesta
+Faccio esercizio fisico regolarmente, almeno 30 minuti al giorno.	inserDatiGener
+Ho avuto un trapianto di rene	inserDatiGener
+vorrei aggiungere i dettagli sulla mia alimentazione.	Generale
+Desidero consultare le mie letture più recenti della pressione.	Richiesta
+la mia pressione sanguigna è 135/85 e la mia frequenza cardiaca è 72.	inserDatiTot
+Desidero visualizzare i miei dati sulla frequenza cardiaca delle 4 settimane precedenti.	Richiesta
+La mia pressione oggi è 120/80 e la mia frequenza cardiaca è 72.	inserDatiTot
+Buongiorno, assistente! Spero tu possa darmi qualche consiglio sulla mia ipertensione oggi.	Generale
+Ho un lavoro che richiede viaggi frequenti	inserDatiGener
+La mia pressione è 120/60	inserDatiPress
+La pressione è 130/70	inserDatiPress
+Ho un forte dolore al collo.	Generale
+Ho paura che la mia pressione alta possa causare un attacco di cuore.	Umore
+il mio battito cardiaco è 72 battiti al minuto.	inserDatiFreq
+Potresti mostrarmi tutte le mie letture che hai registrato?	Richiesta
+Media frequenza ultimi 7 giorni	Richiesta
+puoi fornirmi i dati sulla pressione e sulla frequenza?	Richiesta
+Media frequenza oggi	Richiesta
+Ho una storia familiare di malattie del fegato	inserDatiGener
+Posso inserire le mie ultime misurazioni?	Generale
+sono molto ansioso per la mia pressione alta.	Umore
+Vorrei vedere tutte le informazioni che ho condiviso recentemente.	Richiesta
+cosa causa l’ipertensione?	Generale
+Vorrei rivedere l’ultimo dato sulla frequenza che ho inserito.	Richiesta
+Media pressione ultimi sei mesi	Richiesta
+I miei battiti al minuto sono 85	inserDatiFreq
+Ti fornisco i dati: pressione è 130/85 e il mio battito cardiaco è 70.	inserDatiTot
+pressione 120 80 frequenza 75	inserDatiTot
+grazie	Generale
+Sono Sara e ho 15 anni	inserDatiGener
+Come posso prevenire l’ipertensione?	Generale
+Mi spieghi perché quando sono in ansia non riesco a respirare bene?	Generale
+la mia pressione sanguigna è 125/80 e la mia frequenza cardiaca è 68.	inserDatiTot
+Non ho ansia per la mia pressione alta.	Umore
+memorizza la frequenza di 85 bpm	inserDatiFreq
+Come curo la botta presa alla schiena?	Generale
+La mia pressione sanguigna e frequenza cardiaca sono di 125/75 mmHg e 70 bpm, secondo l’ultima misurazione.	inserDatiTot
+hai mai visitato il colosseo?	Generale
+ho avuto un episodio di palpitazioni ieri.	inserDatiGener
+inserisci pressione 123 67	inserDatiPress
+Ho 50 anni e non bevo alcol.	inserDatiGener
+La mia pressione sanguigna e frequenza cardiaca più recenti sono di 120/70 mmHg e 71 bpm.	inserDatiTot
+Ho letto un libro	Generale
+Pressione sanguigna attuale: 110/70	inserDatiPress
+Vorrei rivedere i dati sulla frequenza  che ho inserito nell’ultimo mese.	Richiesta
+Quali sono le mie statistiche relative all’ultimo mese?	Richiesta
+Ho appena fatto un controllo, il mio polso è 70.	inserDatiFreq
+a presto, assistente! sono pronto per un altro giorno di successi nella gestione della mia ipertensione.	Generale
+Posso avere un elenco di tutte le informazioni che ho inserito finora?	Richiesta
+Mi piacerebbe controllare le ultime letture della pressione che ho registrato nell’ultima settimana.	Richiesta
+Dammi frequenza	Richiesta
+Mi sento strano ultimamente	Umore
+Ho una storia familiare di diabete	inserDatiGener
+Ho male alla gamba	Generale
+Qual è stata l'ultima misurazione sulla frequenza cardiaca?	Richiesta
+La mia pressione oggi è .../...	inserDatiPress
+Posso registrare i dati della mia frequenza cardiaca di ieri?	Generale
+Potrei controllare le ultime misurazioni della pressione che ho registrato nell’ultima settimana?	Richiesta
+Pressione sanguigna: 125/75	inserDatiPress
+Qual è la mia media di frequenza cardiaca degli ultimi nove mesi?	Richiesta
+ho appena misurato la mia pressione, è 130/85 e il mio battito cardiaco è 75.	inserDatiTot
+Ricordami l'ultima misurazione inserita sulla pressione?	Richiesta
+posso inserire i dati della mia pressione sanguigna di questo mese?	Generale
+La mia pressione sistolica è 125 e la diastolica è 75	inserDatiPress
+come lo stress può influenzare la mia depressione?	Generale
+Media frequenza ultimi tre anni	Richiesta
+come la gravidanza può influenzare la mia tiroide?	Generale
+Ultimo dato inserito sulla frequenza	Richiesta
+la mia pressione oggi è 120/80 e la mia frequenza cardiaca è 72.	inserDatiTot
+Qual è la mia media di frequenza cardiaca di quest’anno?	Richiesta
+Mio figlio ha la febbre	Generale
+ho paura che la mia ipertensione possa causare problemi di concentrazione.	Umore
+Ho avuto un intervento chirurgico al cuore	inserDatiGener
+Desidero consultare le mie letture della pressione dell’ultimo mese.	Richiesta
+come il sonno può influenzare la mia ansia?	Generale
+Posso registrare i dati della mia frequenza cardiaca di questa mattina?	Generale
+Voglio i dati registrati sulla pressione	Richiesta
+La mia pressione oggi è 140/90.	inserDatiPress
+Ho misurato la pressione: 140/90	inserDatiPress
+Quali sono i fattori di rischio per l’osteoporosi?	Generale
+Mi piacerebbe controllare tutte le letture della pressione che ho registrato.	Richiesta
+Dati generali	Richiesta
+Come si prepara?	Generale
+ho paura che la mia pressione alta possa causare problemi seri.	Umore
+Vorrei i dati dell’ultima settimana	Richiesta
+Potrei controllare le ultime misurazioni della pressione che ho registrato?	Richiesta
+Ho notato un cambiamento nel mio appetito.	Generale
+Qual è la media delle mie misurazioni di quest’anno?	Richiesta
+Dammi media freq	Richiesta
+Ho smesso di fumare da un mese.	inserDatiGener
+posso registrare i dati della mia frequenza cardiaca del mese scorso?	Generale
+Ho una storia familiare di ictus	inserDatiGener
+Potrei controllare le misurazioni dei sette giorni precedenti?	Richiesta
+La mia frequenza è 90	inserDatiFreq
+Voglio le mie informazioni personali	Richiesta
+Mi spieghi perché quando salgo le scale ho un forte affanno?	Generale
+Qual è la mia media di pressione sanguigna degli ultimi sei mesi?	Richiesta
+Ho appena fatto una lettura e la mia pressione sanguigna è di 125/80 mmHg.	inserDatiPress
+quale è il tuo genere di film preferito?	Generale
+non ho nervosismo per la mia pressione alta.	Umore
+Quali sono i dati della pressione sanguigna dell’ultimo mese?	Richiesta
+140	inserDatiFreq
+Fumo molto durante la giornata	inserDatiGener
+Il mio polso è di 180 battiti al minuto	inserDatiFreq
+Vorrei rivedere i dati sulla frequenza che ho inserito nell’ultima settimana.	Richiesta
+sono molto stressato per i miei livelli di pressione sanguigna.	Umore
+Ho appena controllato e la mia frequenza cardiaca è di 69 bpm.	inserDatiFreq
+Sono un vegano	inserDatiGener
+Media frequenza ultime quattro settimane	Richiesta
+ho paura che la mia ipertensione possa causare problemi di energia.	Umore
+Posso registrare i dati della mia frequenza cardiaca di quest’anno?	Generale
+Media frequenza ieri	Richiesta
+ho smesso di bere alcol da due settimane.	inserDatiGener
+Mi piacerebbe aggiornare il mio registro sanitario con le mie ultime letture della pressione arteriosa.	Generale
+Ho smesso di bere tè nero da due settimane.	inserDatiGener
+X	inserDatiFreq
+Ho un battito di 230 bpm	inserDatiFreq
+Sono una persona che fuma molto	inserDatiGener
+Ho fatto nuove misurazioni: ecco la mia pressione sanguigna è 140/90 e il mio battito cardiaco è 75.	inserDatiTot
+Come viene diagnosticata l’ipertensione?	Generale
+quali sono i fattori di rischio per l’ipertensione?	Generale
+Media frequenza anno scorso	Richiesta
+Dammi i dati dell'ultimo mese	Richiesta
+quali sono i valori di pressione nell'ultima settimana?	Richiesta
+Posso avere un elenco di tutte le informazioni che ho inserito?	Richiesta
+Voglio i dati della frequenza cardiaca dell’ultimo mese	Richiesta
+Vorrei vedere tutte le informazioni che ho condiviso.	Richiesta
+Pressione sanguigna attuale: 110/70, ho un battito di 125	inserDatiTot
+Dono il plasma regolarmente	inserDatiGener
+Quali sono i valori generali della mia frequenza?	Richiesta
+come l’ambiente può influenzare la mia asma?	Generale
+La mia frequenza cardiaca al momento è 120	inserDatiFreq
+Media frequenza questa settimana	Richiesta
+Mi elenchi le mie informazioni personali?	Richiesta
+Ho notato un cambiamento nel mio peso.	Generale
+Soffro di depressione	inserDatiGener
+Vorrei dare un’occhiata a tutte le letture della frequenza cardiaca che ho inserito.	Richiesta
+La mia pressione sanguigna attuale è 125/80 e la mia frequenza cardiaca è 68.	inserDatiTot
+Ho registrato un valore di pressione sanguigna di 140/90 mmHg oggi.	inserDatiPress
+il mio battito cardiaco è 70 battiti al minuto.	inserDatiFreq
+Media pressione questa settimana	Richiesta
+Ho X anni e ho una dieta equilibrata.	inserDatiGener
+Media dei miei dati	Richiesta
+posso registrare i dati della mia frequenza cardiaca del prossimo mese?	Generale
+Qual è la mia media di frequenza cardiaca di ieri?	Richiesta
+come il peso può influenzare il mio diabete?	Generale
+la mia pressione sanguigna è 130/85.	inserDatiPress
+Non ricordo la traccia dei dati nell'ultimo mese	Richiesta
+Quali sono le mie misurazioni della frequenza cardiaca dell’ultimo mese?	Richiesta
+Media dati totali	Richiesta
+non sono preoccupato per la mia pressione alta.	Umore
+mi puoi dare i dati su pressione e frequenza dell'ultimo mese	Richiesta
+ho fatto nuove misurazioni. La pressione è di 120/80 mentre la frequenza indicata è 90bpm	inserDatiTot
+Ho l’osteoporosi	inserDatiGener
+Vorrei vedere tutte le generalità che ho dato.	Richiesta
+il mio battito cardiaco è 80 battiti al minuto.	inserDatiFreq
+Ho un battito di 290 bpm	inserDatiFreq
+ho avuto un episodio di sudorazione eccessiva la scorsa notte.	inserDatiGener
+ho iniziato una nuova dieta povera di zuccheri.	inserDatiGener
+Potrei controllare tutte le misurazioni della frequenza cardiaca che ho registrato?	Richiesta
+come il sonno può influenzare l’ipertensione?	Generale
+Dammi il grafico con andamento di pressione arteriosa nell'ultimo mese	Richiesta
+I miei battiti al minuto sono 265	inserDatiFreq
+Quali esami diagnostici dovrei fare per valutare il mio stato di salute associato all'ipertensione?	Generale
+fumo da circa 15 anni	inserDatiGener
+Qual è l'andamento delle misurazioni sulla pressione?	Richiesta
+Frequenza cardiaca misurata: 140 bpm	inserDatiFreq
+Ho iniziato a fare stretching regolare per aiutare a gestire lo stress.	inserDatiGener
+Ho un battito di 75	inserDatiFreq
+Qual è la mia media di pressione sanguigna e frequenza cardiaca degli ultimi due anni?	Richiesta
+Sono in sovrappeso	inserDatiGener
+Media pressione ultimi nove mesi	Richiesta
+Pressione sanguigna: 130/80	inserDatiPress
+Ho notato che la mia pressione sanguigna aumenta quando faccio esercizio fisico.	inserDatiGener
+Ho notato che la mia pressione sanguigna aumenta quando sono stressato.	inserDatiGener
+ultima misurazione della pressione arteriosa	Richiesta
+Buongiorno, assistente! Spero che tu sia pronto ad aiutarmi a gestire la mia ipertensione oggi.	Generale
+La mia pressione sanguigna è 130/80.	inserDatiPress
+vorrei aggiornare i miei dati sulla pressione sanguigna.	Generale
+Ricordami l'ultima misurazione	Richiesta
+Ho appena controllato la pressione, è 140/85	inserDatiPress
+ho avuto un attacco di panico ieri sera.	inserDatiGener
+come l’età può influenzare la mia memoria?	Generale
+Frequenza del polso: 285 bpm	inserDatiFreq
+Potrei vedere tutte le misurazioni della pressione che ho registrato?	Richiesta
+buonanotte, assistente! grazie per avermi aiutato a capire meglio la mia ipertensione.	Generale
+La mia pressione sistolica è 110 e la diastolica è 75, ho un battito di 280	inserDatiTot
+puoi dirmi il giusto metodo per misurare la pressione?	Generale
+Il mio polso è di 300 battiti al minuto	inserDatiFreq
+come l’esercizio fisico può aiutare a gestire l’ipertensione?	Generale
+Qual è la mia media di pressione sanguigna e frequenza cardiaca delle ultime quattro settimane?	Richiesta
+Vorrei dare un’occhiata all’ultima lettura della frequenza cardiaca che ho inserito.	Richiesta
+Ciao	Generale
+Aiutami, c'è qualcosa che non va	Umore
+Potresti mostrarmi le mie letture dell’ultimo mese?	Richiesta
+Sono un crudista	inserDatiGener
+mi sento molto tranquillo riguardo alla mia pressione alta.	Umore
+Potrei controllare tutte le misurazioni che ho registrato?	Richiesta
+Vorrei dare un’occhiata alle ultime letture della pressione che ho inserito nell’ultimo mese.	Richiesta
+Qual è la mia media di pressione sanguigna di quest’anno?	Richiesta
+quali sono le opzioni di trattamento farmacologico per l’ipertensione?	Generale
+Qual è la mia media di pressione sanguigna e frequenza cardiaca del mese scorso?	Richiesta
+la mia pressione sanguigna è 140/90.	inserDatiPress
+mi sento molto rilassato riguardo alla mia pressione alta.	Umore
+Ho avuto dolori muscolari.	Generale
+come una dieta sana può aiutare a gestire l’ipertensione?	Generale
+Ho appena fatto la misurazione, la pressione è 130/70	inserDatiPress
+Voglio la media  dei dati sulla pressione	Richiesta
+Posso avere un riepilogo di tutte le informazioni che ho dato?	Richiesta
+La mia pressione è 110/75	inserDatiPress
+Desidero visualizzare tutte le mie letture registrate.	Richiesta
+Ho avuto un episodio di nausea questa mattina.	inserDatiGener
+Vorrei vedere un riepilogo di tutte le informazioni che ho inserito finora.	Richiesta
+La mia ultima lettura della frequenza cardiaca era di 68 bpm.	inserDatiFreq
+Mi sento un po’ ansioso perché la mia pressione sanguigna è salita all’improvviso.	Umore
+Qual è la mia media di frequenza cardiaca delle ultime due settimane?	Richiesta
+posso registrare i dati della mia frequenza cardiaca di questa settimana?	Generale
+Media pressione mese scorso	Richiesta
+quali sono i trattamenti disponibili per l’artrite?	Generale
+La mia pressione sanguigna è 120/80 e il mio battito cardiaco è 70.	inserDatiTot
+Ho appena fatto una lettura e la mia frequenza è di 72 bpm.	inserDatiFreq
+vorrei inserire i dati del mio monitoraggio della pressione sanguigna di questa settimana.	Generale
+Posso aggiungere i dati della mia pressione sanguigna di questa mattina?	Generale
+Pressione misurata: 145/95	inserDatiPress
+la mia pressione sanguigna è 135/85.	inserDatiPress
+La pressione sistolica è 125 e la diastolica è 75	inserDatiPress
+Ho registrato un valore di pressione sanguigna e frequenza cardiaca di 140/90 mmHg e 75 bpm oggi.	inserDatiTot
+ho smesso di bere tè nero da due settimane.	inserDatiGener
+Media pressione e frequenza	Richiesta
+Sono felice di informarti che la mia frequenza cardiaca è stabile e mi sento bene.	Umore
+posso registrare i dati della mia frequenza cardiaca di questo mese?	Generale
+voglio che mi fornisci sia i dati sulla frequenza che i dati sulla pressione.	Richiesta
+sono molto preoccupato per la mia ipertensione.	Umore
+Posso vedere la media delle mie misurazioni di questo mese?	Richiesta
+Sto cercando di mantenere un peso sano per ridurre il rischio di ipertensione.	inserDatiGener
+Qual è la mia media di pressione sanguigna degli ultimi tre anni?	Richiesta
+Pressione sanguigna: 110/70	inserDatiPress
+Potresti mostrarmi i miei dati più recenti?	Richiesta
+sono molto nervoso per la mia ipertensione.	Umore
+Qual è la media delle mie misurazioni delle ultime tre settimane?	Richiesta
+sono molto pacifico riguardo alla mia ipertensione.	Umore
+Battito cardiaco: 185 bpm	inserDatiFreq
+Il mio amico sta male	Generale
+Rappresenta le misurazioni della pressione arteriosa dell’ultimo mese con un immagine	Richiesta
+Mi piacerebbe esaminare il dato più recente sulla frequenza che ho registrato.	Richiesta
+Pressione sanguigna registrata: 110/75	inserDatiPress
+hai mai provato a fare arrampicata?	Generale
+la mia pressione sanguigna è 130/80.	inserDatiPress
+Salve	Generale
+Pressione 120 80	inserDatiPress
+Dammi I dati di pressione	Richiesta
+Pressione 130 90	inserDatiPress
+Dammi grafico pressione	Richiesta
