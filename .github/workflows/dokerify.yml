@@ -1,8 +1,6 @@
 name: dockerify
 on:
   push:
-    types:
-      - completed
     branches:
       - master
       - main
