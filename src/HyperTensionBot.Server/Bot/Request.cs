@@ -39,12 +39,12 @@ namespace HyperTensionBot.Server.Bot {
                 return "";
         }
 
-        public static async Task ManageRequest(string message, Memory mem, Chat chat, TelegramBotClient bot, GPTService gpt) { 
+        public static async Task ManageRequest(string message, Memory mem, Chat chat, TelegramBotClient bot, LLMService llm) { 
             // 0 => contesto, 1 => giorni, 2 => formato
             try {
-                var outGPT = await gpt.CallGpt(TypeConversation.Analysis, message);
-                var parameters = RegexExtensions.ExtractParameters(outGPT);
-                await bot.SendTextMessageAsync(chat.Id, outGPT);
+                string outLLM = await llm.AskLlm(TypeConversation.Analysis, message);
+                var parameters = RegexExtensions.ExtractParameters(outLLM);
+                await bot.SendTextMessageAsync(chat.Id, outLLM);
                 bool pressure = false;
                 bool frequence = false;
 

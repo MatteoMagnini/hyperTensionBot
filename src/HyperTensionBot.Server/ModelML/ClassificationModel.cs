@@ -42,6 +42,15 @@ namespace HyperTensionBot.Server.ModelML {
             var predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(model);
             // update training set with new input
             var result = predictionEngine.Predict(input).PredictedLabel;
+
+            // update training set with new input 
+            if (pathFile != null) {
+                using (StreamWriter file = new StreamWriter(pathFile, true)) {
+
+                    file.WriteLine(input.Sentence + "\t" + result);
+                }
+            }
+
             return (Intent)Enum.Parse(typeof(Intent), result);
         }
     }
