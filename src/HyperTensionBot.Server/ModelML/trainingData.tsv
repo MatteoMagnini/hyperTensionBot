@@ -1291,3 +1291,60 @@ Pressione 120 80	inserDatiPress
 Dammi I dati di pressione	Richiesta
 Pressione 130 90	inserDatiPress
 Dammi grafico pressione	Richiesta
+Salve	Generale
+Salve	Generale
+Salve	Generale
+Salve	Generale
+salve	Generale
+posso inserire i miei dati?	Generale
+la mia pressione è 120/70	inserDatiPress
+puoi dirmi i miei dati sulla pressione ?	Richiesta
+salve	Generale
+salve	Generale
+ciao	Generale
+ciao	Generale
+buongiorno	Generale
+buongiorno	Generale
+buongiorno	Generale
+vorrei effettuare delle	Generale
+vorrei effettuare delle	Generale
+vorrei effettuare delle	Generale
+vorrei effettuare delle	Generale
+vorrei effettuare delle	Generale
+vorrei effettuare delle	Generale
+vorrei effettuare delle	Generale
+vorrei effettuare delle misurazioni, è possibile?	Generale
+buongiorno	Generale
+posso inserire i miei dati?	Generale
+la mia pressione è 120/70, la frequenza 80	inserDatiTot
+130/90	inserDatiPress
+60	inserDatiPress
+frequenza 60	inserDatiFreq
+ho misurato la frequenza: 100	inserDatiFreq
+ho appena fatto delle misurazioni relative alla pressione: 140 su 100	inserDatiPress
+puoi darmi i dati sulla pressione e sulla frequenza registrati?	Richiesta
+la mia pressione è 120/70, la frequenza 80	inserDatiTot
+frequenza 130/70	inserDatiFreq
+pressione 90	inserDatiPress
+100 su 60	inserDatiPress
+frequenza 90	inserDatiFreq
+80	inserDatiPress
+frequenza 80	inserDatiFreq
+la mia pressione è di 100 su 60 mentre la frequenza è di 120	inserDatiTot
+mostrami i dati sulla pressione e sulla frequenza	Richiesta
+puoi darmi i valori registrati sulla pressione e sulla frequenza?	Richiesta
+salve	Generale
+salve	Generale
+vorrei i dati sulla pressione e sulla frequenza che ho registrato, me li fornisci?	Richiesta
+mi dai i dati sulla pressione?	Richiesta
+voglio la lista dei miei dati sulla pressione	Richiesta
+voglio i miei dati sulla frequenza	Richiesta
+voglio che mi fornisci i dati sia sulla frequenza che sulla pressione	Richiesta
+voglio la lista dei dati sia sulla pressione che sulla frequenza	Richiesta
+salve, si è sgonfiata la ruota della mia auto, cosa potrei fare?	Generale
+mi puoi dare la ricetta per la carbonara?	Generale
+mi sento stanco e affaticato	Umore
+corro tutti i giorni ma mi piace concedermi una birra nel weekend	Richiesta
+corro 3 volte al giorno	inserDatiGener
+mi dai i dati personali definiti?	Richiesta
+sono molto soddisfatto del tuo lavoro	Generale

@@ -71,10 +71,10 @@ namespace HyperTensionBot.Server.Services {
             return chatInformation!.GeneralInfo;
         }
 
-        public List<ChatMessage> AddMessageLLM(Chat chat, string message) {
+        public string AddMessageLLM(Chat chat, string message) {
             UserMemory.TryGetValue(chat.Id, out var chatInformation);
-            chatInformation!.ChatMessages.Add(new ChatMessage(ChatMessageRole.User, message));
-            return chatInformation!.ChatMessages;
+            chatInformation!.ChatMessages.Add(message);
+            return chatInformation!.ChatMessages.Last()!;
         }
     }
 }

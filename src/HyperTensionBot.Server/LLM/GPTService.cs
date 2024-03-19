@@ -4,6 +4,7 @@ using OpenAI_API.Chat;
 using OpenAI_API.Models;
 
 namespace HyperTensionBot.Server.LLM {
+    // questa classe è stata sostituita da LLMService ed è in fase di cancellazione 
     public class GPTService {
         private OpenAIAPI? api;
         private string? gptKey;
