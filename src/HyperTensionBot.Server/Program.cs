@@ -12,9 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.ConfigureTelegramBot();
 builder.Services.AddSingleton<Memory>();
 
-// add model and GPT 
+// add model and llm 
 builder.Services.AddSingleton(new ClassificationModel(builder));
-builder.Services.AddSingleton(new GPTService(builder));
+builder.Services.AddSingleton(new LLMService(builder));
 
 var app = builder.Build();
 
@@ -24,7 +24,7 @@ app.SetupTelegramBot();
 TimerAdvice timer = new(app.Services.GetRequiredService<Memory>(), app.Services.GetRequiredService<TelegramBotClient>());
 
 // handle update 
-app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memory memory, ILogger<Program> logger, ClassificationModel model, GPTService gpt) => {
+app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memory memory, ILogger<Program> logger, ClassificationModel model, LLMService llm) => {
     if (!context.Request.HasJsonContentType()) {
         throw new BadHttpRequestException("HTTP request must be of type application/json");
     }
@@ -52,7 +52,7 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
             logger.LogInformation("Incoming message matches intent {0}", result);
 
             // manage operations
-            await Context.ControlFlow(bot, gpt, memory, result, messageText, chat, update.Message!.Date.ToLocalTime());
+            await Context.ControlFlow(bot, llm, memory, result, messageText, chat, update.Message!.Date.ToLocalTime());
         }
         
     }

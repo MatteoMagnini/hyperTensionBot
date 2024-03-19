@@ -10,11 +10,11 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace HyperTensionBot.Server.Bot {
     public static class Context { 
-        public static async Task ControlFlow(TelegramBotClient bot, GPTService gpt, Memory memory, Intent context, string message, Chat chat, DateTime date) {
+        public static async Task ControlFlow(TelegramBotClient bot, LLMService llm, Memory memory, Intent context, string message, Chat chat, DateTime date) {
             try {
                 switch (context) {
                     case Intent.Richiesta:
-                        await Request.ManageRequest(message, memory, chat, bot, gpt);
+                        await Request.ManageRequest(message, memory, chat, bot, llm);
                         break;
 
                     // ask conferme and storage data 
@@ -33,8 +33,8 @@ namespace HyperTensionBot.Server.Bot {
 
                     case Intent.Umore:
                         await bot.SendTextMessageAsync(
-                            chat.Id, await gpt.CallGpt(TypeConversation.Communication,
-                                conversation: memory.AddMessageLLM(chat, "Rispondi a questo messaggio con poche parole: " + message)));
+                            chat.Id, await llm.AskLlm(TypeConversation.Communication,
+                                memory.AddMessageLLM(chat, "Rispondi a questo messaggio con poche parole: " + message)));
                         memory.UserMemory.TryGetValue(chat.Id, out var info);
                         if (info?.FirstMeasurement != null)
                             await CheckAverage(Request.AverageData(memory, chat, 30, true, false), bot, chat);
@@ -43,7 +43,7 @@ namespace HyperTensionBot.Server.Bot {
                     // gpt 
                     case Intent.Generale:
                         await bot.SendTextMessageAsync(
-                            chat.Id, await gpt.CallGpt(TypeConversation.Communication, conversation: memory.AddMessageLLM(chat, message)));
+                            chat.Id, await llm.AskLlm(TypeConversation.Communication, memory.AddMessageLLM(chat, message)));
                         break;
                 }
             }
