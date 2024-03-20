@@ -4,6 +4,7 @@ using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.ModelML;
 using HyperTensionBot.Server.Services;
 using Newtonsoft.Json;
+using System.Diagnostics;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -52,7 +53,10 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
             logger.LogInformation("Incoming message matches intent {0}", result);
 
             // manage operations
+            Stopwatch stopwatch = Stopwatch.StartNew();
             await Context.ControlFlow(bot, llm, memory, result, messageText, chat, update.Message!.Date.ToLocalTime());
+            stopwatch.Stop();
+            logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
         }
         
     }

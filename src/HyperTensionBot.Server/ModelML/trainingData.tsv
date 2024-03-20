@@ -534,7 +534,6 @@ ho appena controllato, la mia frequenza cardiaca è 75 battiti al minuto.	inserD
 Il mio battito cardiaco è 195 bpm	inserDatiFreq
 sono tornata	Generale
 ho iniziato una nuova dieta ricca di frutta e verdura.	inserDatiGener
-Pressione sistolica 135, diastolica 80	inserDatiPress
 potresti indicarmi tutti i dati registrati sulla pressione e sulla frequenza?	Richiesta
 Potrei controllare le misurazioni che ho registrato nelle ultime 4 settimane?	Richiesta
 ho paura che la mia pressione alta possa causare problemi di appetito.	Umore
@@ -818,7 +817,6 @@ Desidero consultare i dati delle ultime 4 settimane	Richiesta
 La mia pressione quando torno a casa dalla famiglia si alza sempre	Umore
 la mia frequenza cardiaca oggi è 72 battiti al minuto.	inserDatiFreq
 Ciao, assistente! Spero che tu possa darmi qualche suggerimento su come gestire la mia ipertensione.	Generale
-Dammi le medie	Richiesta
 Ho appena misurato la mia pressione sanguigna e i valori sono 120/80 mmHg.	inserDatiPress
 Potresti mostrarmi tutte le mie misurazioni della pressione?	Richiesta
 Mi piacerebbe esaminare tutti i dati sulla pressione che ho registrato.	Richiesta
@@ -949,7 +947,6 @@ Media frequenza ultimi nove mesi	Richiesta
 Dati personali	Richiesta
 posso aggiungere i dati della mia pressione sanguigna di domani?	Generale
 Oggi mi sento molto rilassato grazie.	Umore
-Media pressione	Richiesta
 Non mi sento particolarmente bene. Le ultime misurazioni mi stanno preoccupando	Umore
 hai mai visitato il museo del louvre?	Generale
 Media frequenza quest’anno	Richiesta
@@ -1180,7 +1177,6 @@ Ho registrato un valore di pressione sanguigna di 140/90 mmHg oggi.	inserDatiPre
 il mio battito cardiaco è 70 battiti al minuto.	inserDatiFreq
 Media pressione questa settimana	Richiesta
 Ho X anni e ho una dieta equilibrata.	inserDatiGener
-Media dei miei dati	Richiesta
 posso registrare i dati della mia frequenza cardiaca del prossimo mese?	Generale
 Qual è la mia media di frequenza cardiaca di ieri?	Richiesta
 come il peso può influenzare il mio diabete?	Generale
@@ -1286,65 +1282,54 @@ Mi piacerebbe esaminare il dato più recente sulla frequenza che ho registrato.	
 Pressione sanguigna registrata: 110/75	inserDatiPress
 hai mai provato a fare arrampicata?	Generale
 la mia pressione sanguigna è 130/80.	inserDatiPress
-Salve	Generale
-Pressione 120 80	inserDatiPress
 Dammi I dati di pressione	Richiesta
-Pressione 130 90	inserDatiPress
-Dammi grafico pressione	Richiesta
-Salve	Generale
-Salve	Generale
-Salve	Generale
-Salve	Generale
-salve	Generale
 posso inserire i miei dati?	Generale
 la mia pressione è 120/70	inserDatiPress
 puoi dirmi i miei dati sulla pressione ?	Richiesta
-salve	Generale
-salve	Generale
-ciao	Generale
-ciao	Generale
-buongiorno	Generale
-buongiorno	Generale
-buongiorno	Generale
-vorrei effettuare delle	Generale
-vorrei effettuare delle	Generale
-vorrei effettuare delle	Generale
-vorrei effettuare delle	Generale
-vorrei effettuare delle	Generale
-vorrei effettuare delle	Generale
-vorrei effettuare delle	Generale
 vorrei effettuare delle misurazioni, è possibile?	Generale
-buongiorno	Generale
-posso inserire i miei dati?	Generale
-la mia pressione è 120/70, la frequenza 80	inserDatiTot
-130/90	inserDatiPress
-60	inserDatiPress
-frequenza 60	inserDatiFreq
+135/91	inserDatiPress
+63	inserDatiFreq
+frequenza 62	inserDatiFreq
 ho misurato la frequenza: 100	inserDatiFreq
 ho appena fatto delle misurazioni relative alla pressione: 140 su 100	inserDatiPress
 puoi darmi i dati sulla pressione e sulla frequenza registrati?	Richiesta
 la mia pressione è 120/70, la frequenza 80	inserDatiTot
-frequenza 130/70	inserDatiFreq
-pressione 90	inserDatiPress
-100 su 60	inserDatiPress
-frequenza 90	inserDatiFreq
-80	inserDatiPress
 frequenza 80	inserDatiFreq
 la mia pressione è di 100 su 60 mentre la frequenza è di 120	inserDatiTot
 mostrami i dati sulla pressione e sulla frequenza	Richiesta
-puoi darmi i valori registrati sulla pressione e sulla frequenza?	Richiesta
-salve	Generale
-salve	Generale
-vorrei i dati sulla pressione e sulla frequenza che ho registrato, me li fornisci?	Richiesta
-mi dai i dati sulla pressione?	Richiesta
-voglio la lista dei miei dati sulla pressione	Richiesta
-voglio i miei dati sulla frequenza	Richiesta
 voglio che mi fornisci i dati sia sulla frequenza che sulla pressione	Richiesta
 voglio la lista dei dati sia sulla pressione che sulla frequenza	Richiesta
 salve, si è sgonfiata la ruota della mia auto, cosa potrei fare?	Generale
 mi puoi dare la ricetta per la carbonara?	Generale
 mi sento stanco e affaticato	Umore
-corro tutti i giorni ma mi piace concedermi una birra nel weekend	Richiesta
+corro tutti i giorni ma mi piace concedermi una birra nel weekend	inserDatiGener
 corro 3 volte al giorno	inserDatiGener
 mi dai i dati personali definiti?	Richiesta
 sono molto soddisfatto del tuo lavoro	Generale
+buongiono, come funziona questo chatbot?	Generale
+come posso inserire le mie misurazioni nel sistema?	Generale
+la mia pressione è 104 su 92	inserDatiPress
+la mia frequenza è 56	inserDatiFreq
+100 90 86	inserDatiTot
+108 92 67	inserDatiTot
+100/78 64	inserDatiTot
+pressione 100 su 76 frequenza 89	inserDatiTot
+pressione 124 su 102 frequenza 85	inserDatiTot
+pressione 123 su 75 frequenza 90	inserDatiTot
+quando corro mi fa male qualcosa	inserDatiGener
+bevo il vino dopo i pasti	inserDatiGener
+sono preoccupato: quando corro mi sento davvero senza forze	Umore
+121 67	inserDatiPress
+mi riassumi i miei dati sulla pressione?	Richiesta
+mi dici quali sono state le misurazioni inerenti alla frequenza?	Richiesta
+vorrei i dati registrati sulla frequenza cardiaca	Richiesta
+mi rappresenti le mie misurazioni?	Richiesta
+vorrei tutte le misurazioni fatte in forma grafica	Richiesta
+100 70	inserDatiPress
+120 70	inserDatiPress
+120 70 60	inserDatiTot
+128 90 34	inserDatiTot
+120/60 70	inserDatiTot
+100 80 e frequenza 78	inserDatiTot
+102 76 e 78	inserDatiTot
+forniscimi dati sulla frequenza registrati	Richiesta
