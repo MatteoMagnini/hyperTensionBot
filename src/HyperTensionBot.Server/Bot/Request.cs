@@ -161,11 +161,11 @@ namespace HyperTensionBot.Server.Bot {
             foreach (var m in measurements) {
 
                 if (press && m.SystolicPressure != null && m.DiastolicPressure != null) 
-                    sbPress.AppendLine($"🔻 Pressione {m.SystolicPressure}/{m.DiastolicPressure} mmgh misurata il {m.Date}");
+                    sbPress.AppendLine($"🔻 Pressione {m.SystolicPressure}/{m.DiastolicPressure} mmgh misurata il {m.Date}\n\n");
                 if (freq && m.HeartRate != null)
                     sbFreq.AppendLine($"❤️ Frequenza {m.HeartRate} bpm misurata il {m.Date}");                    
             }
-            await bot.SendTextMessageAsync(chat.Id, $"{mex}\n\n{sbPress}\n\n{sbFreq}");
+            await bot.SendTextMessageAsync(chat.Id, $"{mex}{sbPress}\n\n{sbFreq}");
         }
 
         private static async Task SendGeneralInfo(TelegramBotClient bot, Memory memory, Chat chat) {
@@ -178,7 +178,7 @@ namespace HyperTensionBot.Server.Bot {
             if (sb.Length > 0) 
                 await bot.SendTextMessageAsync(chat.Id, "Ecco un elenco di tutte le informazioni generali registrate finora!!🗒️\n\n" + sb.ToString());
             else
-                await bot.SendTextMessageAsync(chat.Id, "Non sono presenti dati personali nel tuo storico. Queste informazioni sono molto importanti perchè offrono al dottore" +
+                await bot.SendTextMessageAsync(chat.Id, "Non sono presenti dati personali nel tuo storico. Queste informazioni sono molto importanti perchè offrono al dottore " +
                     "una panoramica più ampia della tua situazione. Ogni informazione può essere preziosa🗒️");
         }
 
