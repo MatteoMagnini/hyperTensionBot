@@ -161,7 +161,7 @@ namespace HyperTensionBot.Server.Bot {
             foreach (var m in measurements) {
 
                 if (press && m.SystolicPressure != null && m.DiastolicPressure != null) 
-                    sbPress.AppendLine($"🔻 Pressione {m.SystolicPressure}/{m.DiastolicPressure} mmgh misurata il {m.Date}\n\n");
+                    sbPress.AppendLine($"🔻 Pressione {m.SystolicPressure}/{m.DiastolicPressure} mmgh misurata il {m.Date}");
                 if (freq && m.HeartRate != null)
                     sbFreq.AppendLine($"❤️ Frequenza {m.HeartRate} bpm misurata il {m.Date}");                    
             }

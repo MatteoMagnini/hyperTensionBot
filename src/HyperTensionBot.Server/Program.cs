@@ -17,6 +17,7 @@ builder.Services.AddSingleton<Memory>();
 builder.Services.AddSingleton(new ClassificationModel(builder));
 builder.Services.AddSingleton(new LLMService(builder));
 
+bool internalPOST = false; // flag: exclude some POST request from LLM server 
 var app = builder.Build();
 
 // configuring the bot and timer to alert patients 
@@ -29,6 +30,8 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
     if (!context.Request.HasJsonContentType()) {
         throw new BadHttpRequestException("HTTP request must be of type application/json");
     }
+    if (internalPOST)
+        return Results.Ok();
 
     using var sr = new StreamReader(context.Request.Body);
     var update = JsonConvert.DeserializeObject<Update>(await sr.ReadToEndAsync()) ?? throw new BadHttpRequestException("Could not deserialize JSON payload as Telegram bot update");
@@ -43,6 +46,7 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
         UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
         _ => "update of unhandled type"
     });
+    internalPOST = true; // possible POST calls for request to the LLM server 
     if (update.Message?.Text is not null) {
         var messageText = update.Message?.Text;
         if (messageText != null) {
@@ -57,13 +61,12 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
             await Context.ControlFlow(bot, llm, memory, result, messageText, chat, update.Message!.Date.ToLocalTime());
             stopwatch.Stop();
             logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
-        }
-        
+        }  
     }
     else if (update.CallbackQuery?.Data != null && update.CallbackQuery?.Message?.Chat != null) {
         await Context.ValuteMeasurement(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, bot, memory);
         } else return Results.NotFound();
-
+    internalPOST = false; // after request, reset flag
     return Results.Ok();
 });
 
