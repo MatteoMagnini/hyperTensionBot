@@ -3,6 +3,7 @@ using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.ModelML;
 using HyperTensionBot.Server.Services;
+using Microsoft.ML.Transforms.Text;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using Telegram.Bot;
@@ -65,8 +66,13 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
     }
     else if (update.CallbackQuery?.Data != null && update.CallbackQuery?.Message?.Chat != null) {
         await Context.ValuteMeasurement(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, bot, memory);
-        } else return Results.NotFound();
+        // removing inline keybord
+        await bot.EditMessageReplyMarkupAsync(update.CallbackQuery.Message.Chat, update.CallbackQuery.Message.MessageId, replyMarkup: null); 
+    } else
+        return Results.NotFound();
+
     internalPOST = false; // after request, reset flag
+
     return Results.Ok();
 });
 
