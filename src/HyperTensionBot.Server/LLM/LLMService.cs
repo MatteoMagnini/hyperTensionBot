@@ -16,6 +16,7 @@ namespace HyperTensionBot.Server.LLM {
 
         private readonly string analysisPrompt;
         private readonly string comunicationPrompt;
+        private ILogger<LLMService>? _logger; 
 
 
         // Build option for client 
@@ -25,12 +26,12 @@ namespace HyperTensionBot.Server.LLM {
             analysisPrompt = BaseRequestPrompt();
             comunicationPrompt = BaseComunicationPrompt();
         }
-
+        public void SetLogger(ILogger<LLMService> logger) { _logger = logger; }
         private string BaseComunicationPrompt() {
             return "Comportati come un dottore specializzato sull'ipertensione, rivolgendoti in modo semplice e breve come negli esempi che seguiranno. " +
                 "Puoi far inserire, memorizzare ed elaborare i dati medici garantendo sicurezza, quindi quando richiesto comportati come un assistente nei confronti del paziente.\" " +
                 "\"Puoi rispondere a domande relative all'ipertensione o fornire semplicissimi consigli generali sulla salute, " +
-                "sul benessere su argomenti medici in generale, mantenendo un alta astrazione ai tecnicismi che non ti competono e che sarà il dottore a prenderne atto. \" +\n                    " +
+                "sul benessere su argomenti medici in PERSONALE, mantenendo un alta astrazione ai tecnicismi che non ti competono e che sarà il dottore a prenderne atto. \" +\n                    " +
                 "\"Infatti, non sei in grado di fornire consigli articolati sul campo medico diversi dal contesto ipertensione o rispondere a domande fuori contesto medico.\" +\n " +
                 "\"Usa un tono educato, rispondi in maniera chiara e semplice se gli input sono inerenti al ruolo descritto altrimenti se fuori contesto sii generico e responsabilizza il paziente verso chi di dovere.\"" +
                 "Prendi in considerazioni le seguenti domande con le corrette risposte dopo ->: " +
@@ -45,9 +46,9 @@ namespace HyperTensionBot.Server.LLM {
 
         private string BaseRequestPrompt() {
             return "devi analizzare e produrre esclusivamente con 3 etichette (Mostrate fra '..' ma dovrai riportare solo la parola senza nient'altro). La prima etichetta descrive il contesto richiesta" +
-                "'PRESSIONE', 'FREQUENZA', 'ENTRAMBI' (quando la richiesta indica sia pressione che frequenza o è generico), 'GENERALE' (per richieste sui dati personali diverse da misurazioni e medie). " +
+                "'PRESSIONE', 'FREQUENZA', 'ENTRAMBI' (quando la richiesta indica sia pressione che frequenza oppure è generica), 'PERSONALE' (per richieste che intendono le informazioni personali). " +
                 "Il secondo parametro è l'arco temporale espresso in giorni sempre positivi: eccezione fanno i dati recenti con risposta 1, e la totalità dei dati o richieste non specifiche con -1. " +
-                "Il terzo parametro indica il formato che potrà essere 'MEDIA' 'GRAFICO' (esplicitamente o implicitamente con richieste di rappresentazioni e andamenti), 'LISTA' (Per l'etichetta 1 GENERALE è sempre lista)" +
+                "Il terzo parametro indica il formato che potrà essere 'MEDIA' (si vuole la media dei dati), 'GRAFICO' (con richieste di rappresentazioni e andamenti), 'LISTA' (In tutti gli altri casi si fornisce sempre la lista. Inoltre se il primo parametro è PERSONALE questo è sempre lista)" +
                 "Il tuo output da questo momento in poi deve essere con le sole 3 etichette senza virgole punti o altro." +
                 "Sii conciso, rispondi esattamente solo con i tre valori. " +
                 "Esempi: \n      \"voglio la media della pressione di ieri\" -> \"PRESSIONE 1 MEDIA\".\n      " +
@@ -56,7 +57,7 @@ namespace HyperTensionBot.Server.LLM {
                 "\"Tutti i dati della pressione\" -> \"PRESSIONE -1 LISTA\".\n      " +
                 "\"Voglio sapere la frequenza degli ultimi 6 mesi\" -> \"FREQUENZA 180 LISTA\".\n      " +
                 "\"Volgio visualizzare pressione e frequenza delle ultime due settimane\" -> \"ENTRAMBI 14 GRAFICO\".\n      " +
-                "\"Riassunto di tutte le informazioni che ho fornito finora\" -> \"GENERALE -1 LISTA\".\n    " +
+                "\"Riassunto di tutte le informazioni che ho fornito finora\" -> \"PERSONALE -1 LISTA\".\n    " +
                 "Puoi rispondere solo con i tre valori in ordine separati da spazio." +
                 "Ora estrai i parametri dal seguente messagio: ";
         }
@@ -93,7 +94,7 @@ namespace HyperTensionBot.Server.LLM {
                         var jsonResponse = await response.Content.ReadAsStringAsync();
 
                         // extracting text by LLM response 
-                        return ParserResponse(jsonResponse);
+                        return ParserResponse(jsonResponse, t);
                     }
 
                     return "Si è verificato un errore nella generazione del testo.";
@@ -105,14 +106,16 @@ namespace HyperTensionBot.Server.LLM {
             return "Non è possibile rispondere a queste domande. Riprova più tardi. "; 
         }
 
-        private string ParserResponse(string response) {
+        private string ParserResponse(string response, TypeConversation t) {
             JObject jsonObj = JObject.Parse(response);
 
             // Estrai il valore della chiave 'response'
             var resp = jsonObj["response"]?.ToString();
 
             // Rimuovi i caratteri di newline e ritorna la risposta
-            return resp?.Replace("\\n", "") ?? string.Empty;
+            resp = resp!.Replace("\\n", "");
+            if (t == TypeConversation.Analysis && _logger is not null) _logger.LogDebug(resp); 
+            return resp;
         }
     }
 }

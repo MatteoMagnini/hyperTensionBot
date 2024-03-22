@@ -44,14 +44,14 @@ namespace HyperTensionBot.Server.Bot {
             try {
                 string outLLM = await llm.AskLlm(TypeConversation.Analysis, message);
                 var parameters = RegexExtensions.ExtractParameters(outLLM);
-                await bot.SendTextMessageAsync(chat.Id, outLLM);
+
                 bool pressure = false;
                 bool frequence = false;
 
                 mem.UserMemory.TryGetValue(chat.Id, out var info);
                 var text = SettingsValue(ref pressure, ref frequence, parameters[0], int.Parse(parameters[1]), info!);
 
-                if (parameters[0] != "GENERALE") {
+                if (parameters[0] != "PERSONALE") {
                     switch (parameters[2]) {
                         case "GRAFICO":
                             await bot.SendTextMessageAsync(chat.Id, $"Ecco il grafico richiesto {text}");
@@ -79,6 +79,9 @@ namespace HyperTensionBot.Server.Bot {
             catch (ArgumentNullException) {
                 await bot.SendTextMessageAsync(chat.Id, "Vorrei fornirti le tue misurazioni ma non sono ancora state registrate, ricordati di farlo quotidianamente.😢\n\n" +
                     "(Pss..💕) Mi è stato riferito che il dottore non vede l'ora di studiare la tua situazione😁");
+            }
+            catch (ArgumentException) {
+                await bot.SendTextMessageAsync(chat.Id, "Non sono riuscito a comprendere il tuo messaggio. \nRiscrivi la richiesta in maniera differente, così potrò aiutarti😁"); 
             }
             catch (ExceptionExtensions.InsufficientData) {
                 await bot.SendTextMessageAsync(chat.Id, "Per poterti generare il grafico necessito di almeno due misurazioni, ricordati di fornirmi giornalmente i tuoi dati.😢\n\n" +
@@ -156,8 +159,8 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         private static async Task SendDataList(TelegramBotClient bot, Chat chat, bool press, bool freq, string mex) {
-            var sbPress = new StringBuilder();
-            var sbFreq = new StringBuilder();
+            var sbPress = new StringBuilder("\n\n");
+            var sbFreq = new StringBuilder("\n");
             foreach (var m in measurements) {
 
                 if (press && m.SystolicPressure != null && m.DiastolicPressure != null) 
@@ -165,7 +168,7 @@ namespace HyperTensionBot.Server.Bot {
                 if (freq && m.HeartRate != null)
                     sbFreq.AppendLine($"❤️ Frequenza {m.HeartRate} bpm misurata il {m.Date}");                    
             }
-            await bot.SendTextMessageAsync(chat.Id, $"{mex}{sbPress}\n\n{sbFreq}");
+            await bot.SendTextMessageAsync(chat.Id, $"{mex}{sbPress}{sbFreq}");
         }
 
         private static async Task SendGeneralInfo(TelegramBotClient bot, Memory memory, Chat chat) {
@@ -202,7 +205,6 @@ namespace HyperTensionBot.Server.Bot {
 
                 average.Add((int?)freq.Select(x => x.HeartRate).Where(x => x != null).Average());
             }
-
             return average;
         }
     }

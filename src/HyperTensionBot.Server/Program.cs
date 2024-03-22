@@ -6,12 +6,14 @@ using HyperTensionBot.Server.Services;
 using Microsoft.ML.Transforms.Text;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.ConfigureTelegramBot();
+
 builder.Services.AddSingleton<Memory>();
 
 // add model and llm 
@@ -23,6 +25,7 @@ var app = builder.Build();
 
 // configuring the bot and timer to alert patients 
 app.SetupTelegramBot();
+app.Services.GetRequiredService<LLMService>().SetLogger(app.Services.GetRequiredService<ILogger<LLMService>>());
 
 TimerAdvice timer = new(app.Services.GetRequiredService<Memory>(), app.Services.GetRequiredService<TelegramBotClient>());
 
