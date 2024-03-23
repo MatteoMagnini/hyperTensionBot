@@ -34,16 +34,17 @@ namespace HyperTensionBot.Server.Bot {
                     case Intent.Umore:
                         await bot.SendTextMessageAsync(
                             chat.Id, await llm.AskLlm(TypeConversation.Communication,
-                                memory.AddMessageLLM(chat, "Rispondi a questo messaggio con poche parole: " + message)));
+                                "Rispondi a questo messaggio con poche parole: " + message,
+                                comunicationChat: memory.AddMessageLLM(chat, message)));
                         memory.UserMemory.TryGetValue(chat.Id, out var info);
                         if (info?.FirstMeasurement != null)
                             await CheckAverage(Request.AverageData(memory, chat, 30, true, false), bot, chat);
                         break;
 
-                    // gpt 
+                    // LLM 
                     case Intent.Generale:
                         await bot.SendTextMessageAsync(
-                            chat.Id, await llm.AskLlm(TypeConversation.Communication, memory.AddMessageLLM(chat, message)));
+                            chat.Id, await llm.AskLlm(TypeConversation.Communication, message, memory.AddMessageLLM(chat, message)));
                         break;
                 }
             }

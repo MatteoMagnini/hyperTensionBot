@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Text;
 using OpenAI_API;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Collections.Concurrent;
 
 namespace HyperTensionBot.Server.LLM {
     public class LLMService {
@@ -14,8 +15,8 @@ namespace HyperTensionBot.Server.LLM {
         private readonly string MODEL_COMUNICATION = "nous-hermes2-mixtral";
         private readonly string MODEL_ANALYSIS = "nous-hermes2-mixtral";
 
-        private readonly string analysisPrompt;
-        private readonly string comunicationPrompt;
+        private List<ChatMessage> analysisChat = new();
+
         private ILogger<LLMService>? _logger; 
 
 
@@ -23,8 +24,8 @@ namespace HyperTensionBot.Server.LLM {
         public LLMService(WebApplicationBuilder builder) {
             ConfigureUrl(builder);
             _httpClient.Timeout = TimeSpan.FromSeconds(200);
-            analysisPrompt = BaseRequestPrompt();
-            comunicationPrompt = BaseComunicationPrompt();
+
+            analysisChat.Add(new ChatMessage("assistant", BaseRequestPrompt()));
         }
         public void SetLogger(ILogger<LLMService> logger) { _logger = logger; }
         private string BaseComunicationPrompt() {
@@ -34,7 +35,7 @@ namespace HyperTensionBot.Server.LLM {
                 "sul benessere su argomenti medici in PERSONALE, mantenendo un alta astrazione ai tecnicismi che non ti competono e che sarà il dottore a prenderne atto. \" +\n                    " +
                 "\"Infatti, non sei in grado di fornire consigli articolati sul campo medico diversi dal contesto ipertensione o rispondere a domande fuori contesto medico.\" +\n " +
                 "\"Usa un tono educato, rispondi in maniera chiara e semplice se gli input sono inerenti al ruolo descritto altrimenti se fuori contesto sii generico e responsabilizza il paziente verso chi di dovere.\"" +
-                "Prendi in considerazioni le seguenti domande con le corrette risposte dopo ->: " +
+                "Prendi in considerazioni le seguenti domande con le corrette risposte dopo -> esclusivamente come contesto di base. Non riprendere tali esempi nelle tue risposte se non strettamente correlate ad essi: " +
                 "Salve, come posso effettuare delle misurazioni ottimali? -> Posso darti i seguenti consigli: Ricordati di attendere qualche minuto in posizione seduta \" +\n                    " +
                 "\"prima di effettuare le misurazioni. Evita di effettuare le misurazioni dopo: pasti, fumo di sigarette, consumo di alcolici, sforzi fisici o stress emotivi. \" +\n                    " +
                 "\"Posiziona il bracciale uno o due centimetri sopra la piega del gomito. Durante le misurazioni resta in posizione seduta, comoda, con il braccio rilassato e appoggiato in modo che \" +\n                    " +
@@ -70,17 +71,25 @@ namespace HyperTensionBot.Server.LLM {
         }
 
         // connection and interaction with server for request to LLM 
-        public async Task<string> AskLlm(TypeConversation t, string message) {
+        public async Task<string> AskLlm(TypeConversation t, string message, List<ChatMessage>? comunicationChat = null) {
 
             if (_llmApiUrl != "") {
-
-                var modelName = (t == TypeConversation.Communication) ? MODEL_COMUNICATION : MODEL_ANALYSIS; 
+                string modelName;
+                if (t == TypeConversation.Communication) {
+                    modelName = MODEL_COMUNICATION;
+                }
+                else {
+                    modelName = MODEL_ANALYSIS;
+                    analysisChat.Add(new ChatMessage("user", message));
+                }
 
                 // build payload JSON
                 var jsonPayload = new {
                     model = modelName,
-                    prompt = ((t == TypeConversation.Communication) ? comunicationPrompt : analysisPrompt) + message,
-                    stream = false
+                    prompt = ((t == TypeConversation.Communication) ? BaseComunicationPrompt() : analysisChat.First().Content) + message,
+                    messages = (t == TypeConversation.Communication) ? comunicationChat : analysisChat,
+                    stream = false,
+                    message = "fdsf"
                 };
 
                 var content = new StringContent(JsonConvert.SerializeObject(jsonPayload), Encoding.UTF8, "application/json");
