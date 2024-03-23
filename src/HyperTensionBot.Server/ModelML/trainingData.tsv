@@ -1383,3 +1383,29 @@ la mia pressione è 120 su 70	inserDatiPress
 come posso misurare la frequenza?^	Generale
 oggi sono caduto dalle scale e mi sono tagliato	Generale
 non mi sta bene questo	Generale
+vorrei memorizzare i miei valori di pressione	Generale
+in realtà non so come posso misurare questi dati, qual è il corretto procedimento?	Generale
+pressione 120 80	inserDatiPress
+frequenza 89	inserDatiFreq
+pressione 130 90 e frequenza 114	inserDatiTot
+Grafico	Richiesta
+on so come posso misurare questi dati, qual è il corretto procedimento?	Generale
+non so come memorizzare i miei dati sulla pressione, come posso fare?	Generale
+120 7 080	inserDatiPress
+120 70 8 0	inserDatiTot
+120 70 60	inserDatiTot
+120 6 0	inserDatiPress
+120 60	inserDatiPress
+77 80 76	inserDatiTot
+grafico	Richiesta
+mi dai i dati registrati sulla pressione?	Richiesta
+dammi i dati registrati negli ultimi 14 giorni	Richiesta
+120 70 80	inserDatiTot
+100 60 120	inserDatiPress
+pressione 100 50 e frequenza 70	inserDatiTot
+190 100 140	inserDatiPress
+grafico	Richiesta
+come posso inserire i miei valori?	Generale
+potesti riassumermi queste informazioni con parole più semplici, non mi è tanto chiaro	Richiesta
+dammi i valori d pressione	Richiesta
+dammi i valor idi frequenza	Richiesta

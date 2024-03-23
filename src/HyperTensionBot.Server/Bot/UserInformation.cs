@@ -9,7 +9,7 @@ namespace HyperTensionBot.Server.Bot {
             LastConversationUpdate = DateTime.UtcNow;
             Measurements = new();
             GeneralInfo = new();
-            ChatComunication = new();
+            ChatComunication = Prompt.GeneralContext();
         }
 
         public long TelegramId { get; init; }
