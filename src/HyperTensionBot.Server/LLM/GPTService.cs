@@ -54,7 +54,7 @@ namespace HyperTensionBot.Server.LLM {
 
                 var response = await api.Chat.CreateChatCompletionAsync(
                     model: Model.ChatGPTTurbo,
-                    messages: (t == TypeConversation.Communication) ? conversation : calculateDays,
+                    messages: (IList<OpenAI_API.Chat.ChatMessage>?)((t == TypeConversation.Communication) ? conversation : calculateDays),
                     max_tokens: 200);
                 return response.ToString();
             }

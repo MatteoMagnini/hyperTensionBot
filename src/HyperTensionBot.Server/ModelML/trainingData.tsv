@@ -1345,3 +1345,41 @@ Potresti fornirmi consigli alimentari per l'ipertensione?	Generale
 80	inserDatiFreq
 Frequenza 78	inserDatiFreq
 Vorrei una scritta sui dati misurati	Richiesta
+Buongiorno	Generale
+VOLEVO cominciare a raccogliere i miei dati di pressione	Generale
+come posso misurare la pressione?	Generale
+in realtà ancora non mi hai fornito alcuna indicazione su come misurare la pressione	Generale
+sì sì ho capito	Generale
+quindi hai memorizzato i miei dati?	Generale
+dammi la mia ultima misurazione	Richiesta
+120 80	inserDatiPress
+pressione: 120 80	inserDatiPress
+Ecco un'altra misurazione: 120 85	inserDatiPress
+dottore, oggi sono stanca	Umore
+grazie	Generale
+vorrei vedere l'andamento della mia pressione nell'ultima settimana	Richiesta
+prego, mi dai l'andamento di pressione dell'ultima settimana?	Richiesta
+grazie, sono felicissima!	Generale
+165 98	inserDatiPress
+sì esatto...	Generale
+voglio la lista dei valori da me inseriti	Richiesta
+voglio i numeri!	Richiesta
+vabbhè ok	Generale
+mi dai il grafico dei valori dell'ultima settimana?	Richiesta
+La mia pressione è  1000/400	inserDatiPress
+/start	Generale
+Passo e chiudo	Generale
+A presto!!!	Generale
+145 89	inserDatiPress
+pressione 145 90	inserDatiPress
+Grafico	Richiesta
+La mia pressione è 120 90	inserDatiPress
+Bravo	Generale
+salve	Generale
+vorrei inserire i miei dati sulla pressione	Generale
+MI chiamo Michelangelo e ho 22 anni	inserDatiGener
+perfetto	Generale
+la mia pressione è 120 su 70	inserDatiPress
+come posso misurare la frequenza?^	Generale
+oggi sono caduto dalle scale e mi sono tagliato	Generale
+non mi sta bene questo	Generale

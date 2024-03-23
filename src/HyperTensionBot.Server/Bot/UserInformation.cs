@@ -1,5 +1,6 @@
 using HyperTensionBot.Server.LLM;
 using OpenAI_API.Chat;
+using ChatMessage = HyperTensionBot.Server.LLM.ChatMessage;
 
 namespace HyperTensionBot.Server.Bot {
     public class UserInformation {
@@ -8,7 +9,7 @@ namespace HyperTensionBot.Server.Bot {
             LastConversationUpdate = DateTime.UtcNow;
             Measurements = new();
             GeneralInfo = new();
-            ChatMessages = new();
+            ChatComunication = new();
         }
 
         public long TelegramId { get; init; }
@@ -49,8 +50,6 @@ namespace HyperTensionBot.Server.Bot {
 
         public List<string> GeneralInfo { get; set; }
 
-        public List<string> ChatMessages { get; set; }
-
         public override bool Equals(object? obj) {
             if (obj is UserInformation userInformation) {
                 return TelegramId == userInformation.TelegramId;
@@ -62,5 +61,7 @@ namespace HyperTensionBot.Server.Bot {
         public override int GetHashCode() {
             return TelegramId.GetHashCode();
         }
+
+        public List<ChatMessage> ChatComunication { get;}
     }
 }

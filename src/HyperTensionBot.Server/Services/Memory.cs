@@ -1,5 +1,5 @@
 using HyperTensionBot.Server.Bot;
-using OpenAI_API.Chat;
+using HyperTensionBot.Server.LLM;
 using System.Collections.Concurrent;
 using Telegram.Bot.Types;
 
@@ -71,10 +71,10 @@ namespace HyperTensionBot.Server.Services {
             return chatInformation!.GeneralInfo;
         }
 
-        public string AddMessageLLM(Chat chat, string message) {
+        public List<ChatMessage> AddMessageLLM(Chat chat, string message) {
             UserMemory.TryGetValue(chat.Id, out var chatInformation);
-            chatInformation!.ChatMessages.Add(message);
-            return chatInformation!.ChatMessages.Last()!;
+            chatInformation!.ChatComunication.Add(new ChatMessage("user", message));
+            return chatInformation!.ChatComunication;
         }
     }
 }
