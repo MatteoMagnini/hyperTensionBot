@@ -1,4 +1,5 @@
 using HyperTensionBot.Server.Services;
+using System.ComponentModel;
 using Telegram.Bot;
 
 namespace HyperTensionBot.Server.Bot {
@@ -12,7 +13,7 @@ namespace HyperTensionBot.Server.Bot {
 
         private void TimerStart(Memory m, TelegramBotClient bot) {
             // the timer runs an event every hour
-            _timer.Interval = TimeSpan.FromHours(3).TotalMilliseconds;
+            _timer.Interval = TimeSpan.FromHours(48).TotalMilliseconds;
             _timer.Elapsed += async (e, o) => await AdvicePatients(m, bot);
             _timer.AutoReset = true;
             _timer.Enabled = true;
@@ -24,7 +25,7 @@ namespace HyperTensionBot.Server.Bot {
                 var timePassed = DateTime.Now - p.Value.LastMeasurement!.Date;
                 if (timePassed.Hours > TimeSpan.FromDays(2).Hours) {
                     await bot.SendTextMessageAsync(p.Key,
-                        $"Salve {p.Value.FullName} è passato circa un giorno dalla tua ultima misurazione🕰️\n\n" +
+                        $"Salve {p.Value.FullName}, sono passate circa {TimeSpan.FromMilliseconds(_timer.Interval).Hours} ore dalla tua ultima misurazione🕰️\n\n" +
                         $"Facciamo un altro check sulla pressione e sulla frequenza assieme...\n" +
                         $"Il dottore non vede l'ora di valutare i nuovi dati🧑🏽‍⚕️");
                 }

@@ -1449,3 +1449,40 @@ la mia frequenza è 80	Inserimento
 ho misurato la frequenza, 80	Inserimento
 dammi la media dei miei dati di frequenza	Richiesta
 voglio la mia media sui soli dati di frequenza	Richiesta
+120 70 80	Inserimento
+la frequenza è 100 mentre la pressione 100 60	Inserimento
+pressione 100 60 e frequenza 90	Inserimento
+puoi fornirmi la media dei dati di pressione?	Richiesta
+dammi la media dei dati di frequenza	Richiesta
+voglio i dati medi sulle registrazioni date sulla frequenz	Richiesta
+grazie	Generale
+si puoi dirmi quando è necessario che io contatti il dottore?	Generale
+buongiorno!	Generale
+/start	Generale
+/start	Generale
+Ciao, come funzioni?	Generale
+Ho appena fatto un controllo, ho 130 70 di pressione e 60 di pulsazioni	Inserimento
+Ho appena fatto un controllo, ho 130 70 di pressione e 60 di pulsazioni	Inserimento
+vorrei inserire una pressione	Generale
+misura di pressione 130 85	Inserimento
+/start	Generale
+/start	Generale
+pressione 120 80	Inserimento
+120 70 80	Inserimento
+ottimo grazie	Generale
+150 90	Inserimento
+pressione 150 90	Inserimento
+130 90	Inserimento
+Mi puoi dare la media delle misurazioni di oggi?	Richiesta
+pressione 130 90	Inserimento
+120 80	Inserimento
+145 80	Inserimento
+145 80	Inserimento
+battiti 90	Inserimento
+mi faresti il grafico dei valori dell'ultima settimana?	Richiesta
+grazie	Generale
+e la media dei valori dell'ultima settimana qual è?	Richiesta
+160 99	Inserimento
+oggi mi fa mal la testa	Generale
+vorrei il grafico di pressione dell'ultimo mese	Richiesta
+100 80 90	Inserimento
