@@ -42,7 +42,7 @@ namespace HyperTensionBot.Server.Bot {
         public static async Task ManageRequest(string message, Memory mem, Chat chat, TelegramBotClient bot, LLMService llm) { 
             // 0 => contesto, 1 => giorni, 2 => formato
             try {
-                string outLLM = await llm.AskLlm(TypeConversation.Analysis, message);
+                string outLLM = await llm.AskLlm(TypeConversation.Request, message);
                 var parameters = RegexExtensions.ExtractParameters(outLLM);
 
                 bool pressure = false;
@@ -62,14 +62,15 @@ namespace HyperTensionBot.Server.Bot {
                                 $"Ecco la lista richiesta sulle misurazioni {text}");
                             break;
                         case "MEDIA":
-                            List<int?> average = AverageData(mem, chat, int.Parse(parameters[1]), pressure, frequence);
+                            int?[] average = AverageData(mem, chat, int.Parse(parameters[1]), pressure, frequence);
                             if (frequence)
                                 await bot.SendTextMessageAsync(chat.Id, $"Ecco le media sulla frequenza cardiaca {text}:\n" +
                                     $"❤️ Frequenza cardiaca media: {average[2]} bpm\n");
                             if (pressure)
                                 await bot.SendTextMessageAsync(chat.Id, $"Ecco le media sulla pressione arteriosa {text}:\n" +
                                     $"🔻 Pressione arteriosa media: {average[0]}/{average[1]} mmHg");
-                            await Context.CheckAverage(average, bot, chat);
+                            if (pressure)
+                                await Context.CheckAverage(average, bot, chat);
                             break;
                     }
                 } else
@@ -185,8 +186,8 @@ namespace HyperTensionBot.Server.Bot {
                     "una panoramica più ampia della tua situazione. Ogni informazione può essere preziosa🗒️");
         }
 
-        public static List<int?> AverageData(Memory memory, Chat chat, int d, bool pressure, bool frequence) {
-            List<int?> average = new();
+        public static int?[] AverageData(Memory memory, Chat chat, int d, bool pressure, bool frequence) {
+            int?[] average = new int?[3];
             days = d;
             memory.UserMemory.TryGetValue(chat.Id, out var info);
             if (info?.FirstMeasurement == null)
@@ -196,14 +197,14 @@ namespace HyperTensionBot.Server.Bot {
             if (pressure) {
                 var press = ProcessesRequest(info,
                     x => x.SystolicPressure != null && x.DiastolicPressure != null && x.Date >= DateTime.Now.Date.AddDays(-days));
-                average.Add(((int?)press.Select(m => m.SystolicPressure).Where(x => x != null).Average()));
-                average.Add((int?)press.Select(m => m.DiastolicPressure).Where(x => x != null).Average());
+                average[0] = (((int?)press.Select(m => m.SystolicPressure).Where(x => x != null).Average()));
+                average[1] = ((int?)press.Select(m => m.DiastolicPressure).Where(x => x != null).Average());
             }
             if (frequence) {
                 var freq = ProcessesRequest(info,
                     x => x.HeartRate != null && x.Date >= DateTime.Now.Date.AddDays(-days));
 
-                average.Add((int?)freq.Select(x => x.HeartRate).Where(x => x != null).Average());
+                average[2] = ((int?)freq.Select(x => x.HeartRate).Where(x => x != null).Average());
             }
             return average;
         }

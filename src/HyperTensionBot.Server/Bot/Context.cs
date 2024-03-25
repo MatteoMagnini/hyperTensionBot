@@ -18,17 +18,12 @@ namespace HyperTensionBot.Server.Bot {
                         break;
 
                     // ask conferme and storage data 
-                    case Intent.inserDatiGener:
+                    case Intent.InserPerson:
                         await StorageGeneralData(bot, message, chat, memory);
                         break;
-                    case Intent.inserDatiPress:
-                        await StorageDataPress(bot, message, chat, memory, date);
-                        break;
-                    case Intent.inserDatiFreq:
-                        await StorageDataFreq(bot, message, chat, memory, date);
-                        break;
-                    case Intent.inserDatiTot:
-                        await StorageDataTot(bot, message, chat, memory, date);
+                    case Intent.Inserimento:
+                        var result = await llm.AskLlm(TypeConversation.Insert, message);
+                        await StorageData(bot, result, chat, memory, date);
                         break;
 
                     case Intent.Umore:
@@ -73,9 +68,9 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         // manage meuserment
-        private static async Task StorageDataTot(TelegramBotClient bot, string message, Chat chat, Memory memory, DateTime date) {
+        private static async Task StorageData(TelegramBotClient bot, string result, Chat chat, Memory memory, DateTime date) {
             // Match values
-            var measurement = RegexExtensions.ExtractMeasurement(message);
+            var measurement = RegexExtensions.ExtractMeasurement(result);
             // send message and button
             memory.SetTemporaryMeasurement(chat, new Measurement(
                 systolicPressure: measurement[0],
@@ -84,45 +79,13 @@ namespace HyperTensionBot.Server.Bot {
                 date: date
             ));
 
-            string text = $"Grazie per avermi inviato pressione e frequenza.\n\n🔺 Pressione sistolica: {measurement[0].ToString("F0")} mmHg\n🔻 Pressione diastolica: {measurement[1].ToString("F0")} mmHg\n" +
-                $"❤️ Frequenza: {measurement[2].ToString("F0")} bpm\n\nHo capito bene?";
+            StringBuilder text = new StringBuilder("Ho ricevuto la misurazione.\n\n");
+            if (measurement[0] is not null)
+                text.AppendLine($"🔺 Pressione sistolica: {(int)measurement[0]!} mmHg\n🔻 Pressione diastolica: {(int)measurement[1]!} mmHg");
+            if (measurement[2] is not null)
+                text.AppendLine($"❤️ Frequenza: {(int)measurement[2]!} bpm\n\nHo capito bene?");
 
-            await SendButton(bot, text, chat, new string[] { "Sì, registra!", "yes", "No", "no" });
-
-        }
-
-        private static async Task StorageDataPress(TelegramBotClient bot, string message, Chat chat, Memory memory, DateTime date) {
-            // Match values
-            var pressure = RegexExtensions.ExtractPressure(message);
-            // send message and button
-            memory.SetTemporaryMeasurement(chat, new Measurement(
-                systolicPressure: pressure[0],
-                diastolicPressure: pressure[1],
-                heartRate: null,
-                date: date
-            ));
-
-            string text = $"Grazie per avermi inviato la tua pressione.\n\n🔺 Pressione sistolica: {pressure[0].ToString("F0")} mmHg\n🔻 Pressione diastolica: {pressure[1].ToString("F0")} mmHg\n" +
-                $"Ho capito bene?";
-
-            await SendButton(bot, text, chat, new string[] { "Sì, registra!", "yes", "No", "no" });
-        }
-
-        private static async Task StorageDataFreq(TelegramBotClient bot, string message, Chat chat, Memory memory, DateTime date) {
-            // Match values
-            var freq = RegexExtensions.ExtractFreq(message);
-
-            // send message and button
-            memory.SetTemporaryMeasurement(chat, new Measurement(
-                systolicPressure: null,
-                diastolicPressure: null,
-                heartRate: freq,
-                date: date
-            ));
-
-            string text = $"Grazie per avermi inviato la tua frequenza.\n\n❤️ Frequenza: {freq.ToString()} bpm\nHo capito bene?";
-
-            await SendButton(bot, text, chat, new string[] { "Sì, registra!", "yes", "No", "no" });
+            await SendButton(bot, text.ToString(), chat, new string[] { "Sì, registra!", "yes", "No", "no" });
 
         }
 
@@ -141,7 +104,7 @@ namespace HyperTensionBot.Server.Bot {
                 await HandleConfirmRegisterMeasurement(from, chat, bot, memory);
                 memory.UserMemory.TryGetValue(chat.Id, out var info);
                 if (info?.LastMeasurement?.DiastolicPressure != null) {
-                    List<int?> average = Request.AverageData(memory, chat, 30, true, false);
+                    int?[] average = Request.AverageData(memory, chat, 30, true, false);
                     await CheckAverage(average, bot, chat);
                 }
             }
@@ -150,7 +113,7 @@ namespace HyperTensionBot.Server.Bot {
             }
         }
 
-        public static async Task CheckAverage(List<int?> average, TelegramBotClient bot, Chat chat) {
+        public static async Task CheckAverage(int?[] average, TelegramBotClient bot, Chat chat) {
             // check sulla media nell'ultimo mese dopo un inserimento delle nuove misure
             StringBuilder sb = new();
             sb.Append("Ho analizzato le nuove medie registrate:\n");
