@@ -31,51 +31,54 @@ TimerAdvice timer = new(app.Services.GetRequiredService<Memory>(), app.Services.
 
 // handle update 
 app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memory memory, ILogger<Program> logger, ClassificationModel model, LLMService llm) => {
-    if (!context.Request.HasJsonContentType()) {
-        throw new BadHttpRequestException("HTTP request must be of type application/json");
+    try {
+        if (!context.Request.HasJsonContentType()) {
+            throw new BadHttpRequestException("HTTP request must be of type application/json");
+        }
+        if (internalPOST)
+            return Results.Ok();
+
+        using var sr = new StreamReader(context.Request.Body);
+        var update = JsonConvert.DeserializeObject<Update>(await sr.ReadToEndAsync()) ?? throw new BadHttpRequestException("Could not deserialize JSON payload as Telegram bot update");
+        logger.LogDebug("Received update {0} of type {1}", update.Id, update.Type);
+
+        User? from = update.Message?.From ?? update.CallbackQuery?.From;
+        Chat chat = update.Message?.Chat ?? update.CallbackQuery?.Message?.Chat ?? throw new Exception("Unable to detect chat ID");
+        memory.HandleUpdate(from, chat);
+
+        logger.LogInformation("Chat {0} incoming {1}", chat.Id, update.Type switch {
+            UpdateType.Message => $"message with text: {update.Message?.Text}",
+            UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
+            _ => "update of unhandled type"
+        });
+        internalPOST = true; // possible POST calls for request to the LLM server 
+        if (update.Message?.Text is not null) {
+            var messageText = update.Message?.Text;
+            if (messageText != null) {
+                // add message to model input and predict intent
+                var input = new ModelInput { Sentence = messageText };
+                var result = model.Predict(input);
+
+                logger.LogInformation("Incoming message matches intent {0}", result);
+
+                // manage operations
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                await Context.ControlFlow(bot, llm, memory, result, messageText, chat, update.Message!.Date.ToLocalTime());
+                stopwatch.Stop();
+                logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
+            }
+        }
+        else if (update.CallbackQuery?.Data != null && update.CallbackQuery?.Message?.Chat != null) {
+            await Context.ValuteMeasurement(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, bot, memory);
+            // removing inline keybord
+            await bot.EditMessageReplyMarkupAsync(update.CallbackQuery.Message.Chat, update.CallbackQuery.Message.MessageId, replyMarkup: null);
+        }
+        else
+            return Results.NotFound();
+
+        internalPOST = false; // after request, reset flag
     }
-    if (internalPOST)
-        return Results.Ok();
-
-    using var sr = new StreamReader(context.Request.Body);
-    var update = JsonConvert.DeserializeObject<Update>(await sr.ReadToEndAsync()) ?? throw new BadHttpRequestException("Could not deserialize JSON payload as Telegram bot update");
-    logger.LogDebug("Received update {0} of type {1}", update.Id, update.Type);
-
-    User? from = update.Message?.From ?? update.CallbackQuery?.From;
-    Chat chat = update.Message?.Chat ?? update.CallbackQuery?.Message?.Chat ?? throw new Exception("Unable to detect chat ID");
-    memory.HandleUpdate(from, chat);
-
-    logger.LogInformation("Chat {0} incoming {1}", chat.Id, update.Type switch {
-        UpdateType.Message => $"message with text: {update.Message?.Text}",
-        UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
-        _ => "update of unhandled type"
-    });
-    internalPOST = true; // possible POST calls for request to the LLM server 
-    if (update.Message?.Text is not null) {
-        var messageText = update.Message?.Text;
-        if (messageText != null) {
-            // add message to model input and predict intent
-            var input = new ModelInput { Sentence = messageText };
-            var result = model.Predict(input);
-
-            logger.LogInformation("Incoming message matches intent {0}", result);
-
-            // manage operations
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            await Context.ControlFlow(bot, llm, memory, result, messageText, chat, update.Message!.Date.ToLocalTime());
-            stopwatch.Stop();
-            logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
-        }  
-    }
-    else if (update.CallbackQuery?.Data != null && update.CallbackQuery?.Message?.Chat != null) {
-        await Context.ValuteMeasurement(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, bot, memory);
-        // removing inline keybord
-        await bot.EditMessageReplyMarkupAsync(update.CallbackQuery.Message.Chat, update.CallbackQuery.Message.MessageId, replyMarkup: null); 
-    } else
-        return Results.NotFound();
-
-    internalPOST = false; // after request, reset flag
-
+    catch (Exception) { return Results.Ok(); }
     return Results.Ok();
 });
 
