@@ -14,7 +14,7 @@ namespace HyperTensionBot.Server.LLM {
         private string? _llmApiUrl;
         // set names to different model 
         private readonly string MODEL_COMUNICATION = "nous-hermes2-mixtral";
-        private readonly string MODEL_REQUEST = "nous-hermes2-mixtral";
+        private readonly string MODEL_REQUEST = "alfred";
         private readonly string MODEL_INSERT = "nous-hermes2-mixtral";
 
         private List<ChatMessage> analysistInsert; 
