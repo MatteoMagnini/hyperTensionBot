@@ -20,14 +20,22 @@ namespace HyperTensionBot.Server.Bot.Extensions {
         }
 
         public static double?[] ExtractMeasurement(string message) {
-            var match = Regex.Match(message, @"(?<v1>\d{1,3})\D+(?<v2>\d{1,3})\D+(?<v3>\d{1,3})");
+            var match = Regex.Match(message, @"(?<v1>\d{2,3})(?:\D+(?<v2>\d{2,3}))?(?:\D+(?<v3>\d{2,3}))?");
 
             if (!match.Success) {
                 throw new ArgumentException("Il messaggio non contiene numeri decimali.");
             }
-            double? sistolyc = (double.Parse(match.Groups["v1"].Value) != 0) ? Math.MaxMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value)) : null;
-            double? diastolic = (double.Parse(match.Groups["v1"].Value) != 0) ? Math.MinMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value)) : null;
-            double? frequence = (double.Parse(match.Groups["v3"].Value) != 0) ? double.Parse(match.Groups["v3"].Value) : null;
+            double? frequence, sistolyc, diastolic; 
+            if (string.IsNullOrEmpty(match.Groups["v2"].Value)) {
+                frequence = double.Parse(match.Groups["v1"].Value);
+                sistolyc = diastolic = null; 
+            }
+            else {
+                sistolyc = (!string.IsNullOrEmpty(match.Groups["v1"].Value)) ? Math.MaxMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value)) : null;
+                diastolic = (!string.IsNullOrEmpty(match.Groups["v1"].Value)) ? Math.MinMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value)) : null;
+                frequence = (!string.IsNullOrEmpty(match.Groups["v3"].Value)) ? double.Parse(match.Groups["v3"].Value) : null;
+            }
+            
             return new[] { sistolyc, diastolic, frequence};
         }
 

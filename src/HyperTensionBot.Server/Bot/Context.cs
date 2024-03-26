@@ -22,8 +22,8 @@ namespace HyperTensionBot.Server.Bot {
                         await StorageGeneralData(bot, message, chat, memory);
                         break;
                     case Intent.Inserimento:
-                        var result = await llm.AskLlm(TypeConversation.Insert, message);
-                        await StorageData(bot, result, chat, memory, date);
+                        // var result = await llm.AskLlm(TypeConversation.Insert, message); // non è consigliabile procedere tramite LLM sul parser dei parametri
+                        await StorageData(bot, message, chat, memory, date);
                         break;
 
                     case Intent.Umore:
