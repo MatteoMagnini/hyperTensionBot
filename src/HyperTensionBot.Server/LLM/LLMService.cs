@@ -1,11 +1,6 @@
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Text;
-using OpenAI_API;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Collections.Concurrent;
-using System.CodeDom;
-
 namespace HyperTensionBot.Server.LLM {
     public class LLMService {
 
@@ -13,9 +8,9 @@ namespace HyperTensionBot.Server.LLM {
         // URL dell'API del LLM
         private string? _llmApiUrl;
         // set names to different model 
-        private readonly string MODEL_COMUNICATION = "nous-hermes2-mixtral";
-        private readonly string MODEL_REQUEST = "alfred";
-        private readonly string MODEL_INSERT = "nous-hermes2-mixtral";
+        private readonly string MODEL_COMUNICATION = "falcon:180b";
+        private readonly string MODEL_REQUEST = "falcon:180b";
+        private readonly string MODEL_INSERT = "falcon:180b";
 
         private List<ChatMessage> analysistInsert; 
         private List<ChatMessage> analysisRequest;
@@ -26,7 +21,7 @@ namespace HyperTensionBot.Server.LLM {
         // Build option for client 
         public LLMService(WebApplicationBuilder builder) {
             ConfigureUrl(builder);
-            _httpClient.Timeout = TimeSpan.FromSeconds(200);
+            _httpClient.Timeout = TimeSpan.FromSeconds(600);
 
             analysisRequest = Prompt.RequestContext();
             analysistInsert = Prompt.InsertContest(); 
