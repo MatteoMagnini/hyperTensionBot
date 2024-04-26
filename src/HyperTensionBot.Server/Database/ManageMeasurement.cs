@@ -1,5 +1,4 @@
 using HyperTensionBot.Server.Bot;
-using HyperTensionBot.Server.Services;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -33,14 +32,14 @@ namespace HyperTensionBot.Server.Database {
                     Builders<BsonDocument>.Filter.Eq("Date", date)
                 );
 
-            var measure = measurements.FindAsync(filter).Result.First(); 
+            var measure = measurements.FindAsync(filter).Result.FirstOrDefault(); 
             return new Measurement((double?)measure["Systolic"], (double?)measure["Diastolic"],
                     (double?)measure["HeartRate"], (DateTime)measure["Date"]); 
         }
 
-        private static DateTime DateLastMeasurement(IMongoCollection<BsonDocument>? user, long id) {
-            var doc = user.FindAsync(Memory.GetFilter(id)).Result.First();
-            return (DateTime)doc["DateLastMeasurement"]; 
+        private static DateTime? DateLastMeasurement(IMongoCollection<BsonDocument>? user, long id) {
+            var doc = user.FindAsync(Memory.GetFilter(id)).Result.FirstOrDefault();
+            return doc["DateLastMeasurement"].ToLocalTime(); 
         }
     }
 }

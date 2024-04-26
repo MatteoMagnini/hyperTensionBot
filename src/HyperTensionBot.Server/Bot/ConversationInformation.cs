@@ -2,7 +2,7 @@ namespace HyperTensionBot.Server.Bot {
     public class ConversationInformation {
         public ConversationInformation(long telegramChatId) {
             TelegramChatId = telegramChatId;
-            LastConversationUpdate = DateTime.UtcNow;
+            LastConversationUpdate = DateTime.Now;
         }
 
         public long TelegramChatId { get; init; }

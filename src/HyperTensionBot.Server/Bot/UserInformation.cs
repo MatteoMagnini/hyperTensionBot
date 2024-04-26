@@ -4,9 +4,9 @@ using LLMChat = HyperTensionBot.Server.LLM.LLMChat;
 
 namespace HyperTensionBot.Server.Bot {
     public class UserInformation {
-        public UserInformation(User from) {
+        public UserInformation(User from, DateTime date) {
             TelegramId = from.Id;
-            LastConversationUpdate = DateTime.UtcNow;
+            LastConversationUpdate = date;
             FirstName = from.FirstName;
             LastName = from.LastName;
             Measurements = new();
