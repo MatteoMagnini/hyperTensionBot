@@ -3,7 +3,7 @@ namespace HyperTensionBot.Server.ModelML {
         Generale,
         Richiesta,
         Umore,
-        InserPerson,
+        PersonalInfo,
         Inserimento
     }
 }

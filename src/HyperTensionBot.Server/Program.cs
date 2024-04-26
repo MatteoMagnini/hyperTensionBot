@@ -44,13 +44,7 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
 
         User? from = update.Message?.From ?? update.CallbackQuery?.From;
         Chat chat = update.Message?.Chat ?? update.CallbackQuery?.Message?.Chat ?? throw new Exception("Unable to detect chat ID");
-        memory.HandleUpdate(from, chat);
-
-        logger.LogInformation("Chat {0} incoming {1}", chat.Id, update.Type switch {
-            UpdateType.Message => $"message with text: {update.Message?.Text}",
-            UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
-            _ => "update of unhandled type"
-        });
+        
         internalPOST = true; // possible POST calls for request to the LLM server 
         if (update.Message?.Text is not null) {
             var messageText = update.Message?.Text;
@@ -59,6 +53,12 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
                 var input = new ModelInput { Sentence = messageText };
                 var result = model.Predict(input);
 
+                memory.HandleUpdate(from, result, messageText);
+                logger.LogInformation("Chat {0} incoming {1}", chat.Id, update.Type switch {
+                    UpdateType.Message => $"message with text: {update.Message?.Text}",
+                    UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
+                    _ => "update of unhandled type"
+                });
                 logger.LogInformation("Incoming message matches intent {0}", result);
 
                 // manage operations

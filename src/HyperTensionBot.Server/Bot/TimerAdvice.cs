@@ -20,12 +20,12 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         private async Task AdvicePatients(Memory m, TelegramBotClient bot) {
-            var patients = m.UserMemory.Where(pait => pait.Value.LastMeasurement is not null);
+            var patients = m.GetAllPatients();
             foreach (var p in patients) {
-                var timePassed = DateTime.Now - p.Value.LastMeasurement!.Date;
+                var timePassed = DateTime.Now - (DateTime)p["DateLastMeasurement"];
                 if (timePassed.Hours > TimeSpan.FromDays(2).Hours) {
-                    await bot.SendTextMessageAsync(p.Key,
-                        $"Salve {p.Value.FullName}, sono passate circa {TimeSpan.FromMilliseconds(_timer.Interval).Hours} ore dalla tua ultima misurazione🕰️\n\n" +
+                    await bot.SendTextMessageAsync((long)p["id"],
+                        $"Salve {p["name"]}, sono passate circa {TimeSpan.FromMilliseconds(_timer.Interval).Hours} ore dalla tua ultima misurazione🕰️\n\n" +
                         $"Facciamo un altro check sulla pressione e sulla frequenza assieme...\n" +
                         $"Il dottore non vede l'ora di valutare i nuovi dati🧑🏽‍⚕️");
                 }

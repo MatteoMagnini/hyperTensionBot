@@ -1,12 +1,14 @@
 using HyperTensionBot.Server.LLM;
-using OpenAI_API.Chat;
-using ChatMessage = HyperTensionBot.Server.LLM.ChatMessage;
+using Telegram.Bot.Types;
+using LLMChat = HyperTensionBot.Server.LLM.LLMChat;
 
 namespace HyperTensionBot.Server.Bot {
     public class UserInformation {
-        public UserInformation(long telegramId) {
-            TelegramId = telegramId;
+        public UserInformation(User from) {
+            TelegramId = from.Id;
             LastConversationUpdate = DateTime.UtcNow;
+            FirstName = from.FirstName;
+            LastName = from.LastName;
             Measurements = new();
             GeneralInfo = new();
             ChatComunication = Prompt.GeneralContext();
@@ -14,9 +16,9 @@ namespace HyperTensionBot.Server.Bot {
 
         public long TelegramId { get; init; }
 
-        public string? FirstName { get; set; }
+        public string? FirstName { get; init; }
 
-        public string? LastName { get; set; }
+        public string? LastName { get; init; }
 
         public string? FullName {
             get {
@@ -62,6 +64,6 @@ namespace HyperTensionBot.Server.Bot {
             return TelegramId.GetHashCode();
         }
 
-        public List<ChatMessage> ChatComunication { get;}
+        public List<LLMChat> ChatComunication { get;}
     }
 }

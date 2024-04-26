@@ -1,7 +1,7 @@
 namespace HyperTensionBot.Server.LLM {
-    public class ChatMessage {
+    public class LLMChat {
 
-        public ChatMessage(string role, string content) {
+        public LLMChat(string role, string content) {
             Role = role;
             Content = content;
         }

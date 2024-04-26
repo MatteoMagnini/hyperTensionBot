@@ -11,26 +11,32 @@ namespace HyperTensionBot.Server.Bot {
     public static class Request {
 
         private static int days;
-        private static List<Measurement> measurements = new();
+        private static List<Measurement> measurementsFormatted = new();
 
         // manage request
 
-        private static string  SettingsValue(ref bool pressure,ref bool frequence, string x, int d, UserInformation info) {
+        [Obsolete] // because there is a obsolete method in GetFirstMeasurement().. 
+        private static string SettingsValue(Memory m, long id, ref bool pressure, ref bool frequence, string x, int d) {
             days = d;
-            ControlDays(info);
+
+            // info di control days è la data della prima misurazione
+            var firstMeasurement = m.GetFirstMeasurement(id);
+            ControlDays(firstMeasurement);
+
+            // info di process Request è la lista di tutte le misurzioni per un utente 
             if (x == "PRESSIONE") {
                 pressure = true;
                 frequence = false;
-                measurements = ProcessesRequest(info, x => x.SystolicPressure != null && x.DiastolicPressure != null && x.Date >= DateTime.Now.Date.AddDays(-days));
+                measurementsFormatted = ProcessesRequest(m, id, x => x.SystolicPressure != null && x.DiastolicPressure != null && x.Date >= DateTime.Now.Date.AddDays(-days));
             }
                 else if (x == "FREQUENZA") {
                     pressure = false;
                     frequence = true;
-                    measurements = ProcessesRequest(info, x => x.HeartRate != null && x.Date >= DateTime.Now.Date.AddDays(-days));
+                    measurementsFormatted = ProcessesRequest(m, id, x => x.HeartRate != null && x.Date >= DateTime.Now.Date.AddDays(-days));
                 }
                 else if (x == "ENTRAMBI"){
                     pressure = frequence = true;
-                    measurements = ProcessesRequest(info, x => (x.SystolicPressure != null && x.DiastolicPressure != null ||
+                    measurementsFormatted = ProcessesRequest(m, id, x => (x.SystolicPressure != null && x.DiastolicPressure != null ||
                                 x.HeartRate != null) && x.Date >= DateTime.Now.Date.AddDays(-days));
                 }
             if (d != -1)
@@ -39,6 +45,7 @@ namespace HyperTensionBot.Server.Bot {
                 return "";
         }
 
+        [Obsolete]
         public static async Task ManageRequest(string message, Memory mem, Chat chat, TelegramBotClient bot, LLMService llm) { 
             // 0 => contesto, 1 => giorni, 2 => formato
             try {
@@ -48,8 +55,7 @@ namespace HyperTensionBot.Server.Bot {
                 bool pressure = false;
                 bool frequence = false;
 
-                mem.UserMemory.TryGetValue(chat.Id, out var info);
-                var text = SettingsValue(ref pressure, ref frequence, parameters[0], int.Parse(parameters[1]), info!);
+                var text = SettingsValue(mem, chat.Id, ref pressure, ref frequence, parameters[0], int.Parse(parameters[1]));
 
                 if (parameters[0] != "PERSONALE") {
                     switch (parameters[2]) {
@@ -90,15 +96,15 @@ namespace HyperTensionBot.Server.Bot {
             }
         }
 
-        private static void ControlDays(UserInformation? info) {
-            if (info?.FirstMeasurement is null) { throw new ArgumentNullException(); }
+        private static void ControlDays(DateTime? date) {
+            if (!date.HasValue) { throw new ArgumentNullException(); }
             if (days == -1) {
-                days = DateTime.Now.Subtract(info.FirstMeasurement!.Date).Days;
+                days = DateTime.Now.Subtract((DateTime)date).Days;
             }
         }
 
-        private static List<Measurement> ProcessesRequest(UserInformation? i, Predicate<Measurement> p) {
-            var result =  i?.Measurements.FindAll(p);
+        private static List<Measurement> ProcessesRequest(Memory m, long id, Predicate<Measurement> p) {
+            var result = m.GetAllMeasurements(id).FindAll(p);
             if (result is null || result.Count == 0) {
                 throw new ArgumentNullException();
             }
@@ -109,9 +115,9 @@ namespace HyperTensionBot.Server.Bot {
             var plot = new Plot(600, 400);
 
             if (includePress) {
-                double[] datePressure = measurements.Where(m => m.SystolicPressure != null).Select(x => x.Date.ToOADate()).ToArray();
-                double?[] systolic = measurements.Select(m => m.SystolicPressure).Where(x => x != null).ToArray();
-                double?[] diastolic = measurements.Select(m => m.DiastolicPressure).Where(x => x != null).ToArray();
+                double[] datePressure = measurementsFormatted.Where(m => m.SystolicPressure != null).Select(x => x.Date.ToOADate()).ToArray();
+                double?[] systolic = measurementsFormatted.Select(m => m.SystolicPressure).Where(x => x != null).ToArray();
+                double?[] diastolic = measurementsFormatted.Select(m => m.DiastolicPressure).Where(x => x != null).ToArray();
                 if (systolic.Length > 1 && diastolic.Length > 1) {
                     plot.AddScatterLines(datePressure, systolic.Where(d => d.HasValue).Select(d => d!.Value).ToArray(),
                         System.Drawing.Color.Chocolate, 1, LineStyle.Solid, "Pressione Sistolica");
@@ -125,8 +131,8 @@ namespace HyperTensionBot.Server.Bot {
                 else throw new ExceptionExtensions.InsufficientData();
             }
             if (includeFreq) {
-                double[] dateFrequence = measurements.Where(m => m.HeartRate != null).Select(x => x.Date.ToOADate()).ToArray();
-                double?[] frequence = measurements.Select(m => m.HeartRate).Where(x => x != null).ToArray();
+                double[] dateFrequence = measurementsFormatted.Where(m => m.HeartRate != null).Select(x => x.Date.ToOADate()).ToArray();
+                double?[] frequence = measurementsFormatted.Select(m => m.HeartRate).Where(x => x != null).ToArray();
                 if (frequence.Length > 1) {
                     plot.AddScatterLines(dateFrequence, frequence.Where(d => d.HasValue).Select(d => d!.Value).ToArray(),
                         System.Drawing.Color.Red, 1, LineStyle.Solid, "Frequenza cardiaca");
@@ -162,7 +168,7 @@ namespace HyperTensionBot.Server.Bot {
         private static async Task SendDataList(TelegramBotClient bot, Chat chat, bool press, bool freq, string mex) {
             var sbPress = new StringBuilder("\n\n");
             var sbFreq = new StringBuilder("\n");
-            foreach (var m in measurements) {
+            foreach (var m in measurementsFormatted) {
 
                 if (press && m.SystolicPressure != null && m.DiastolicPressure != null) 
                     sbPress.AppendLine($"🔻 Pressione {m.SystolicPressure}/{m.DiastolicPressure} mmgh misurata il {m.Date}");
@@ -186,23 +192,22 @@ namespace HyperTensionBot.Server.Bot {
                     "una panoramica più ampia della tua situazione. Ogni informazione può essere preziosa🗒️");
         }
 
+        [Obsolete]
         public static int?[] AverageData(Memory memory, Chat chat, int d, bool pressure, bool frequence) {
             int?[] average = new int?[3];
             days = d;
-            memory.UserMemory.TryGetValue(chat.Id, out var info);
-            if (info?.FirstMeasurement == null)
+            var firstMeasurement = memory.GetFirstMeasurement(chat.Id);
+            if (firstMeasurement.HasValue)
                 throw new ArgumentNullException();
-            ControlDays(info);
+            ControlDays(firstMeasurement);
 
             if (pressure) {
-                var press = ProcessesRequest(info,
-                    x => x.SystolicPressure != null && x.DiastolicPressure != null && x.Date >= DateTime.Now.Date.AddDays(-days));
+                var press = ProcessesRequest(memory, chat.Id, x => x.SystolicPressure != null && x.DiastolicPressure != null && x.Date >= DateTime.Now.Date.AddDays(-days));
                 average[0] = (((int?)press.Select(m => m.SystolicPressure).Where(x => x != null).Average()));
                 average[1] = ((int?)press.Select(m => m.DiastolicPressure).Where(x => x != null).Average());
             }
             if (frequence) {
-                var freq = ProcessesRequest(info,
-                    x => x.HeartRate != null && x.Date >= DateTime.Now.Date.AddDays(-days));
+                var freq = ProcessesRequest(memory, chat.Id, x => x.HeartRate != null && x.Date >= DateTime.Now.Date.AddDays(-days));
 
                 average[2] = ((int?)freq.Select(x => x.HeartRate).Where(x => x != null).Average());
             }
