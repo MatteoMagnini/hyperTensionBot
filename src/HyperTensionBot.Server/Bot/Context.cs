@@ -9,7 +9,8 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace HyperTensionBot.Server.Bot {
-    public static class Context { 
+    public static class Context {
+        [Obsolete]
         public static async Task ControlFlow(TelegramBotClient bot, LLMService llm, Memory memory, Intent context, string message, Chat chat, DateTime date) {
             try {
                 switch (context) {
@@ -18,7 +19,7 @@ namespace HyperTensionBot.Server.Bot {
                         break;
 
                     // ask conferme and storage data 
-                    case Intent.InserPerson:
+                    case Intent.PersonalInfo:
                         await StorageGeneralData(bot, message, chat, memory);
                         break;
                     case Intent.Inserimento:
@@ -31,8 +32,7 @@ namespace HyperTensionBot.Server.Bot {
                             chat.Id, await llm.AskLlm(TypeConversation.Communication,
                                 "Rispondi a questo messaggio con poche parole: " + message,
                                 comunicationChat: memory.AddMessageLLM(chat, message)));
-                        memory.UserMemory.TryGetValue(chat.Id, out var info);
-                        if (info?.FirstMeasurement != null)
+                        if (memory.GetFirstMeasurement(chat.Id).HasValue)
                             await CheckAverage(Request.AverageData(memory, chat, 30, true, false), bot, chat);
                         break;
 
@@ -99,11 +99,12 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         // manage button
+        [Obsolete]
         public static async Task ValuteMeasurement(string resp, User from, Chat chat, TelegramBotClient bot, Memory memory) {
             if (resp == "yes") {
                 await HandleConfirmRegisterMeasurement(from, chat, bot, memory);
-                memory.UserMemory.TryGetValue(chat.Id, out var info);
-                if (info?.LastMeasurement?.DiastolicPressure != null) {
+                // if it is inserts a measure of pressure then check
+                if (memory.IsPressureLastMeasurement(chat.Id)) {
                     int?[] average = Request.AverageData(memory, chat, 30, true, false);
                     await CheckAverage(average, bot, chat);
                 }

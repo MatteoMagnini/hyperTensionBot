@@ -8,12 +8,12 @@ namespace HyperTensionBot.Server.LLM {
         // URL dell'API del LLM
         private string? _llmApiUrl;
         // set names to different model 
-        private readonly string MODEL_COMUNICATION = "falcon:180b";
-        private readonly string MODEL_REQUEST = "falcon:180b";
-        private readonly string MODEL_INSERT = "falcon:180b";
+        private readonly string MODEL_COMUNICATION = "nous-hermes2-mixtral";
+        private readonly string MODEL_REQUEST = "llama2:70b";
+        private readonly string MODEL_INSERT = "llama2:70b";
 
-        private List<ChatMessage> analysistInsert; 
-        private List<ChatMessage> analysisRequest;
+        private List<LLMChat> analysistInsert; 
+        private List<LLMChat> analysisRequest;
 
         private ILogger<LLMService>? _logger; 
 
@@ -36,12 +36,12 @@ namespace HyperTensionBot.Server.LLM {
         }
 
         // connection and interaction with server for request to LLM 
-        public async Task<string> AskLlm(TypeConversation t, string message, List<ChatMessage>? comunicationChat = null) {
+        public async Task<string> AskLlm(TypeConversation t, string message, List<LLMChat>? comunicationChat = null) {
 
             if (_llmApiUrl != "") {
 
                 string modelName = "";
-                List<ChatMessage> chatContext = new();
+                List<LLMChat> chatContext = new();
                 AssignInput(t, ref chatContext, comunicationChat, ref modelName); 
 
                 //modelName = (t == TypeConversation.Communication)? MODEL_COMUNICATION: MODEL_REQUEST;
@@ -77,7 +77,7 @@ namespace HyperTensionBot.Server.LLM {
             return "Non è possibile rispondere a queste domande. Riprova più tardi. "; 
         }
 
-        private void AssignInput(TypeConversation t, ref List<ChatMessage> chatContext, List<ChatMessage>? comunication, ref string modelName) {
+        private void AssignInput(TypeConversation t, ref List<LLMChat> chatContext, List<LLMChat>? comunication, ref string modelName) {
             switch(t) {
                 case TypeConversation.Request:
                     modelName = MODEL_REQUEST;
