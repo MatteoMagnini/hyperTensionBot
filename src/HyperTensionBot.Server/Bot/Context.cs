@@ -1,7 +1,7 @@
 using HyperTensionBot.Server.Bot.Extensions;
+using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.ModelML;
-using HyperTensionBot.Server.Services;
 using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -10,7 +10,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace HyperTensionBot.Server.Bot {
     public static class Context {
-        [Obsolete]
+        
         public static async Task ControlFlow(TelegramBotClient bot, LLMService llm, Memory memory, Intent context, string message, Chat chat, DateTime date) {
             try {
                 switch (context) {
@@ -99,7 +99,7 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         // manage button
-        [Obsolete]
+        
         public static async Task ValuteMeasurement(string resp, User from, Chat chat, TelegramBotClient bot, Memory memory) {
             if (resp == "yes") {
                 await HandleConfirmRegisterMeasurement(from, chat, bot, memory);
@@ -125,7 +125,7 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         private static async Task HandleConfirmRegisterMeasurement(User from, Chat chat, TelegramBotClient bot, Memory memory) {
-            memory.PersistMeasurement(from, chat);
+            memory.PersistMeasurement(from, chat.Id);
 
             await bot.SendTextMessageAsync(chat.Id,
                 new string[] {

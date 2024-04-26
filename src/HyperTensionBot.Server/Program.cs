@@ -1,8 +1,8 @@
 using HyperTensionBot.Server.Bot;
 using HyperTensionBot.Server.Bot.Extensions;
+using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.ModelML;
-using HyperTensionBot.Server.Services;
 using Microsoft.ML.Transforms.Text;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -14,6 +14,7 @@ using Telegram.Bot.Types.Enums;
 var builder = WebApplication.CreateBuilder(args);
 builder.ConfigureTelegramBot();
 
+builder.Services.AddSingleton<ConfigurationManager>(builder.Configuration);
 builder.Services.AddSingleton<Memory>();
 
 // add model and llm 
@@ -39,7 +40,7 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
             return Results.Ok();
 
         using var sr = new StreamReader(context.Request.Body);
-        var update = JsonConvert.DeserializeObject<Update>(await sr.ReadToEndAsync()) ?? throw new BadHttpRequestException("Could not deserialize JSON payload as Telegram bot update");
+        var update = JsonConvert.DeserializeObject<Telegram.Bot.Types.Update>(await sr.ReadToEndAsync()) ?? throw new BadHttpRequestException("Could not deserialize JSON payload as Telegram bot update");
         logger.LogDebug("Received update {0} of type {1}", update.Id, update.Type);
 
         User? from = update.Message?.From ?? update.CallbackQuery?.From;
@@ -53,7 +54,7 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
                 var input = new ModelInput { Sentence = messageText };
                 var result = model.Predict(input);
 
-                memory.HandleUpdate(from, result, messageText);
+                memory.HandleUpdate(from, update, result, messageText);
                 logger.LogInformation("Chat {0} incoming {1}", chat.Id, update.Type switch {
                     UpdateType.Message => $"message with text: {update.Message?.Text}",
                     UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
@@ -63,7 +64,7 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
 
                 // manage operations
                 Stopwatch stopwatch = Stopwatch.StartNew();
-                await Context.ControlFlow(bot, llm, memory, result, messageText, chat, update.Message!.Date.ToLocalTime());
+                await Context.ControlFlow(bot, llm, memory, result, messageText, chat, update.Message!.Date);
                 stopwatch.Stop();
                 logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
             }

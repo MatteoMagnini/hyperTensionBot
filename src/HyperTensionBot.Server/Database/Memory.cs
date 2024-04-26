@@ -1,5 +1,4 @@
 using HyperTensionBot.Server.Bot;
-using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.ModelML;
 using MongoDB.Bson;
@@ -9,7 +8,7 @@ using System.Collections.Concurrent;
 using Telegram.Bot.Types;
 using Update = HyperTensionBot.Server.Database.Update;
 
-namespace HyperTensionBot.Server.Services {
+namespace HyperTensionBot.Server.Database {
     public class Memory {
 
         // prendere tutti gli UserMemory metodi Get e toglierli dal codice formando invece delle query di interazione
@@ -26,22 +25,22 @@ namespace HyperTensionBot.Server.Services {
         // to speed access 
         private readonly ConcurrentDictionary<long, ConversationInformation> _chatMemory = new();
 
-        private readonly ILogger<Memory> _logger; 
+        private readonly ILogger<Memory> _logger;
 
         public Memory(
-            ILogger<Memory> logger, WebApplicationBuilder builder
+            ILogger<Memory> logger, ConfigurationManager conf
         ) {
             _logger = logger;
-            Client = new MongoClient(GetStringConnection(builder));
+            Client = new MongoClient(GetStringConnection(conf));
 
             // create Scheme for DB
             Database = Client.GetDatabase("HyperTension");
 
-            CreateScheme(Database); 
+            CreateScheme(Database);
         }
 
-        private string GetStringConnection(WebApplicationBuilder builder) {
-            var section = builder.Configuration.GetSection("MongoDB");
+        private string GetStringConnection(ConfigurationManager conf) {
+            var section = conf.GetSection("MongoDB");
             if (!section.Exists() || section["connection"] is null)
                 throw new ArgumentException("Connection DB: string connection MongoDB is not set");
             return section["connection"]!;
@@ -75,20 +74,20 @@ namespace HyperTensionBot.Server.Services {
         }
 
         public static FilterDefinition<BsonDocument> GetFilter(long id) {
-            return Builders<BsonDocument>.Filter.Eq("id", id); 
+            return Builders<BsonDocument>.Filter.Eq("id", id);
         }
 
         // metodo che deve prendere le informazioni di un nuovo utente e le deve salvare
         // chat information - posso integrare l'unica informazione necessaria che è la data dell'ultimo messaggio. 
-        public void HandleUpdate(User? from, Intent i, string mex) {
+        public void HandleUpdate(User? from, Telegram.Bot.Types.Update? update, Intent i, string mex) {
 
             // update info of User as name,..., Time and number of messages 
             if (from != null) {
-                Update.UpdateUser(User, i, from, mex);
+                Update.UpdateUser(User, update, i, from, mex);
                 _logger.LogTrace("Updated user memory");
             }
 
-            Update.InsertNewMex(Chat, from, i, mex); 
+            Update.InsertNewMex(Chat, update, from, i, mex);
         }
 
         // non interviene database, è qualcosa di temporaneo in Ram 
@@ -105,18 +104,18 @@ namespace HyperTensionBot.Server.Services {
             return User.FindAsync(new BsonDocument()).Result.ToList();
         }
         // gisce collection delle misurazioni
-        public void PersistMeasurement(User from, Chat chat) {
-            if(!_chatMemory.TryGetValue(chat.Id, out var chatInformation)) {
-                throw new Exception($"Tried persisting measurement but no information available about chat {chat.Id}");
+        public void PersistMeasurement(User from, long id) {
+            if (!_chatMemory.TryGetValue(id, out var chatInformation)) {
+                throw new Exception($"Tried persisting measurement but no information available about chat {id}");
             }
-            if(chatInformation.TemporaryMeasurement == null) {
-                throw new Exception($"Tried persisting measurement but no temporary measurement was recorded for chat {chat.Id}");
+            if (chatInformation.TemporaryMeasurement == null) {
+                throw new Exception($"Tried persisting measurement but no temporary measurement was recorded for chat {id}");
             }
 
             var newMeasurement = chatInformation.TemporaryMeasurement;
-            ManageMeasurement.InsertMeasurement(Misuration, chat.Id, newMeasurement); 
+            ManageMeasurement.InsertMeasurement(Misuration, id, newMeasurement);
 
-            _chatMemory.AddOrUpdate(chat.Id, new ConversationInformation(chat.Id), (_, existing) => {
+            _chatMemory.AddOrUpdate(id, new ConversationInformation(id), (_, existing) => {
                 existing.TemporaryMeasurement = null;
                 return existing;
             });
@@ -125,17 +124,17 @@ namespace HyperTensionBot.Server.Services {
         // informazioni personali - occorre splittare nei metodi di inserimento in database e una che invece resta di ritorno Lista per la stampa. 
         public List<string> GetGeneralInfo(Chat chat) {
             // get all messages with type = personal messages 
-            var messages = ManageChat.GetMessages(chat.Id, Chat, Intent.PersonalInfo.ToString()); 
-            return messages!.Select(x => x["messages"].AsString).ToList(); 
+            var messages = ManageChat.GetMessages(chat.Id, Chat, Intent.PersonalInfo.ToString());
+            return messages!.Select(x => x["messages"].AsString).ToList();
         }
 
         public List<Measurement> GetAllMeasurements(long id) {
 
             var bsonMeasurements = ManageMeasurement.GetAllDocuments(Misuration, id);
-            List<Measurement> measurements = new(); 
+            List<Measurement> measurements = new();
             foreach (var measure in bsonMeasurements) {
                 measurements.Add(new Measurement((double?)measure["Systolic"], (double?)measure["Diastolic"],
-                    (double?)measure["HeartRate"], (DateTime)measure["Date"])); 
+                    (double?)measure["HeartRate"], measure["Date"].ToLocalTime()));
             }
             return measurements;
 
@@ -151,18 +150,17 @@ namespace HyperTensionBot.Server.Services {
             foreach (var mex in messages) {
                 chatToLLM.Add(new LLMChat("user", mex.ToString()));
             }
-            return chatToLLM; 
+            return chatToLLM;
         }
 
-        [Obsolete] // AsDateTime is obsolete method, but work !! :) 
         internal DateTime? GetFirstMeasurement(long id) {
-            var document = User.FindAsync(GetFilter(id)).Result.First();
-            return document["DateFirstMeasurement"].AsDateTime; 
+            var document = User.FindAsync(GetFilter(id)).Result.FirstOrDefault();
+            return document["DateFirstMeasurement"].ToLocalTime();
         }
 
         public bool IsPressureLastMeasurement(long id) {
 
-            return ManageMeasurement.LastMeasurement(Misuration, User, id).DiastolicPressure.HasValue; 
+            return ManageMeasurement.LastMeasurement(Misuration, User, id).DiastolicPressure.HasValue;
 
         }
     }

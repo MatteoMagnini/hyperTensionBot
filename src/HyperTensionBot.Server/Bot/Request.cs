@@ -1,11 +1,11 @@
 using HyperTensionBot.Server.LLM;
 using Telegram.Bot.Types;
 using Telegram.Bot;
-using HyperTensionBot.Server.Services;
 using System.Drawing;
 using ScottPlot;
 using System.Text;
 using HyperTensionBot.Server.Bot.Extensions;
+using HyperTensionBot.Server.Database;
 
 namespace HyperTensionBot.Server.Bot {
     public static class Request {
@@ -15,7 +15,7 @@ namespace HyperTensionBot.Server.Bot {
 
         // manage request
 
-        [Obsolete] // because there is a obsolete method in GetFirstMeasurement().. 
+         // because there is a obsolete method in GetFirstMeasurement().. 
         private static string SettingsValue(Memory m, long id, ref bool pressure, ref bool frequence, string x, int d) {
             days = d;
 
@@ -45,7 +45,7 @@ namespace HyperTensionBot.Server.Bot {
                 return "";
         }
 
-        [Obsolete]
+        
         public static async Task ManageRequest(string message, Memory mem, Chat chat, TelegramBotClient bot, LLMService llm) { 
             // 0 => contesto, 1 => giorni, 2 => formato
             try {
@@ -192,7 +192,7 @@ namespace HyperTensionBot.Server.Bot {
                     "una panoramica più ampia della tua situazione. Ogni informazione può essere preziosa🗒️");
         }
 
-        [Obsolete]
+        
         public static int?[] AverageData(Memory memory, Chat chat, int d, bool pressure, bool frequence) {
             int?[] average = new int?[3];
             days = d;

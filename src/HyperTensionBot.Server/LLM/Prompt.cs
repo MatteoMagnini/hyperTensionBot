@@ -26,7 +26,7 @@ namespace HyperTensionBot.Server.LLM {
                 "Contesto: Determina il contesto della richiesta assegnando una delle seguenti etichette: ‘PRESSIONE’, ‘FREQUENZA’, ‘ENTRAMBI’, ‘PERSONALE’ (quest'ultimo si riferisce a contesti di informazioni personali). \\" +
                 "Arco Temporale: Stabilisci l’arco temporale menzionato e assegna un valore numerico positivo corrispondente ai giorni, fanno eccezione ‘1’ per dati recenti, o ‘-1’ per richieste non specifiche o totali. \\" +
                 "Formato: Identifica il formato richiesto e assegna ‘MEDIA’, ‘GRAFICO’, o ‘LISTA’, quest’ultima è l’opzione predefinita e obbligatoria se il contesto è ‘PERSONALE’.\\ " +
-                "Il tuo output deve consistere esclusivamente nelle tre etichette scelte, separate da uno spazio, senza alcuna punteggiatura aggiuntiva. Esegui questa operazione con attenzione e precisione, rispettando il significato e le direttive fornite. " +
+                "Il tuo output deve consistere esclusivamente nelle tre etichette scelte, una per ognuna delle 3 categorie, separate da uno spazio, senza alcuna punteggiatura aggiuntiva. Esegui questa operazione con attenzione e precisione, rispettando il significato e le direttive fornite. " +
                 "Questo sarà il tuo unico compito da ora in poi."),
                 new LLMChat("user", "voglio la media della pressione di ieri"),
                 new LLMChat("assistant", "PRESSIONE 1 MEDIA"),
