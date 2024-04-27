@@ -22,7 +22,7 @@ namespace HyperTensionBot.Server.Bot {
         private async Task AdvicePatients(Memory m, TelegramBotClient bot) {
             var patients = m.GetAllPatients();
             foreach (var p in patients) {
-                var timePassed = DateTime.Now - p["DateLastMeasurement"].ToLocalTime();
+                var timePassed = DateTime.Now - (DateTime)p["DateLastMeasurement"];
                 if (timePassed.Hours > TimeSpan.FromDays(2).Hours) {
                     await bot.SendTextMessageAsync((long)p["id"],
                         $"Salve {p["name"]}, sono passate circa {TimeSpan.FromMilliseconds(_timer.Interval).Hours} ore dalla tua ultima misurazione🕰️\n\n" +

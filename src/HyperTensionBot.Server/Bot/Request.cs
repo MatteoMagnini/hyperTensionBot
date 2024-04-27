@@ -197,7 +197,7 @@ namespace HyperTensionBot.Server.Bot {
             int?[] average = new int?[3];
             days = d;
             var firstMeasurement = memory.GetFirstMeasurement(chat.Id);
-            if (firstMeasurement.HasValue)
+            if (!firstMeasurement.HasValue)
                 throw new ArgumentNullException();
             ControlDays(firstMeasurement);
 

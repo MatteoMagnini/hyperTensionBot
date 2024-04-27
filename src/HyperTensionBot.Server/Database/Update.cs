@@ -50,7 +50,7 @@ namespace HyperTensionBot.Server.Database {
                 {"id", from?.Id},
                 {"messages", mex},
                 {"type", i.ToString()},
-                {"Date", u?.Message ?.Date},
+                {"Date", u?.Message?.Date},
             };
             chat?.InsertOne(documentMex);
         }

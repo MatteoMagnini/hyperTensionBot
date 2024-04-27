@@ -39,7 +39,7 @@ namespace HyperTensionBot.Server.Database {
 
         private static DateTime? DateLastMeasurement(IMongoCollection<BsonDocument>? user, long id) {
             var doc = user.FindAsync(Memory.GetFilter(id)).Result.FirstOrDefault();
-            return doc["DateLastMeasurement"].ToLocalTime(); 
+            return (DateTime)doc["DateLastMeasurement"]; 
         }
     }
 }

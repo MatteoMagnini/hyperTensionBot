@@ -134,7 +134,7 @@ namespace HyperTensionBot.Server.Database {
             List<Measurement> measurements = new();
             foreach (var measure in bsonMeasurements) {
                 measurements.Add(new Measurement((double?)measure["Systolic"], (double?)measure["Diastolic"],
-                    (double?)measure["HeartRate"], measure["Date"].ToLocalTime()));
+                    (double?)measure["HeartRate"], (DateTime)measure["Date"]));
             }
             return measurements;
 
@@ -155,7 +155,7 @@ namespace HyperTensionBot.Server.Database {
 
         internal DateTime? GetFirstMeasurement(long id) {
             var document = User.FindAsync(GetFilter(id)).Result.FirstOrDefault();
-            return document["DateFirstMeasurement"].ToLocalTime();
+            return (DateTime)document["DateFirstMeasurement"];
         }
 
         public bool IsPressureLastMeasurement(long id) {

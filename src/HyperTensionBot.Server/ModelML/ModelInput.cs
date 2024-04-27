@@ -5,10 +5,10 @@ namespace HyperTensionBot.Server.ModelML {
 
         [LoadColumn(0)]
         [ColumnName(@"Sentence")]
-        public string Sentence { get; set; }
+        public string? Sentence { get; set; }
 
         [LoadColumn(1)]
         [ColumnName(@"Label")]
-        public string Label { get; set; }
+        public string? Label { get; set; }
     }
 }

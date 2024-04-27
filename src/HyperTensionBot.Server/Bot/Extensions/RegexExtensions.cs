@@ -40,7 +40,7 @@ namespace HyperTensionBot.Server.Bot.Extensions {
         }
 
         public static string[] ExtractParameters(string message) {
-            var match = Regex.Match(message, @"(?<v1>\w+)\s*(?<v2>[\+\-]?\d+)\s*(?<v3>\w+)");
+            var match = Regex.Match(message, @"(?<v1>[A-Z]+)\s*(?<v2>[\+\-]?\d+)\s*(?<v3>[A-Z]+)");
             if (!match.Success) {
                 throw new ArgumentException("L'output non contiene tre parametri.");
             }
