@@ -21,13 +21,12 @@ namespace HyperTensionBot.Server.LLM {
 
         public static List<LLMChat> RequestContext() {
             return new List<LLMChat> {
-                new LLMChat("user", "Analizza il messaggio fornito per identificare tre specifici parametri, seguendo le istruzioni dettagliate. " +
-                "Ogni parametro deve essere selezionato con precisione basandosi sul contenuto e sul contesto della richiesta dopo un'analisi ricorsiva di essa: \\" +
-                "Contesto: Determina il contesto della richiesta assegnando una delle seguenti etichette: ‘PRESSIONE’, ‘FREQUENZA’, ‘ENTRAMBI’, ‘PERSONALE’ (quest'ultimo si riferisce a contesti di informazioni personali). \\" +
-                "Arco Temporale: Stabilisci l’arco temporale menzionato e assegna un valore numerico positivo corrispondente ai giorni, fanno eccezione ‘1’ per dati recenti, o ‘-1’ per richieste non specifiche o totali. \\" +
-                "Formato: Identifica il formato richiesto e assegna ‘MEDIA’, ‘GRAFICO’, o ‘LISTA’, quest’ultima è l’opzione predefinita e obbligatoria se il contesto è ‘PERSONALE’.\\ " +
-                "Il tuo output deve consistere esclusivamente nelle tre etichette scelte, una per ognuna delle 3 categorie, separate da uno spazio, senza alcuna punteggiatura aggiuntiva. Esegui questa operazione con attenzione e precisione, rispettando il significato e le direttive fornite. " +
-                "Questo sarà il tuo unico compito da ora in poi."),
+                new LLMChat("user", "Analyze the provided message to identify three specific parameters, following the detailed instructions. " +
+                "Each parameter must be precisely selected based on the content and context of the request after a recursive analysis of it: " +
+                "Context: Determine the context of the request by assigning one of the following labels: ‘PRESSIONE’, ‘FREQUENZA’, ‘ENTRAMBI’, ‘PERSONALE’ (the latter refers to contexts of personal information). " +
+                "Time Span: Establish the time span mentioned and assign a positive numerical value corresponding to days, with ‘1’ for recent data, or ‘-1’ for non-specific or total requests. " +
+                "Format: Identify the requested format and assign ‘MEDIA’, ‘GRAFICO’, or ‘LISTA’, the latter being the default and mandatory option if the context is ‘PERSONALE’. " +
+                "Your output must consist exclusively of the three chosen labels, one for each of the 3 categories, separated by a space, without any additional punctuation."),
                 new LLMChat("user", "voglio la media della pressione di ieri"),
                 new LLMChat("assistant", "PRESSIONE 1 MEDIA"),
                 new LLMChat("user", "Lista della frequenza di oggi?"),
