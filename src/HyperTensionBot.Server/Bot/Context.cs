@@ -13,14 +13,20 @@ namespace HyperTensionBot.Server.Bot {
         
         public static async Task ControlFlow(TelegramBotClient bot, LLMService llm, Memory memory, Intent context, string message, Chat chat, DateTime date) {
             try {
+                int idMessage;
                 switch (context) {
+                    
                     case Intent.Richiesta:
+                        idMessage = await SendMessagesExtension.Waiting(chat.Id, bot); 
                         await Request.ManageRequest(message, memory, chat, bot, llm);
+                        await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
 
                     // ask conferme and storage data 
                     case Intent.PersonalInfo:
+                        idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await StorageGeneralData(bot, message, chat, memory);
+                        await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
                     case Intent.Inserimento:
                         // var result = await llm.AskLlm(TypeConversation.Insert, message); // non è consigliabile procedere tramite LLM sul parser dei parametri
@@ -28,18 +34,23 @@ namespace HyperTensionBot.Server.Bot {
                         break;
 
                     case Intent.Umore:
+                        idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await bot.SendTextMessageAsync(
-                            chat.Id, await llm.AskLlm(TypeConversation.Communication,
-                                "Rispondi a questo messaggio con poche parole: " + message,
+                            chat.Id, await llm.AskLlm(TypeConversation.Communication, message,
                                 comunicationChat: memory.AddMessageLLM(chat, message)));
                         if (memory.GetFirstMeasurement(chat.Id).HasValue)
                             await CheckAverage(Request.AverageData(memory, chat, 30, true, false), bot, chat);
+
+                        await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
 
                     // LLM 
                     case Intent.Generale:
+                        idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await bot.SendTextMessageAsync(
                             chat.Id, await llm.AskLlm(TypeConversation.Communication, message, memory.AddMessageLLM(chat, message)));
+
+                        await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
                 }
             }
@@ -85,24 +96,15 @@ namespace HyperTensionBot.Server.Bot {
             if (measurement[2] is not null)
                 text.AppendLine($"❤️ Frequenza: {(int)measurement[2]!} bpm\n\nHo capito bene?");
 
-            await SendButton(bot, text.ToString(), chat, new string[] { "Sì, registra!", "yes", "No", "no" });
+            await SendMessagesExtension.SendButton(bot, text.ToString(), chat, new string[] { "Sì, registra!", "yes", "No", "no" });
 
-        }
-
-        public static async Task SendButton(TelegramBotClient bot, string text, Chat chat, string[] s) {
-            await bot.SendTextMessageAsync(chat.Id, text,
-                replyMarkup: new InlineKeyboardMarkup(new InlineKeyboardButton[] {
-                new InlineKeyboardButton(s[0]) { CallbackData = s[1] },
-                new InlineKeyboardButton(s[2]) { CallbackData = s[3] },
-                })
-            );
         }
 
         // manage button
         
         public static async Task ValuteMeasurement(string resp, User from, Chat chat, TelegramBotClient bot, Memory memory) {
             if (resp == "yes") {
-                await HandleConfirmRegisterMeasurement(from, chat, bot, memory);
+                await SendMessagesExtension.HandleConfirmRegisterMeasurement(from, chat, bot, memory);
                 // if it is inserts a measure of pressure then check
                 if (memory.IsPressureLastMeasurement(chat.Id)) {
                     int?[] average = Request.AverageData(memory, chat, 30, true, false);
@@ -110,7 +112,7 @@ namespace HyperTensionBot.Server.Bot {
                 }
             }
             else if (resp == "no") {
-                await HandleRefuseRegisterMeasurement(chat, bot, memory);
+                await SendMessagesExtension.HandleRefuseRegisterMeasurement(chat, bot, memory);
             }
         }
 
@@ -122,32 +124,6 @@ namespace HyperTensionBot.Server.Bot {
                 await bot.SendTextMessageAsync(chat.Id, $"La media sulla pressione è {average[0]}/{average[1]} che rientra sotto i parametri ottimali di salute😁");
             else
                 await bot.SendTextMessageAsync(chat.Id, $"La media sulla pressione è {average[0]}/{average[1]}, e le consiglio di consultare il medico per analizzare la situazione in maneira più approfondita🧑🏽‍⚕️");
-        }
-
-        private static async Task HandleConfirmRegisterMeasurement(User from, Chat chat, TelegramBotClient bot, Memory memory) {
-            memory.PersistMeasurement(from, chat.Id);
-
-            await bot.SendTextMessageAsync(chat.Id,
-                new string[] {
-                    "Perfetto, tutto chiaro\\! Inserisco subito i tuoi dati\\. Ricordati di inviarmi una nuova misurazione domani\\. ⌚",
-                    "Il dottore sarà impaziente di vedere i tuoi dati\\. Ricordati di inviarmi una nuova misurazione domani\\. ⌚",
-                    "I dati sono stati inseriti, spero solo che il dottore capisca la mia calligrafia\\! Ricordati di inviarmi una nuova misurazione domani\\. ⌚",
-                    "Perfetto, grazie\\! Ricordati di inviarmi una nuova misurazione domani\\. ⌚"
-                        }.PickRandom(),
-                        parseMode: ParseMode.MarkdownV2
-            );
-        }
-
-        private static async Task HandleRefuseRegisterMeasurement(Chat chat, TelegramBotClient bot, Memory memory) {
-
-            await bot.SendTextMessageAsync(chat.Id,
-                new string[] {
-                    "No? Mandami pure i dati corretti allora\\.\nInvia le misure rilevate in un *unico messaggio di testo\\.",
-                    "Devo aver capito male, puoi ripetere i dati della misurazione?\nInvia le misure rilevate in un *unico messaggio di testo*\\.",
-                    "Forse ho capito male, puoi ripetere?\nInvia le misure rilevate in un *unico messaggio di testo*\\.",
-                        }.PickRandom(),
-                        parseMode: ParseMode.MarkdownV2
-            );
         }
     }
 }

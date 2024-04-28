@@ -5,8 +5,7 @@ namespace HyperTensionBot.Server.LLM {
             return new List<LLMChat> {
                 new LLMChat("user", "Assumi il ruolo di assistente virtuale medico, specializzato nel supporto a pazienti con ipertensione. Il tuo compito è di gestire dati medici in modo sicuro, fornire risposte e consigli basilari sulla salute, " +
                 "e indirizzare questioni complesse al medico. Mantieni un linguaggio semplice, evita tecnicismi e rispetta i limiti del tuo ruolo. Rispondi educatamente e con brevità alle domande pertinenti, e guida i pazienti verso il personale qualificato " +
-                "per questioni fuori dal tuo ambito. Questa sarà la tua funzione costante."),
-                new LLMChat("assistant", "Ho compreso perfettamente il mio ruolo."),
+                "per questioni fuori dal tuo ambito. Questa sarà la tua funzione per sempre d'ora in poi."),
                 new LLMChat("user", "Salve, come posso effettuare delle misurazioni ottimali?"),
                 new LLMChat("assistant", "Posso darti i seguenti consigli: Ricordati di attendere qualche minuto in posizione seduta prima di effettuare le misurazioni." +
                 "Evita di effettuare le misurazioni dopo: pasti, fumo di sigarette, consumo di alcolici, sforzi fisici o stress emotivi. " + "Posiziona il bracciale uno o due centimetri " +
@@ -25,23 +24,14 @@ namespace HyperTensionBot.Server.LLM {
                     "For Context, assign one of these labels: 'PRESSIONE', 'FREQUENZA', 'ENTRAMBI', 'PERSONALE', where - PERSONALE - refers to contexts of personal information. " +
                     "For Time Span, establish the mentioned time span and assign a positive numerical value corresponding to days, use 1 for recent data, or -1 for non-specific or total requests. " +
                     "For Format, identify the requested format and assign 'MEDIA', 'GRAFICO', or 'LISTA', with -LIST- being the default and mandatory option if the context is -PERSONALE-. " +
-                    "The output must consist exclusively of the three chosen labels, one for each category, separated by a space, with no additional punctuation or explanations. look at the examples already present in the chat"),
-                new LLMChat("user", "voglio la media della pressione di ieri"),
-                new LLMChat("assistant", "PRESSIONE 1 MEDIA"),
+                    "The output must consist exclusively of the three chosen labels, one for each category, separated by a space, without additional punctuation, explanations. " +
+                    "Look the sintax to the examples already present in the chat and respond as a robot with just the 3 words you are allowed."),
+                new LLMChat("user", "voglio la media della pressione"),
+                new LLMChat("assistant", "PRESSIONE -1 MEDIA"),
                 new LLMChat("user", "Lista della frequenza di oggi?"),
                 new LLMChat("assistant", "FREQUENZA 0 LISTA"),
                 new LLMChat("user", "Grafico delle misure dell'ultimo mese"),
                 new LLMChat("assistant", "ENTRAMBI 30 GRAFICO"),
-                new LLMChat("user", "Tutti i dati della pressione"),
-                new LLMChat("assistant", "PRESSIONE -1 LISTA"),
-                new LLMChat("user", "Voglio sapere la frequenza degli ultimi 6 mesi"),
-                new LLMChat("assistant", "FREQUENZA 180 LISTA"),
-                new LLMChat("user", "Voglio visualizzare i dati delle ultime due settimane"),
-                new LLMChat("assistant", "ENTRAMBI 14 GRAFICO"),
-                new LLMChat("user", "Riassunto di tutte le informazioni che ho fornito finora\""),
-                new LLMChat("assistant", "PERSONALE -1 LISTA"),
-                new LLMChat("user", "Grafico"),
-                new LLMChat("assistant", "ENTRAMBI -1 GRAFICO")
             };
         }
 
