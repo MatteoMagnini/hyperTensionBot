@@ -40,11 +40,12 @@ namespace HyperTensionBot.Server.Bot.Extensions {
         }
 
         public static string[] ExtractParameters(string message) {
-            var match = Regex.Match(message, @"(?<v1>[A-Z]+)\s*(?<v2>[\+\-]?\d+)\s*(?<v3>[A-Z]+)");
+            var match = Regex.Match(message, @"(?<v1>[A-Z]{2,})[\s\S]*?(?<v2>\d+)[\s\S]*?(?<v3>[A-Z]{2,})");
+
             if (!match.Success) {
                 throw new ArgumentException("L'output non contiene tre parametri.");
             }
-            return new[] { match.Groups["v1"].Value, match.Groups["v2"].Value, match.Groups["v3"].Value };
+            return new[] { Regex.Replace(match.Groups["v1"].Value, "[^A-Z]+", ""), match.Groups["v2"].Value, Regex.Replace(match.Groups["v3"].Value, "[^A-Z]+", "")};
         }
     }
 }

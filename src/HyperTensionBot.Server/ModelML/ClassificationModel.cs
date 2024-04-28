@@ -51,7 +51,7 @@ namespace HyperTensionBot.Server.ModelML {
                 }
             }
 
-            return (Intent)Enum.Parse(typeof(Intent), result);
+            return (Intent)Enum.Parse(typeof(Intent), result!);
         }
     }
 }

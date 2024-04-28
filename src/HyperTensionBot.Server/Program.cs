@@ -50,11 +50,12 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
         if (update.Message?.Text is not null) {
             var messageText = update.Message?.Text;
             if (messageText != null) {
+                var date = Time.Convert(update!.Message!.Date); 
                 // add message to model input and predict intent
                 var input = new ModelInput { Sentence = messageText };
                 var result = model.Predict(input);
 
-                memory.HandleUpdate(from, update, result, messageText);
+                memory.HandleUpdate(from, date, result, messageText);
                 logger.LogInformation("Chat {0} incoming {1}", chat.Id, update.Type switch {
                     UpdateType.Message => $"message with text: {update.Message?.Text}",
                     UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
@@ -64,7 +65,7 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
 
                 // manage operations
                 Stopwatch stopwatch = Stopwatch.StartNew();
-                await Context.ControlFlow(bot, llm, memory, result, messageText, chat, update.Message!.Date);
+                await Context.ControlFlow(bot, llm, memory, result, messageText, chat, date);
                 stopwatch.Stop();
                 logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
             }
