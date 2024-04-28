@@ -4,6 +4,7 @@ using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.ModelML;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using OpenAI_API.Chat;
 using System.Collections.Concurrent;
 using Telegram.Bot.Types;
@@ -149,9 +150,11 @@ namespace HyperTensionBot.Server.Database {
             var messages = ManageChat.GetMessages(chat.Id, Chat, Intent.Generale.ToString());
 
             var chatToLLM = Prompt.GeneralContext();
-            foreach (var mex in messages) {
-                chatToLLM.Add(new LLMChat("user", mex.ToString()));
-            }
+            chatToLLM.AddRange(new List<LLMChat> {
+                new LLMChat("user", messages[messages.Count - 1].ToString()),
+                new LLMChat("user", messages[messages.Count - 2].ToString()),
+            }); 
+
             return chatToLLM;
         }
 

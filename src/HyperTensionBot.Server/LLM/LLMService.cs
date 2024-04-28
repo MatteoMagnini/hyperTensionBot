@@ -49,7 +49,7 @@ namespace HyperTensionBot.Server.LLM {
                 // build payload JSON
                 var jsonPayload = new {
                     model = modelName,
-                    prompt = chatContext!.First().Content + message,
+                    prompt = chatContext!.First().Content + "\n The request is: " + message,
                     messages = chatContext,
                     stream = false,
                 };

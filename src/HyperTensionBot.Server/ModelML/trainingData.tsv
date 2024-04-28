@@ -1644,3 +1644,13 @@ Dammi la pressione	Richiesta
 Mi dai il grafico delle pressioni	Richiesta
 dammi il grafico dei miei dati di pressione	Richiesta
 voglio il grafico dei miei dati di pressione	Richiesta
+dammi il grafico sui dati di pressione	Richiesta
+l'anno scorso fumavo tutti i giorni. Quest'anno invece ho smesso	PersonalInfo
+ad ogni partita della juve bevo una birra così le sconfitte risulteranno meno amare.	PersonalInfo
+Mi fai un resoconto di tutte le info personali che ti ho scritto finora?	Richiesta
+Riscrivi le mie informazioni personali	Richiesta
+dammi il grafico con i miei valori della frequenza	Richiesta
+voglio un grafico dei miei dati di frequenza.	Richiesta
+FREQUENZA -1 GRAFICO	Inserimento
+Dammi FREQUENZA -1 GRAFICO	Richiesta
+grazie	Generale
