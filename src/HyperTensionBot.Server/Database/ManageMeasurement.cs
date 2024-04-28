@@ -1,4 +1,5 @@
 using HyperTensionBot.Server.Bot;
+using HyperTensionBot.Server.Bot.Extensions;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -34,12 +35,12 @@ namespace HyperTensionBot.Server.Database {
 
             var measure = measurements.FindAsync(filter).Result.FirstOrDefault(); 
             return new Measurement((double?)measure["Systolic"], (double?)measure["Diastolic"],
-                    (double?)measure["HeartRate"], (DateTime)measure["Date"]); 
+                    (double?)measure["HeartRate"], Time.Convert((DateTime)measure["Date"])); 
         }
 
         private static DateTime? DateLastMeasurement(IMongoCollection<BsonDocument>? user, long id) {
             var doc = user.FindAsync(Memory.GetFilter(id)).Result.FirstOrDefault();
-            return (DateTime)doc["DateLastMeasurement"]; 
+            return Time.Convert((DateTime)doc["DateLastMeasurement"]); 
         }
     }
 }

@@ -77,7 +77,7 @@ namespace HyperTensionBot.Server.Bot {
                 diastolicPressure: measurement[1],
                 heartRate: measurement[2],
                 date: date
-            ));
+            ), date);
 
             StringBuilder text = new StringBuilder("Ho ricevuto la misurazione.\n\n");
             if (measurement[0] is not null)

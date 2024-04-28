@@ -1,4 +1,5 @@
 using HyperTensionBot.Server.Bot;
+using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.ModelML;
 using MongoDB.Bson;
@@ -79,20 +80,20 @@ namespace HyperTensionBot.Server.Database {
 
         // metodo che deve prendere le informazioni di un nuovo utente e le deve salvare
         // chat information - posso integrare l'unica informazione necessaria che è la data dell'ultimo messaggio. 
-        public void HandleUpdate(User? from, Telegram.Bot.Types.Update? update, Intent i, string mex) {
+        public void HandleUpdate(User? from, DateTime date, Intent i, string mex) {
 
             // update info of User as name,..., Time and number of messages 
             if (from != null) {
-                Update.UpdateUser(User, update, i, from, mex);
+                Update.UpdateUser(User, date, i, from, mex);
                 _logger.LogTrace("Updated user memory");
             }
 
-            Update.InsertNewMex(Chat, update, from, i, mex);
+            Update.InsertNewMex(Chat, date, from, i, mex);
         }
 
         // non interviene database, è qualcosa di temporaneo in Ram 
-        public void SetTemporaryMeasurement(Chat chat, Measurement measurement) {
-            _chatMemory.AddOrUpdate(chat.Id, new ConversationInformation(chat.Id) { TemporaryMeasurement = measurement }, (_, existing) => {
+        public void SetTemporaryMeasurement(Chat chat, Measurement measurement, DateTime date) {
+            _chatMemory.AddOrUpdate(chat.Id, new ConversationInformation(chat.Id, date) { TemporaryMeasurement = measurement }, (_, existing) => {
                 existing.TemporaryMeasurement = measurement;
                 return existing;
             });
@@ -103,6 +104,7 @@ namespace HyperTensionBot.Server.Database {
         public List<BsonDocument> GetAllPatients() {
             return User.FindAsync(new BsonDocument()).Result.ToList();
         }
+
         // gisce collection delle misurazioni
         public void PersistMeasurement(User from, long id) {
             if (!_chatMemory.TryGetValue(id, out var chatInformation)) {
@@ -134,7 +136,7 @@ namespace HyperTensionBot.Server.Database {
             List<Measurement> measurements = new();
             foreach (var measure in bsonMeasurements) {
                 measurements.Add(new Measurement((double?)measure["Systolic"], (double?)measure["Diastolic"],
-                    (double?)measure["HeartRate"], (DateTime)measure["Date"]));
+                    (double?)measure["HeartRate"], Time.Convert((DateTime)measure["Date"])));
             }
             return measurements;
 
@@ -155,7 +157,7 @@ namespace HyperTensionBot.Server.Database {
 
         internal DateTime? GetFirstMeasurement(long id) {
             var document = User.FindAsync(GetFilter(id)).Result.FirstOrDefault();
-            return (DateTime)document["DateFirstMeasurement"];
+            return Time.Convert((DateTime)document["DateFirstMeasurement"]);
         }
 
         public bool IsPressureLastMeasurement(long id) {
