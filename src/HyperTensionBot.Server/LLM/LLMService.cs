@@ -1,12 +1,15 @@
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Text;
+using System.Net.Http;
+
 namespace HyperTensionBot.Server.LLM {
     public class LLMService {
 
         private readonly HttpClient _httpClient = new HttpClient();
         // URL dell'API del LLM
         private string? _llmApiUrl;
+
         // set names to different model 
         private readonly string MODEL_COMUNICATION = "nous-hermes2-mixtral";
         private readonly string MODEL_REQUEST = "llama2:70b";
@@ -15,25 +18,44 @@ namespace HyperTensionBot.Server.LLM {
         private List<LLMChat> analysistInsert; 
         private List<LLMChat> analysisRequest;
 
-        private ILogger<LLMService>? _logger; 
+        private ILogger<LLMService>? _logger;
 
-
-        // Build option for client 
-        public LLMService(WebApplicationBuilder builder) {
-            ConfigureUrl(builder);
-            _httpClient.Timeout = TimeSpan.FromSeconds(600);
+        // Factory costructor 
+        private LLMService(WebApplicationBuilder builder) {
+            _llmApiUrl = ConfigureUrl(builder);
 
             analysisRequest = Prompt.RequestContext();
-            analysistInsert = Prompt.InsertContest(); 
+            analysistInsert = Prompt.InsertContest();
         }
-        public void SetLogger(ILogger<LLMService> logger) { _logger = logger; }
 
-        private void ConfigureUrl(WebApplicationBuilder builder) {
+        private static string ConfigureUrl(WebApplicationBuilder builder) {
             var buildCluster = builder.Configuration.GetSection("Clusters");
             if (!buildCluster.Exists() && buildCluster["UrlLLM"] != null)
                 throw new ArgumentException("Configuration Cluster: Url Cluster is not set");
-            _llmApiUrl = buildCluster["UrlLLM"];
+            return buildCluster["UrlLLM"]!;
         }
+
+        public static async Task<LLMService> CreateAsync(WebApplicationBuilder builder) {
+            
+            var llm = new LLMService(builder); 
+            
+            await llm.CheckConnection(llm);
+
+            return llm;
+        }
+
+        private async Task CheckConnection(LLMService llm) {
+
+            llm._httpClient.Timeout = TimeSpan.FromSeconds(200);    // over 200 seconds for the request, it can be an error
+
+            // try get request
+            var response = await llm._httpClient.GetAsync(llm._llmApiUrl!.Replace("/api/generate", ""));
+
+            if (!response.IsSuccessStatusCode)
+                throw new HttpRequestException("Errore di connessione al server"); 
+        }
+
+        public void SetLogger(ILogger<LLMService> logger) { _logger = logger; }
 
         // connection and interaction with server for request to LLM 
         public async Task<string> AskLlm(TypeConversation t, string message, List<LLMChat>? comunicationChat = null) {

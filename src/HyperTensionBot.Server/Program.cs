@@ -19,7 +19,7 @@ builder.Services.AddSingleton<Memory>();
 
 // add model and llm 
 builder.Services.AddSingleton(new ClassificationModel(builder));
-builder.Services.AddSingleton(new LLMService(builder));
+builder.Services.AddSingleton(await LLMService.CreateAsync(builder));
 
 bool internalPOST = false; // flag: exclude some POST request from LLM server 
 var app = builder.Build();
@@ -80,7 +80,10 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
 
         internalPOST = false; // after request, reset flag
     }
-    catch (Exception) { return Results.Ok(); }
+    catch (Exception e) {
+        logger.LogDebug(e.Message); 
+        return Results.Ok(); // system always online 
+    }
     return Results.Ok();
 });
 
