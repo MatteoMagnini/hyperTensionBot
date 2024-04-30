@@ -52,7 +52,7 @@ namespace HyperTensionBot.Server.ModelML {
                     }
                 }
             }
-            
+
         }
     }
 }

@@ -1,11 +1,12 @@
-using HyperTensionBot.Server.LLM;
-using Telegram.Bot.Types;
-using Telegram.Bot;
-using System.Drawing;
-using ScottPlot;
-using System.Text;
 using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
+using HyperTensionBot.Server.LLM;
+using HyperTensionBot.Server.LLM.Strategy;
+using ScottPlot;
+using System.Drawing;
+using System.Text;
+using Telegram.Bot;
+using Telegram.Bot.Types;
 
 namespace HyperTensionBot.Server.Bot {
     public static class Request {
@@ -15,7 +16,7 @@ namespace HyperTensionBot.Server.Bot {
 
         // manage request
 
-         // because there is a obsolete method in GetFirstMeasurement().. 
+        // because there is a obsolete method in GetFirstMeasurement().. 
         private static string SettingsValue(Memory m, long id, ref bool pressure, ref bool frequence, string x, int d) {
             days = d;
 
@@ -29,27 +30,27 @@ namespace HyperTensionBot.Server.Bot {
                 frequence = false;
                 measurementsFormatted = ProcessesRequest(m, id, x => x.SystolicPressure != null && x.DiastolicPressure != null && x.Date >= DateTime.Now.Date.AddDays(-days));
             }
-                else if (x == "FREQUENZA") {
-                    pressure = false;
-                    frequence = true;
-                    measurementsFormatted = ProcessesRequest(m, id, x => x.HeartRate != null && x.Date >= DateTime.Now.Date.AddDays(-days));
-                }
-                else if (x == "ENTRAMBI"){
-                    pressure = frequence = true;
-                    measurementsFormatted = ProcessesRequest(m, id, x => (x.SystolicPressure != null && x.DiastolicPressure != null ||
-                                x.HeartRate != null) && x.Date >= DateTime.Now.Date.AddDays(-days));
-                }
+            else if (x == "FREQUENZA") {
+                pressure = false;
+                frequence = true;
+                measurementsFormatted = ProcessesRequest(m, id, x => x.HeartRate != null && x.Date >= DateTime.Now.Date.AddDays(-days));
+            }
+            else if (x == "ENTRAMBI") {
+                pressure = frequence = true;
+                measurementsFormatted = ProcessesRequest(m, id, x => (x.SystolicPressure != null && x.DiastolicPressure != null ||
+                            x.HeartRate != null) && x.Date >= DateTime.Now.Date.AddDays(-days));
+            }
             if (d != -1)
                 return $"negli ultimi {d} giorni";
             else
                 return "";
         }
 
-        
-        public static async Task ManageRequest(string message, Memory mem, Chat chat, TelegramBotClient bot, LLMService llm) { 
+
+        public static async Task ManageRequest(string message, Memory mem, Chat chat, TelegramBotClient bot, LLMService llm) {
             // 0 => contesto, 1 => giorni, 2 => formato
             try {
-                string outLLM = await llm.AskLlm(TypeConversation.Request, message);
+                string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message);
                 var parameters = RegexExtensions.ExtractParameters(outLLM);
 
                 bool pressure = false;
@@ -79,7 +80,8 @@ namespace HyperTensionBot.Server.Bot {
                                 await Context.CheckAverage(average, bot, chat);
                             break;
                     }
-                } else
+                }
+                else
                     await SendGeneralInfo(bot, mem, chat);
 
             }
@@ -88,7 +90,7 @@ namespace HyperTensionBot.Server.Bot {
                     "(Pss..💕) Mi è stato riferito che il dottore non vede l'ora di studiare la tua situazione😁");
             }
             catch (ArgumentException) {
-                await bot.SendTextMessageAsync(chat.Id, "Non sono riuscito a comprendere il tuo messaggio. \nRiscrivi la richiesta in maniera differente, così potrò aiutarti😁"); 
+                await bot.SendTextMessageAsync(chat.Id, "Non sono riuscito a comprendere il tuo messaggio. \nRiscrivi la richiesta in maniera differente, così potrò aiutarti😁");
             }
             catch (ExceptionExtensions.InsufficientData) {
                 await bot.SendTextMessageAsync(chat.Id, "Per poterti generare il grafico necessito di almeno due misurazioni, ricordati di fornirmi giornalmente i tuoi dati.😢\n\n" +
@@ -170,10 +172,10 @@ namespace HyperTensionBot.Server.Bot {
             var sbFreq = new StringBuilder("\n");
             foreach (var m in measurementsFormatted) {
 
-                if (press && m.SystolicPressure != null && m.DiastolicPressure != null) 
+                if (press && m.SystolicPressure != null && m.DiastolicPressure != null)
                     sbPress.AppendLine($"🔻 Pressione {m.SystolicPressure}/{m.DiastolicPressure} mmgh misurata il {m.Date}");
                 if (freq && m.HeartRate != null)
-                    sbFreq.AppendLine($"❤️ Frequenza {m.HeartRate} bpm misurata il {m.Date}");                    
+                    sbFreq.AppendLine($"❤️ Frequenza {m.HeartRate} bpm misurata il {m.Date}");
             }
             await bot.SendTextMessageAsync(chat.Id, $"{mex}{sbPress}{sbFreq}");
         }
@@ -181,18 +183,18 @@ namespace HyperTensionBot.Server.Bot {
         private static async Task SendGeneralInfo(TelegramBotClient bot, Memory memory, Chat chat) {
 
             StringBuilder sb = new StringBuilder();
-            
-            foreach(var s in memory.GetGeneralInfo(chat)) {
+
+            foreach (var s in memory.GetGeneralInfo(chat)) {
                 sb.Append(s + "\n");
             }
-            if (sb.Length > 0) 
+            if (sb.Length > 0)
                 await bot.SendTextMessageAsync(chat.Id, "Ecco un elenco di tutte le informazioni generali registrate finora!!🗒️\n\n" + sb.ToString());
             else
                 await bot.SendTextMessageAsync(chat.Id, "Non sono presenti dati personali nel tuo storico. Queste informazioni sono molto importanti perchè offrono al dottore " +
                     "una panoramica più ampia della tua situazione. Ogni informazione può essere preziosa🗒️");
         }
 
-        
+
         public static int?[] AverageData(Memory memory, Chat chat, int d, bool pressure, bool frequence) {
             int?[] average = new int?[3];
             days = d;

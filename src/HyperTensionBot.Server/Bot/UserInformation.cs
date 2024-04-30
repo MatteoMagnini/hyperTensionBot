@@ -1,6 +1,6 @@
 using HyperTensionBot.Server.LLM;
+using OpenAI_API.Chat;
 using Telegram.Bot.Types;
-using LLMChat = HyperTensionBot.Server.LLM.LLMChat;
 
 namespace HyperTensionBot.Server.Bot {
     public class UserInformation {
@@ -64,6 +64,6 @@ namespace HyperTensionBot.Server.Bot {
             return TelegramId.GetHashCode();
         }
 
-        public List<LLMChat> ChatComunication { get;}
+        public List<ChatMessage> ChatComunication { get; }
     }
 }

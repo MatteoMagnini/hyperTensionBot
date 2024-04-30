@@ -25,18 +25,18 @@ namespace HyperTensionBot.Server.Bot.Extensions {
             if (!match.Success) {
                 throw new ArgumentException("Il messaggio non contiene numeri decimali.");
             }
-            double? frequence, sistolyc, diastolic; 
+            double? frequence, sistolyc, diastolic;
             if (string.IsNullOrEmpty(match.Groups["v2"].Value)) {
                 frequence = double.Parse(match.Groups["v1"].Value);
-                sistolyc = diastolic = null; 
+                sistolyc = diastolic = null;
             }
             else {
                 sistolyc = (!string.IsNullOrEmpty(match.Groups["v1"].Value)) ? Math.MaxMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value)) : null;
                 diastolic = (!string.IsNullOrEmpty(match.Groups["v1"].Value)) ? Math.MinMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value)) : null;
                 frequence = (!string.IsNullOrEmpty(match.Groups["v3"].Value)) ? double.Parse(match.Groups["v3"].Value) : null;
             }
-            
-            return new[] { sistolyc, diastolic, frequence};
+
+            return new[] { sistolyc, diastolic, frequence };
         }
 
         public static string[] ExtractParameters(string message) {
@@ -45,7 +45,7 @@ namespace HyperTensionBot.Server.Bot.Extensions {
             if (!match.Success) {
                 throw new ArgumentException("L'output non contiene tre parametri.");
             }
-            return new[] { Regex.Replace(match.Groups["v1"].Value, "[^A-Z]+", ""), match.Groups["v2"].Value, Regex.Replace(match.Groups["v3"].Value, "[^A-Z]+", "")};
+            return new[] { Regex.Replace(match.Groups["v1"].Value, "[^A-Z]+", ""), match.Groups["v2"].Value, Regex.Replace(match.Groups["v3"].Value, "[^A-Z]+", "") };
         }
     }
 }

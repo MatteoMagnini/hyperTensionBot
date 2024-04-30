@@ -8,7 +8,6 @@ using MongoDB.Driver.Linq;
 using OpenAI_API.Chat;
 using System.Collections.Concurrent;
 using Telegram.Bot.Types;
-using Update = HyperTensionBot.Server.Database.Update;
 
 namespace HyperTensionBot.Server.Database {
     public class Memory {
@@ -144,16 +143,16 @@ namespace HyperTensionBot.Server.Database {
         }
 
         // inserimento del messaggio in Messaggi collection e restituisco la lista dei messaggi di quell'id Telegram come richiesto 
-        public List<LLMChat> AddMessageLLM(Chat chat, string message) {
+        public List<ChatMessage> AddMessageLLM(Chat chat, string message) {
 
             // get all messages with type = General 
             var messages = ManageChat.GetMessages(chat.Id, Chat, Intent.Generale.ToString());
 
             var chatToLLM = Prompt.GeneralContext();
-            chatToLLM.AddRange(new List<LLMChat> {
-                new LLMChat("user", messages[messages.Count - 1].ToString()),
-                new LLMChat("user", messages[messages.Count - 2].ToString()),
-            }); 
+            chatToLLM.AddRange(new List<ChatMessage> {
+                new ChatMessage(ChatMessageRole.User, messages[messages.Count - 1]["messages"].ToString()),
+                new ChatMessage(ChatMessageRole.User, messages[messages.Count - 2]["messages"].ToString()),
+            });
 
             return chatToLLM;
         }

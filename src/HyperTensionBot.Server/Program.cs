@@ -2,11 +2,11 @@ using HyperTensionBot.Server.Bot;
 using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
+using HyperTensionBot.Server.LLM.Strategy;
 using HyperTensionBot.Server.ModelML;
-using Microsoft.ML.Transforms.Text;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -19,7 +19,9 @@ builder.Services.AddSingleton<Memory>();
 
 // add model and llm 
 builder.Services.AddSingleton(new ClassificationModel(builder));
-builder.Services.AddSingleton(await LLMService.CreateAsync(builder));
+
+// change the strategy - LLM - with class Ollama o gpt
+builder.Services.AddSingleton(new LLMService(await OllamaService.CreateAsync(builder))); // new GPTService(builder))
 
 bool internalPOST = false; // flag: exclude some POST request from LLM server 
 var app = builder.Build();
@@ -45,12 +47,12 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
 
         User? from = update.Message?.From ?? update.CallbackQuery?.From;
         Chat chat = update.Message?.Chat ?? update.CallbackQuery?.Message?.Chat ?? throw new Exception("Unable to detect chat ID");
-        
+
         internalPOST = true; // possible POST calls for request to the LLM server 
         if (update.Message?.Text is not null) {
             var messageText = update.Message?.Text;
             if (messageText != null) {
-                var date = Time.Convert(update!.Message!.Date); 
+                var date = Time.Convert(update!.Message!.Date);
                 // add message to model input and predict intent
                 var input = new ModelInput { Sentence = messageText };
                 var result = model.Predict(input);
@@ -81,7 +83,7 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
         internalPOST = false; // after request, reset flag
     }
     catch (Exception e) {
-        logger.LogDebug(e.Message); 
+        logger.LogDebug(e.Message);
         return Results.Ok(); // system always online 
     }
     return Results.Ok();

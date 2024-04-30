@@ -1,5 +1,3 @@
-using System.Data;
-
 namespace HyperTensionBot.Server.Bot.Extensions {
     public static class Time {
 

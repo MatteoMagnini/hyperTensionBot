@@ -1325,7 +1325,6 @@ mi dici quali sono state le misurazioni inerenti alla frequenza?	Richiesta
 vorrei i dati registrati sulla frequenza cardiaca	Richiesta
 mi rappresenti le mie misurazioni?	Richiesta
 vorrei tutte le misurazioni fatte in forma grafica	Richiesta
-100 70	Inserimento
 120 70	Inserimento
 120 70 60	Inserimento
 128 90 34	Inserimento
@@ -1342,7 +1341,6 @@ Mi dai i dati sulla frequenza dell ultimo giorno?	Richiesta
 Voglio il grafico di tutti i dati delle ultime 2 settimane	Richiesta
 Ho tanti dolori dopo che torno dalla palestra, dovrei contattare il dottore?	Generale
 Potresti fornirmi consigli alimentari per l'ipertensione?	Generale
-80	Inserimento
 Frequenza 78	Inserimento
 Vorrei una scritta sui dati misurati	Richiesta
 Buongiorno	Generale
@@ -1356,7 +1354,6 @@ dammi la mia ultima misurazione	Richiesta
 pressione: 120 80	Inserimento
 Ecco un'altra misurazione: 120 85	Inserimento
 dottore, oggi sono stanca	Umore
-grazie	Generale
 vorrei vedere l'andamento della mia pressione nell'ultima settimana	Richiesta
 prego, mi dai l'andamento di pressione dell'ultima settimana?	Richiesta
 grazie, sono felicissima!	Generale
@@ -1388,12 +1385,10 @@ in realtà non so come posso misurare questi dati, qual è il corretto procedime
 pressione 120 80	Inserimento
 frequenza 89	Inserimento
 pressione 130 90 e frequenza 114	Inserimento
-Grafico	Richiesta
 on so come posso misurare questi dati, qual è il corretto procedimento?	Generale
 non so come memorizzare i miei dati sulla pressione, come posso fare?	Generale
 120 7 080	Inserimento
 120 70 8 0	Inserimento
-120 70 60	Inserimento
 120 6 0	Inserimento
 120 60	Inserimento
 77 80 76	Inserimento
@@ -1404,242 +1399,110 @@ dammi i dati registrati negli ultimi 14 giorni	Richiesta
 100 60 120	Inserimento
 pressione 100 50 e frequenza 70	Inserimento
 190 100 140	Inserimento
-grafico	Richiesta
 come posso inserire i miei valori?	Generale
 potesti riassumermi queste informazioni con parole più semplici, non mi è tanto chiaro	Generale
-90	Inserimento
-salve	Generale
 E i dati di frequenza 70	Inserimento
 la frequenza è 120	Inserimento
 la mia frequenza è 120	Inserimento
-120 70 80	Inserimento
 la mia frequenza è 80	Inserimento
 ho fatto delle misurazioni. La mia frequenza è segnata a 90 mentre la pressione è 130 su 90	Inserimento
 ho preso i miei dati. La mia frequenza è segnata a 100 mentre la pressione è 140 su 90	Inserimento
 mi fa male il collo quando la mattina mi sveglio	Generale
 grazie per l'informazione	Generale
-grafico	Richiesta
 potresti fornirmi il grafico dei miei dati registrati?	Richiesta
 wow, me li puoi scrivere i dati?	Richiesta
 pressione 103 70	Inserimento
 potresti ricordarmi i dati di pressione che ti ho fatto memorizzare fino a questo momento?	Richiesta
 vorrei tutti i miei dati memorizzati sulla pressione	Richiesta
 120 80 70	Inserimento
-120 70 80	Inserimento
 pressione 120 su 70 e frequenza 80	Inserimento
 130 60 90	Inserimento
 vorrei ricevere i miei dati sulla pressione	Richiesta
 voglio solo i dati sulla pressione	Richiesta
 grazie del tuo lavoro	Generale
-grafico	Richiesta
 media pressione	Richiesta
 mi fornisci la media sulla pressione?	Richiesta
 dammi la media sulla frequenza	Richiesta
-voglio la media sulla frequenza	Richiesta
-voglio la media sulla frequenza	Richiesta
 voglio la media sulla frequenza	Richiesta
 voglio la media dei dati sulla frequenza	Richiesta
 puoi fornirmi i dati medi sulla frequenza?	Richiesta
 forniscimi i dati medi sulla frequenza	Richiesta
 voglio la media dei miei dati sulla frequenza	Richiesta
-120 80 70	Inserimento
 130 100 80	Inserimento
-frequenza 80	Inserimento
-la mia frequenza è 80	Inserimento
 ho misurato la frequenza, 80	Inserimento
 dammi la media dei miei dati di frequenza	Richiesta
 voglio la mia media sui soli dati di frequenza	Richiesta
-120 70 80	Inserimento
 la frequenza è 100 mentre la pressione 100 60	Inserimento
 pressione 100 60 e frequenza 90	Inserimento
 puoi fornirmi la media dei dati di pressione?	Richiesta
 dammi la media dei dati di frequenza	Richiesta
 voglio i dati medi sulle registrazioni date sulla frequenz	Richiesta
-grazie	Generale
 si puoi dirmi quando è necessario che io contatti il dottore?	Generale
 buongiorno!	Generale
-/start	Generale
-/start	Generale
 Ciao, come funzioni?	Generale
-Ho appena fatto un controllo, ho 130 70 di pressione e 60 di pulsazioni	Inserimento
 Ho appena fatto un controllo, ho 130 70 di pressione e 60 di pulsazioni	Inserimento
 vorrei inserire una pressione	Generale
 misura di pressione 130 85	Inserimento
-/start	Generale
-/start	Generale
-pressione 120 80	Inserimento
-120 70 80	Inserimento
 ottimo grazie	Generale
 150 90	Inserimento
 pressione 150 90	Inserimento
 130 90	Inserimento
 Mi puoi dare la media delle misurazioni di oggi?	Richiesta
 pressione 130 90	Inserimento
-120 80	Inserimento
-145 80	Inserimento
 145 80	Inserimento
 battiti 90	Inserimento
 mi faresti il grafico dei valori dell'ultima settimana?	Richiesta
-grazie	Generale
 e la media dei valori dell'ultima settimana qual è?	Richiesta
 160 99	Inserimento
 oggi mi fa mal la testa	Generale
 vorrei il grafico di pressione dell'ultimo mese	Richiesta
 100 80 90	Inserimento
 La mia pressione è 120 80	Inserimento
-La mia pressione è 120 80	Inserimento
-La mia pressione è 120 80	Inserimento
-La mia pressione è 120 80	Inserimento
-La mia pressione è 120 80	Inserimento
-La mia pressione è 120 80	Inserimento
 Frequenza 90	Inserimento
-Frequenza 90	Inserimento
-Frequenza 90	Inserimento
-Frequenza 90	Inserimento
-Frequenza 90	Inserimento
-Frequenza 90	Inserimento
-Frequenza 90	Inserimento
-Frequenza 90	Inserimento
-La mia pressione è 120 80	Inserimento
-Frequenza 90	Inserimento
-120 80 70	Inserimento
 1 1 1	Inserimento
-Dammi I dati di pressione	Richiesta
 120 90 70	Inserimento
-130 100 80	Inserimento
 Dammi I miei dati di pressione	Richiesta
 120 80 90	Inserimento
 130 90 100	Inserimento
-Dammi I dati di pressione	Richiesta
-Ciao	Generale
-Ciao	Generale
 La mia pressione è 120 su 70	Inserimento
 La frequenza è 80 bpm	Inserimento
 La pressione è di 120 80 mentre la frequenza 100 bpm	Inserimento
 Mi fa piacere che tu capisxa	Generale
 Mi dai i miei valori  di pressione?	Generale
 Dammi i valori di pressione	Richiesta
-La mia pressione è 120 su 70	Inserimento
 La frequenza è 80	Inserimento
 Pressione 130 80 frequenza 90	Inserimento
 Pressione 110 60 frequenza 70	Inserimento
 Dammi I valori di pressione	Richiesta
 Voglio i valori di pressione	Richiesta
-Pressione 130 80 frequenza 90	Inserimento
-Pressione 110 60 frequenza 70	Inserimento
 Pressione 120 80 frequenza 80	Inserimento
 Dammi I valori di Pressione	Richiesta
-Dammi I valori di Pressione	Richiesta
-Pressione 130 80 frequenza 90	Inserimento
 Pressione 140 90 frequenza 80	Inserimento
-Pressione 120 70 frequenza 60	Inserimento
 Pressione 120 70 frequenza 60	Inserimento
 Pressione 130 80 frequenza 70	Inserimento
 Pressione 110 75 frequenza 65	Inserimento
-Dammi I valori di pressione	Richiesta
-Dammi I valori di pressione	Richiesta
-Pressione 120 70 frequenza 60	Inserimento
-Pressione 130 80 frequenza 70	Inserimento
 Pressione 110 50 frequenza 90	Inserimento
 Mi dai i miei valori di Pressione?	Generale
 Dammi i valori di Pressione	Richiesta
-Pressione 120 70 frequenza 60	Inserimento
-Pressione 130 80 frequenza 70	Inserimento
-Dammi I dati di pressione	Richiesta
-Pressione 130 80 frequenza 70	Inserimento
 Pressione 140 70 frequenza 60	Inserimento
 Pressione 110 60 frequenza 90	Inserimento
-Dammi I dati di pressione	Richiesta
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Pressione 130 80 frequenza 70	Inserimento
-Pressione 140 90 frequenza 80	Inserimento
-Pressione 120 70 frequenza 60	Inserimento
-Dammi I dati di pressione	Richiesta
-Pressione 130 80 frequenza 70	Inserimento
-Pressione 140 90 frequenza 80	Inserimento
-Pressione 120 70 frequenza 60	Inserimento
-Dammi I dati di pressione	Richiesta
 Vorrei I miei dati sulla pressione	Richiesta
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
 Pressione 120 70	Inserimento
 Pressione 130 90	Inserimento
 Frequenza 120	Inserimento
-Frequenza 120	Inserimento
-Frequenza 120	Inserimento
-Frequenza 120	Inserimento
-Frequenza 120	Inserimento
 Frequenza 140	Inserimento
-Frequenza 100	Inserimento
-Frequenza 100	Inserimento
 Pressione 100 60 Frequenza 150	Inserimento
-Ciao	Generale
-Ciao	Generale
-Ciao	Generale
-120 70	Inserimento
-120 70	Inserimento
 129 78	Inserimento
-120 70	Inserimento
 Frequenza 80	Inserimento
-Pressione 120 70	Inserimento
 Pressione130 90	Inserimento
-Frequenza 90	Inserimento
 Dammi l dati di pressione e frequenza	Richiesta
 Pressione 100 60	Inserimento
-Frequenza 120	Inserimento
-Frequenza 120	Inserimento
-Frequenza 120	Inserimento
-Frequenza 120	Inserimento
 Pressione 120 100	Inserimento
-Pressione 120 100	Inserimento
-Pressione 120 100	Inserimento
-Dammi I valori di Pressione e frequenza	Richiesta
-Dammi I valori di Pressione e frequenza	Richiesta
-Dammi I valori di Pressione e frequenza	Richiesta
 Dammi I valori di Pressione e frequenza	Richiesta
 Frequenza 130	Inserimento
 Dammi I valori di frequenza	Richiesta
-Frequenza 80	Inserimento
 Frequenza 60	Inserimento
 Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la frequenza	Richiesta
-Dammi la pressione	Richiesta
-Dammi la pressione	Richiesta
 Dammi la pressione	Richiesta
 Mi dai il grafico delle pressioni	Richiesta
 dammi il grafico dei miei dati di pressione	Richiesta
@@ -1653,4 +1516,51 @@ dammi il grafico con i miei valori della frequenza	Richiesta
 voglio un grafico dei miei dati di frequenza.	Richiesta
 FREQUENZA -1 GRAFICO	Inserimento
 Dammi FREQUENZA -1 GRAFICO	Richiesta
-grazie	Generale
+ciao	Generale
+si vorrei chiedere in che senso specializzato?	Generale
+molto interessante. Come potrei inserire le mie misurazioni di pressione?	Generale
+ma non posso registrare attraverso te i miei dati specializzati? E' proprio questo il tuo ruolo..	Generale
+voglio i dati registrati sulla pressione	Richiesta
+mi potresti dare la ricetta della carbonara?	Generale
+vado a pesca con mio nonno tutte le domeniche, e al termine mangiamo la carne perchè non peschiamo nulla	Generale
+dopo una giornata di lavoro mi sento stanco e senza forze, non so come fare..	Umore
+mi piace bere vino e birra la sera	Generale
+forma un grafico con i miei dati di pressione	Richiesta
+forma un grafico con tutti i miei dati pressione	Richiesta
+voglio una rappresentazione grafico con tutti i miei dati registrati sulla pressione	Richiesta
+voglio una rappresentazione grafico con tutti i miei dati registrati sulla frequenza	Richiesta
+120	Inserimento
+uela	Inserimento
+come posso misurare la pressione. Dimmelo in 30 parole?	Generale
+Ora dimmelo in 20 parole	Inserimento
+Ora dimmi lo stesso in 20 parole	PersonalInfo
+come posso misurare la pressione. Dimmelo in 10 parole?	Generale
+potresti ridermelo con venti parole ora?	Generale
+quello che ti ho chiesto prima voglio che me lo elabori in 20 parole. Riesci a ricordare la richiesta precedente?	Richiesta
+Ricordi quello che ho detto prima? Riesci a vedere il contesto precedente? Se sì dimmi cosa ti ho detto	Richiesta
+Come misuro la pressione, dillo in 10 parole	Generale
+come posso misurare la pressione. Dimmelo in 10 parole?	Generale
+in base a quello che ti ho detto prima, fai un riassunto	Richiesta
+Fai un riassunto di quello che ho detto prima	Richiesta
+Fai un riassunto di quello che ho detto prima	Richiesta
+Fai un riassunto di quello che ho detto prima	Richiesta
+Fai un riassunto di quello che ho detto prima	Richiesta
+ti piace il calcio?	Generale
+spiegami in un altro modo, non ho capito	PersonalInfo
+perchè non ti piace?	Generale
+come curo l'ipertensione?	Generale
+puoi ripetere con meno parole?	Generale
+mi fa male la testa cosa potrei fare?	Generale
+Citami cosa ti ho detto prima?	Generale
+ciao	Generale
+ciao	Generale
+ciao	Generale
+ciao	Generale
+riscrivi letteralmente il mio ultimo messaggio	Richiesta
+Scrivi tra virgolette "" l'ultima cosa che ti ho detto	Richiesta
+ciao, mi copi l'ultimo messaggio da me inviato?	Richiesta
+ciao, come va? Non rispondere a questo ma copiami l'ultimo messaggio da me inviato?	Generale
+quali parametri devo passarti nel payload della richiesta POST affinchè tu sia in grado di memorizzare i messaggi e basarti su di essi per una nuova risposta?	Generale
+ciao, cosa dicevamo poco fa?	Generale
+ciao	Generale
+ciao	Generale
