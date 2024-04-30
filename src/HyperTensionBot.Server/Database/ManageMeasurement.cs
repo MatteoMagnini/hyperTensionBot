@@ -22,25 +22,25 @@ namespace HyperTensionBot.Server.Database {
                 {"Date", newMeasurement.Date},
             };
 
-            measurements?.InsertOne(document); 
+            measurements?.InsertOne(document);
         }
 
         public static Measurement LastMeasurement(IMongoCollection<BsonDocument>? measurements, IMongoCollection<BsonDocument>? user, long id) {
 
-            var date = DateLastMeasurement(user, id); 
+            var date = DateLastMeasurement(user, id);
             var filter = Builders<BsonDocument>.Filter.And(
                     Builders<BsonDocument>.Filter.Eq("id", id),
                     Builders<BsonDocument>.Filter.Eq("Date", date)
                 );
 
-            var measure = measurements.FindAsync(filter).Result.FirstOrDefault(); 
+            var measure = measurements.FindAsync(filter).Result.FirstOrDefault();
             return new Measurement((double?)measure["Systolic"], (double?)measure["Diastolic"],
-                    (double?)measure["HeartRate"], Time.Convert((DateTime)measure["Date"])); 
+                    (double?)measure["HeartRate"], Time.Convert((DateTime)measure["Date"]));
         }
 
         private static DateTime? DateLastMeasurement(IMongoCollection<BsonDocument>? user, long id) {
             var doc = user.FindAsync(Memory.GetFilter(id)).Result.FirstOrDefault();
-            return Time.Convert((DateTime)doc["DateLastMeasurement"]); 
+            return Time.Convert((DateTime)doc["DateLastMeasurement"]);
         }
     }
 }

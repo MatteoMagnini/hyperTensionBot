@@ -1,23 +1,22 @@
 using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
+using HyperTensionBot.Server.LLM.Strategy;
 using HyperTensionBot.Server.ModelML;
 using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace HyperTensionBot.Server.Bot {
     public static class Context {
-        
+
         public static async Task ControlFlow(TelegramBotClient bot, LLMService llm, Memory memory, Intent context, string message, Chat chat, DateTime date) {
             try {
                 int idMessage;
                 switch (context) {
-                    
+
                     case Intent.Richiesta:
-                        idMessage = await SendMessagesExtension.Waiting(chat.Id, bot); 
+                        idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await Request.ManageRequest(message, memory, chat, bot, llm);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
@@ -29,14 +28,14 @@ namespace HyperTensionBot.Server.Bot {
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
                     case Intent.Inserimento:
-                        // var result = await llm.AskLlm(TypeConversation.Insert, message); // non è consigliabile procedere tramite LLM sul parser dei parametri
+                        // var result = await llm.HandleAskAsync(TypeConversation.Insert, message); // non è consigliabile procedere tramite LLM sul parser dei parametri
                         await StorageData(bot, message, chat, memory, date);
                         break;
 
                     case Intent.Umore:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await bot.SendTextMessageAsync(
-                            chat.Id, await llm.AskLlm(TypeConversation.Communication, message,
+                            chat.Id, await llm.HandleAskAsync(TypeConversation.Communication, message,
                                 comunicationChat: memory.AddMessageLLM(chat, message)));
                         if (memory.GetFirstMeasurement(chat.Id).HasValue)
                             await CheckAverage(Request.AverageData(memory, chat, 30, true, false), bot, chat);
@@ -48,7 +47,7 @@ namespace HyperTensionBot.Server.Bot {
                     case Intent.Generale:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await bot.SendTextMessageAsync(
-                            chat.Id, await llm.AskLlm(TypeConversation.Communication, message, memory.AddMessageLLM(chat, message)));
+                            chat.Id, await llm.HandleAskAsync(TypeConversation.Communication, message, memory.AddMessageLLM(chat, message)));
 
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
@@ -61,7 +60,7 @@ namespace HyperTensionBot.Server.Bot {
             catch (ArgumentException) {
                 await bot.SendTextMessageAsync(chat.Id, "Non ho compreso i dati. Prova a riscrivere il messaggio in un altro modo😊\nProva inserendo prima i valori di pressione e poi la frequenza🤞.");
             }
-            
+
             catch (ExceptionExtensions.ImpossibleSystolic) {
                 await bot.SendTextMessageAsync(chat.Id, "La pressione sistolica potrebbe essere errata. Ripeti la misurazione e se i dati si ripetono contatta subito il dottore.");
             }
@@ -101,7 +100,7 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         // manage button
-        
+
         public static async Task ValuteMeasurement(string resp, User from, Chat chat, TelegramBotClient bot, Memory memory) {
             if (resp == "yes") {
                 await SendMessagesExtension.HandleConfirmRegisterMeasurement(from, chat, bot, memory);
@@ -120,7 +119,7 @@ namespace HyperTensionBot.Server.Bot {
             // check sulla media nell'ultimo mese dopo un inserimento delle nuove misure
             StringBuilder sb = new();
             sb.Append("Ho analizzato le nuove medie registrate:\n");
-            if (average[0] < 135 && average[1] < 85) 
+            if (average[0] < 135 && average[1] < 85)
                 await bot.SendTextMessageAsync(chat.Id, $"La media sulla pressione è {average[0]}/{average[1]} che rientra sotto i parametri ottimali di salute😁");
             else
                 await bot.SendTextMessageAsync(chat.Id, $"La media sulla pressione è {average[0]}/{average[1]}, e le consiglio di consultare il medico per analizzare la situazione in maneira più approfondita🧑🏽‍⚕️");

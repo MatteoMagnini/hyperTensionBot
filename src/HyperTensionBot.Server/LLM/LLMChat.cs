@@ -1,4 +1,5 @@
 namespace HyperTensionBot.Server.LLM {
+    /*
     public class LLMChat {
 
         public LLMChat(string role, string content) {
@@ -8,5 +9,5 @@ namespace HyperTensionBot.Server.LLM {
         public string Role { get; set; }
 
         public string Content { get; set; }
-    }
+    }*/
 }

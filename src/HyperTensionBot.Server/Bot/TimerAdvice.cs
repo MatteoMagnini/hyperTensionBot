@@ -1,6 +1,5 @@
 using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
-using System.ComponentModel;
 using Telegram.Bot;
 
 namespace HyperTensionBot.Server.Bot {

@@ -1,11 +1,8 @@
-using Telegram.Bot.Types.ReplyMarkups;
-using Telegram.Bot.Types;
-using Telegram.Bot;
-using Telegram.Bot.Types.Enums;
 using HyperTensionBot.Server.Database;
-using System;
-using Telegram.Bot.Requests;
-using Microsoft.AspNetCore.Authentication.OAuth.Claims;
+using Telegram.Bot;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace HyperTensionBot.Server.Bot.Extensions {
     public static class SendMessagesExtension {
@@ -50,11 +47,11 @@ namespace HyperTensionBot.Server.Bot.Extensions {
         // messages to inform for the wait
         public static async Task<int> Waiting(long id, TelegramBotClient bot) {
             var message = await bot.SendTextMessageAsync(id, "🔄⏳ Sto elaborando... 🔄⏳");
-            return message.MessageId; 
+            return message.MessageId;
         }
 
         public static async Task Delete(TelegramBotClient bot, long idChat, int idMessage) {
-            await bot.DeleteMessageAsync(idChat, idMessage); 
+            await bot.DeleteMessageAsync(idChat, idMessage);
         }
     }
 }
