@@ -3,6 +3,8 @@ using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.LLM.Strategy;
 using ScottPlot;
+using ScottPlot.Renderable;
+using System;
 using System.Drawing;
 using System.Text;
 using Telegram.Bot;
@@ -47,53 +49,50 @@ namespace HyperTensionBot.Server.Bot {
         }
 
 
-        public static async Task ManageRequest(string message, Memory mem, Chat chat, TelegramBotClient bot, LLMService llm) {
+        public static async Task ManageRequest(Memory mem, long id, TelegramBotClient bot, LLMService llm, string[] parameters) {
             // 0 => contesto, 1 => giorni, 2 => formato
             try {
-                string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message);
-                var parameters = RegexExtensions.ExtractParameters(outLLM);
-
                 bool pressure = false;
                 bool frequence = false;
 
-                var text = SettingsValue(mem, chat.Id, ref pressure, ref frequence, parameters[0], int.Parse(parameters[1]));
+                var text = SettingsValue(mem, id, ref pressure, ref frequence, parameters[0], int.Parse(parameters[1]));
 
                 if (parameters[0] != "PERSONALE") {
                     switch (parameters[2]) {
                         case "GRAFICO":
-                            await bot.SendTextMessageAsync(chat.Id, $"Ecco il grafico richiesto {text}");
-                            await SendPlot(bot, chat, CreatePlot(pressure, frequence));
+                            await bot.SendTextMessageAsync(id, $"Ecco il grafico richiesto {text}");
+                            await SendPlot(bot, id, CreatePlot(pressure, frequence));
                             break;
                         case "LISTA":
-                            await SendDataList(bot, chat, pressure, frequence,
+                            await SendDataList(bot, id, pressure, frequence,
                                 $"Ecco la lista richiesta sulle misurazioni {text}");
                             break;
                         case "MEDIA":
-                            int?[] average = AverageData(mem, chat, int.Parse(parameters[1]), pressure, frequence);
+                            int?[] average = AverageData(mem, id, int.Parse(parameters[1]), pressure, frequence);
                             if (frequence)
-                                await bot.SendTextMessageAsync(chat.Id, $"Ecco le media sulla frequenza cardiaca {text}:\n" +
+                                await bot.SendTextMessageAsync(id, $"Ecco le media sulla frequenza cardiaca {text}:\n" +
                                     $"❤️ Frequenza cardiaca media: {average[2]} bpm\n");
                             if (pressure)
-                                await bot.SendTextMessageAsync(chat.Id, $"Ecco le media sulla pressione arteriosa {text}:\n" +
+                                await bot.SendTextMessageAsync(id, $"Ecco le media sulla pressione arteriosa {text}:\n" +
                                     $"🔻 Pressione arteriosa media: {average[0]}/{average[1]} mmHg");
                             if (pressure)
-                                await Context.CheckAverage(average, bot, chat);
+                                await Context.CheckAverage(average, bot, id);
                             break;
                     }
                 }
                 else
-                    await SendGeneralInfo(bot, mem, chat);
+                    await SendGeneralInfo(bot, mem, id);
 
             }
             catch (ArgumentNullException) {
-                await bot.SendTextMessageAsync(chat.Id, "Vorrei fornirti le tue misurazioni ma non sono ancora state registrate, ricordati di farlo quotidianamente.😢\n\n" +
+                await bot.SendTextMessageAsync(id, "Vorrei fornirti le tue misurazioni ma non sono ancora state registrate, ricordati di farlo quotidianamente.😢\n\n" +
                     "(Pss..💕) Mi è stato riferito che il dottore non vede l'ora di studiare la tua situazione😁");
             }
             catch (ArgumentException) {
-                await bot.SendTextMessageAsync(chat.Id, "Non sono riuscito a comprendere il tuo messaggio. \nRiscrivi la richiesta in maniera differente, così potrò aiutarti😁");
+                await bot.SendTextMessageAsync(id, "Non sono riuscito a comprendere il tuo messaggio. \nRiscrivi la richiesta in maniera differente, così potrò aiutarti😁");
             }
             catch (ExceptionExtensions.InsufficientData) {
-                await bot.SendTextMessageAsync(chat.Id, "Per poterti generare il grafico necessito di almeno due misurazioni, ricordati di fornirmi giornalmente i tuoi dati.😢\n\n" +
+                await bot.SendTextMessageAsync(id, "Per poterti generare il grafico necessito di almeno due misurazioni, ricordati di fornirmi giornalmente i tuoi dati.😢\n\n" +
                     "(Pss..💕) Mi è stato riferito che il dottore non vede l'ora di studiare la tua situazione😁");
             }
         }
@@ -152,7 +151,7 @@ namespace HyperTensionBot.Server.Bot {
             return plot;
         }
 
-        private static async Task SendPlot(TelegramBotClient bot, Chat chat, Plot plot) {
+        private static async Task SendPlot(TelegramBotClient bot, long id, Plot plot) {
             Bitmap im = plot.Render();
             Bitmap leg = plot.RenderLegend();
             Bitmap b = new Bitmap(im.Width + leg.Width, im.Height);
@@ -163,11 +162,11 @@ namespace HyperTensionBot.Server.Bot {
             using (var ms = new MemoryStream()) {
                 b.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                 ms.Position = 0;
-                await bot.SendPhotoAsync(chat.Id, new InputFileStream(ms));
+                await bot.SendPhotoAsync(id, new InputFileStream(ms));
             }
         }
 
-        private static async Task SendDataList(TelegramBotClient bot, Chat chat, bool press, bool freq, string mex) {
+        private static async Task SendDataList(TelegramBotClient bot, long id, bool press, bool freq, string mex) {
             var sbPress = new StringBuilder("\n\n");
             var sbFreq = new StringBuilder("\n");
             foreach (var m in measurementsFormatted) {
@@ -177,43 +176,66 @@ namespace HyperTensionBot.Server.Bot {
                 if (freq && m.HeartRate != null)
                     sbFreq.AppendLine($"❤️ Frequenza {m.HeartRate} bpm misurata il {m.Date}");
             }
-            await bot.SendTextMessageAsync(chat.Id, $"{mex}{sbPress}{sbFreq}");
+            await bot.SendTextMessageAsync(id, $"{mex}{sbPress}{sbFreq}");
         }
 
-        private static async Task SendGeneralInfo(TelegramBotClient bot, Memory memory, Chat chat) {
+        private static async Task SendGeneralInfo(TelegramBotClient bot, Memory memory, long id) {
 
             StringBuilder sb = new StringBuilder();
 
-            foreach (var s in memory.GetGeneralInfo(chat)) {
+            foreach (var s in memory.GetGeneralInfo(id)) {
                 sb.Append(s + "\n");
             }
             if (sb.Length > 0)
-                await bot.SendTextMessageAsync(chat.Id, "Ecco un elenco di tutte le informazioni generali registrate finora!!🗒️\n\n" + sb.ToString());
+                await bot.SendTextMessageAsync(id, "Ecco un elenco di tutte le informazioni generali registrate finora!!🗒️\n\n" + sb.ToString());
             else
-                await bot.SendTextMessageAsync(chat.Id, "Non sono presenti dati personali nel tuo storico. Queste informazioni sono molto importanti perchè offrono al dottore " +
+                await bot.SendTextMessageAsync(id, "Non sono presenti dati personali nel tuo storico. Queste informazioni sono molto importanti perchè offrono al dottore " +
                     "una panoramica più ampia della tua situazione. Ogni informazione può essere preziosa🗒️");
         }
 
 
-        public static int?[] AverageData(Memory memory, Chat chat, int d, bool pressure, bool frequence) {
+        public static int?[] AverageData(Memory memory, long id, int d, bool pressure, bool frequence) {
             int?[] average = new int?[3];
             days = d;
-            var firstMeasurement = memory.GetFirstMeasurement(chat.Id);
+            var firstMeasurement = memory.GetFirstMeasurement(id);
             if (!firstMeasurement.HasValue)
                 throw new ArgumentNullException();
             ControlDays(firstMeasurement);
 
             if (pressure) {
-                var press = ProcessesRequest(memory, chat.Id, x => x.SystolicPressure != null && x.DiastolicPressure != null && x.Date >= DateTime.Now.Date.AddDays(-days));
+                var press = ProcessesRequest(memory, id, x => x.SystolicPressure != null && x.DiastolicPressure != null && x.Date >= DateTime.Now.Date.AddDays(-days));
                 average[0] = (((int?)press.Select(m => m.SystolicPressure).Where(x => x != null).Average()));
                 average[1] = ((int?)press.Select(m => m.DiastolicPressure).Where(x => x != null).Average());
             }
             if (frequence) {
-                var freq = ProcessesRequest(memory, chat.Id, x => x.HeartRate != null && x.Date >= DateTime.Now.Date.AddDays(-days));
+                var freq = ProcessesRequest(memory, id, x => x.HeartRate != null && x.Date >= DateTime.Now.Date.AddDays(-days));
 
                 average[2] = ((int?)freq.Select(x => x.HeartRate).Where(x => x != null).Average());
             }
             return average;
+        }
+
+        public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, string message, long id) {
+            string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message);
+            var parameters = RegexExtensions.ExtractParameters(outLLM); 
+            memory.SetTemporaryParametersRequest(id, parameters);
+            await SendMessagesExtension.SendButton(bot, $"Mi stai chiedendo di:\\{SendMessagesExtension.DefineRequestText(parameters)}",
+                    id, new string[] { "Sì, esatto!", "yesReq", "No", "noReq" }); 
+        }
+
+        internal static async Task ValuteRequest(string resp, long id, TelegramBotClient bot, Memory memory, LLMService llm) {
+            // if LLM correctly extract the parameters by requrest continue, else take it manually by user 
+            if (resp == "yesReq") {
+                await ManageRequest(memory, id, bot, llm, memory.GetParameters(id)); 
+            }
+            else if (resp == "noReq") {
+                await ModifyParameters(bot, id); 
+            }
+        }
+
+        // build parameters 
+        private static async Task ModifyParameters(TelegramBotClient bot, long id) {
+            await bot.SendTextMessageAsync(id, "Qui ci saranno le inline Keybord"); 
         }
     }
 }

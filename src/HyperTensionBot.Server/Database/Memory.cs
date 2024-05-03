@@ -6,8 +6,11 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using OpenAI_API.Chat;
+using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.Metrics;
 using Telegram.Bot.Types;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HyperTensionBot.Server.Database {
     public class Memory {
@@ -91,7 +94,7 @@ namespace HyperTensionBot.Server.Database {
             Update.InsertNewMex(Chat, date, from, i, mex);
         }
 
-        // non interviene database, è qualcosa di temporaneo in Ram 
+        // use Ram and not Db 
         public void SetTemporaryMeasurement(Chat chat, Measurement measurement, DateTime date) {
             _chatMemory.AddOrUpdate(chat.Id, new ConversationInformation(chat.Id, date) { TemporaryMeasurement = measurement }, (_, existing) => {
                 existing.TemporaryMeasurement = measurement;
@@ -106,7 +109,7 @@ namespace HyperTensionBot.Server.Database {
         }
 
         // gisce collection delle misurazioni
-        public void PersistMeasurement(User from, long id) {
+        public void PersistMeasurement(long id) {
             if (!_chatMemory.TryGetValue(id, out var chatInformation)) {
                 throw new Exception($"Tried persisting measurement but no information available about chat {id}");
             }
@@ -124,9 +127,9 @@ namespace HyperTensionBot.Server.Database {
         }
 
         // informazioni personali - occorre splittare nei metodi di inserimento in database e una che invece resta di ritorno Lista per la stampa. 
-        public List<string> GetGeneralInfo(Chat chat) {
+        public List<string> GetGeneralInfo(long id) {
             // get all messages with type = personal messages 
-            var messages = ManageChat.GetMessages(chat.Id, Chat, Intent.PersonalInfo.ToString());
+            var messages = ManageChat.GetMessages(id, Chat, Intent.PersonalInfo.ToString());
             return messages!.Select(x => x["messages"].AsString).ToList();
         }
 
@@ -165,7 +168,22 @@ namespace HyperTensionBot.Server.Database {
         public bool IsPressureLastMeasurement(long id) {
 
             return ManageMeasurement.LastMeasurement(Misuration, User, id).DiastolicPressure.HasValue;
+        }
+        internal void SetTemporaryParametersRequest(long id, string[] parameters) {
+            _chatMemory.AddOrUpdate(id, new ConversationInformation(id) { Requestparameters = parameters}, (_, existing) => {
+                existing.Requestparameters = parameters;
+                return existing;
+            });
+        }
 
+        internal string[] GetParameters(long id) {
+            if (!_chatMemory.TryGetValue(id, out var chatInformation)) {
+                throw new Exception($"Tried persisting measurement but no information available about chat {id}");
+            }
+            if (chatInformation.Requestparameters == null) {
+                throw new Exception($"There are not parameters for chat {id}");
+            }
+            return chatInformation.Requestparameters!;
         }
     }
 }

@@ -11,6 +11,8 @@ namespace HyperTensionBot.Server.Bot {
 
         public Measurement? TemporaryMeasurement { get; set; }
 
+        public string[]? Requestparameters { get; set; }
+
         public override bool Equals(object? obj) {
             if (obj is ConversationInformation conversationInformation) {
                 return TelegramChatId == conversationInformation.TelegramChatId;

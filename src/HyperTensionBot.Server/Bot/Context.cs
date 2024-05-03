@@ -17,7 +17,7 @@ namespace HyperTensionBot.Server.Bot {
 
                     case Intent.Richiesta:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
-                        await Request.ManageRequest(message, memory, chat, bot, llm);
+                        await Request.AskConfirmParameters(llm, bot, memory, message, chat.Id); 
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
 
@@ -38,7 +38,7 @@ namespace HyperTensionBot.Server.Bot {
                             chat.Id, await llm.HandleAskAsync(TypeConversation.Communication, message,
                                 comunicationChat: memory.AddMessageLLM(chat, message)));
                         if (memory.GetFirstMeasurement(chat.Id).HasValue)
-                            await CheckAverage(Request.AverageData(memory, chat, 30, true, false), bot, chat);
+                            await CheckAverage(Request.AverageData(memory, chat.Id, 30, true, false), bot, chat.Id);
 
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
@@ -73,7 +73,7 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         private static async Task StorageGeneralData(TelegramBotClient bot, string message, Chat chat, Memory memory) {
-            memory.GetGeneralInfo(chat).Add(message);
+            memory.GetGeneralInfo(chat.Id).Add(message);
             await bot.SendTextMessageAsync(chat.Id, "Queste informazioni sono preziose per il dottore: più dati fornisci migliore sarà l'analisi!💪");
         }
 
@@ -95,34 +95,46 @@ namespace HyperTensionBot.Server.Bot {
             if (measurement[2] is not null)
                 text.AppendLine($"❤️ Frequenza: {(int)measurement[2]!} bpm\n\nHo capito bene?");
 
-            await SendMessagesExtension.SendButton(bot, text.ToString(), chat, new string[] { "Sì, registra!", "yes", "No", "no" });
+            await SendMessagesExtension.SendButton(bot, text.ToString(), chat.Id, new string[] { "Sì, registra!", "yesIns", "No", "noIns" });
 
         }
 
         // manage button
+        public static async Task ManageButton(string resp, User from, Chat chat, TelegramBotClient bot, Memory memory, LLMService llm) {
+            switch (resp) {
+                case "yesIns":
+                case "noIns":
+                    await ValuteMeasurement(resp, from, chat, bot, memory);
+                    break;
+                case "yesReq":
+                case "noReq":
+                    await Request.ValuteRequest(resp, chat.Id, bot, memory, llm);
+                    break;
+            }
+        }
 
-        public static async Task ValuteMeasurement(string resp, User from, Chat chat, TelegramBotClient bot, Memory memory) {
-            if (resp == "yes") {
+        private static async Task ValuteMeasurement(string resp, User from, Chat chat, TelegramBotClient bot, Memory memory) {
+            if (resp == "yesIns") {
                 await SendMessagesExtension.HandleConfirmRegisterMeasurement(from, chat, bot, memory);
                 // if it is inserts a measure of pressure then check
                 if (memory.IsPressureLastMeasurement(chat.Id)) {
-                    int?[] average = Request.AverageData(memory, chat, 30, true, false);
-                    await CheckAverage(average, bot, chat);
+                    int?[] average = Request.AverageData(memory, chat.Id, 30, true, false);
+                    await CheckAverage(average, bot, chat.Id);
                 }
             }
-            else if (resp == "no") {
+            else if (resp == "noIns") {
                 await SendMessagesExtension.HandleRefuseRegisterMeasurement(chat, bot, memory);
             }
         }
 
-        public static async Task CheckAverage(int?[] average, TelegramBotClient bot, Chat chat) {
+        public static async Task CheckAverage(int?[] average, TelegramBotClient bot, long id) {
             // check sulla media nell'ultimo mese dopo un inserimento delle nuove misure
             StringBuilder sb = new();
             sb.Append("Ho analizzato le nuove medie registrate:\n");
             if (average[0] < 135 && average[1] < 85)
-                await bot.SendTextMessageAsync(chat.Id, $"La media sulla pressione è {average[0]}/{average[1]} che rientra sotto i parametri ottimali di salute😁");
+                await bot.SendTextMessageAsync(id, $"La media sulla pressione è {average[0]}/{average[1]} che rientra sotto i parametri ottimali di salute😁");
             else
-                await bot.SendTextMessageAsync(chat.Id, $"La media sulla pressione è {average[0]}/{average[1]}, e le consiglio di consultare il medico per analizzare la situazione in maneira più approfondita🧑🏽‍⚕️");
+                await bot.SendTextMessageAsync(id, $"La media sulla pressione è {average[0]}/{average[1]}, e le consiglio di consultare il medico per analizzare la situazione in maneira più approfondita🧑🏽‍⚕️");
         }
     }
 }
