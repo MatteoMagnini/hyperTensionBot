@@ -73,9 +73,13 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
             }
         }
         else if (update.CallbackQuery?.Data != null && update.CallbackQuery?.Message?.Chat != null) {
-            await Context.ValuteMeasurement(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, bot, memory);
+            await Context.ManageButton(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, bot, memory, llm);
+
             // removing inline keybord
             await bot.EditMessageReplyMarkupAsync(update.CallbackQuery.Message.Chat, update.CallbackQuery.Message.MessageId, replyMarkup: null);
+        }
+        else if (true) {
+            // edit Inline Keyboro
         }
         else
             return Results.NotFound();
