@@ -19,41 +19,33 @@ namespace HyperTensionBot.Server.Bot.Extensions {
             return result;
         }
 
-        public static double[] ExtractPressure(string message) {
-            var match = Regex.Match(message, @"(?<v1>\d{2,3})\D+(?<v2>\d{2,3})");
-            if (!match.Success) {
-                throw new ArgumentException("Il messaggio non contiene due numeri decimali.");
-            }
-            double sistolyc = Math.MaxMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value));
-            double diastolic = Math.MinMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value));
-            return new[] { sistolyc, diastolic };
-        }
+        public static double?[] ExtractMeasurement(string message) {
+            var match = Regex.Match(message, @"(?<v1>\d{2,3})(?:\D+(?<v2>\d{2,3}))?(?:\D+(?<v3>\d{2,3}))?");
 
-        public static double ExtractFreq(string message) {
-            var match = Regex.Match(message, @"(\d{2,3}(\.\d+)?)");
             if (!match.Success) {
-                throw new ArgumentException("Il messaggio non contiene due numeri decimali.");
+                throw new ArgumentException("Il messaggio non contiene numeri decimali.");
             }
-            return double.Parse(match.Value);
-        }
+            double? frequence, sistolyc, diastolic;
+            if (string.IsNullOrEmpty(match.Groups["v2"].Value)) {
+                frequence = double.Parse(match.Groups["v1"].Value);
+                sistolyc = diastolic = null;
+            }
+            else {
+                sistolyc = (!string.IsNullOrEmpty(match.Groups["v1"].Value)) ? Math.MaxMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value)) : null;
+                diastolic = (!string.IsNullOrEmpty(match.Groups["v1"].Value)) ? Math.MinMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value)) : null;
+                frequence = (!string.IsNullOrEmpty(match.Groups["v3"].Value)) ? double.Parse(match.Groups["v3"].Value) : null;
+            }
 
-        public static double[] ExtractMeasurement(string message) {
-            var match = Regex.Match(message, @"(?<v1>\d{2,3})\D+(?<v2>\d{2,3})\D+(?<v3>\d{2,3})");
-            if (!match.Success) {
-                throw new ArgumentException("Il messaggio non contiene tre numeri decimali.");
-            }
-            double sistolyc = Math.MaxMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value));
-            double diastolic = Math.MinMagnitude(double.Parse(match.Groups["v1"].Value), double.Parse(match.Groups["v2"].Value));
-            double frequence = double.Parse(match.Groups["v3"].Value);
             return new[] { sistolyc, diastolic, frequence };
         }
 
         public static string[] ExtractParameters(string message) {
-            var match = Regex.Match(message, @"(?<v1>\w+)\s*(?<v2>[\+\-]?\d+)\s*(?<v3>\w+)");
+            var match = Regex.Match(message, @"(?<v1>[A-Z]{2,})[\s\S]*?(?<v2>\d+)[\s\S]*?(?<v3>[A-Z]{2,})");
+
             if (!match.Success) {
                 throw new ArgumentException("L'output non contiene tre parametri.");
             }
-            return new[] { match.Groups["v1"].Value, match.Groups["v2"].Value, match.Groups["v3"].Value };
+            return new[] { Regex.Replace(match.Groups["v1"].Value, "[^A-Z]+", ""), match.Groups["v2"].Value, Regex.Replace(match.Groups["v3"].Value, "[^A-Z]+", "") };
         }
     }
 }
