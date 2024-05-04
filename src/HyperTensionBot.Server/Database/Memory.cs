@@ -6,11 +6,9 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using OpenAI_API.Chat;
-using System;
 using System.Collections.Concurrent;
-using System.Diagnostics.Metrics;
 using Telegram.Bot.Types;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using static HyperTensionBot.Server.Bot.ConversationInformation;
 
 namespace HyperTensionBot.Server.Database {
     public class Memory {
@@ -170,7 +168,7 @@ namespace HyperTensionBot.Server.Database {
             return ManageMeasurement.LastMeasurement(Misuration, User, id).DiastolicPressure.HasValue;
         }
         internal void SetTemporaryParametersRequest(long id, string[] parameters) {
-            _chatMemory.AddOrUpdate(id, new ConversationInformation(id) { Requestparameters = parameters}, (_, existing) => {
+            _chatMemory.AddOrUpdate(id, new ConversationInformation(id) { Requestparameters = parameters }, (_, existing) => {
                 existing.Requestparameters = parameters;
                 return existing;
             });
@@ -178,12 +176,29 @@ namespace HyperTensionBot.Server.Database {
 
         internal string[] GetParameters(long id) {
             if (!_chatMemory.TryGetValue(id, out var chatInformation)) {
-                throw new Exception($"Tried persisting measurement but no information available about chat {id}");
+                throw new Exception($"Tried parameters but no information available about chat {id}");
             }
             if (chatInformation.Requestparameters == null) {
                 throw new Exception($"There are not parameters for chat {id}");
             }
             return chatInformation.Requestparameters!;
+        }
+
+        public RequestState GetRequestState(long id) {
+            if (!_chatMemory.TryGetValue(id, out var chatInformation)) {
+                throw new Exception($"Tried state but no information available about chat {id}");
+            }
+            if (chatInformation.Requestparameters == null) {
+                throw new Exception($"There are not request state for chat {id}");
+            }
+            return chatInformation.State;
+        }
+
+        public void SetRequestState(long id, RequestState state) {
+            if (!_chatMemory.TryGetValue(id, out var chatInformation)) {
+                throw new Exception($"Tried state but no information available about chat {id}");
+            }
+            chatInformation.State = state;
         }
     }
 }

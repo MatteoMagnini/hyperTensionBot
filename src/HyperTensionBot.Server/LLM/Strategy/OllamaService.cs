@@ -7,17 +7,17 @@ using System.Text;
 namespace HyperTensionBot.Server.LLM {
     public class OllamaService : ILLMService {
 
-        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient = new();
         // URL dell'API del LLM
-        private string? _llmApiUrl;
+        private readonly string? _llmApiUrl;
 
         // set names to different model 
         private readonly string MODEL_COMUNICATION = "mixtral";
         private readonly string MODEL_REQUEST = "mixtral";
         private readonly string MODEL_INSERT = "mixtral";
 
-        private List<ChatMessage> analysistInsert;
-        private List<ChatMessage> analysisRequest;
+        private readonly List<ChatMessage> analysistInsert;
+        private readonly List<ChatMessage> analysisRequest;
 
         private ILogger<LLMService>? _logger;
 
@@ -64,7 +64,7 @@ namespace HyperTensionBot.Server.LLM {
             if (_llmApiUrl != "") {
 
                 string modelName = "";
-                double temp = 0; 
+                double temp = 0;
                 List<ChatMessage> chatContext = new();
                 AssignInput(t, ref chatContext, comunicationChat, ref modelName, ref temp);
 
@@ -80,7 +80,7 @@ namespace HyperTensionBot.Server.LLM {
                         temperature = temp // value for deterministic or crestive response 
                     },
                 };
-                
+
                 var content = new StringContent(JsonConvert.SerializeObject(jsonPayload), Encoding.UTF8, "application/json");
 
                 // send POST request 
@@ -109,17 +109,17 @@ namespace HyperTensionBot.Server.LLM {
                 case TypeConversation.Request:
                     modelName = MODEL_REQUEST;
                     chatContext = analysisRequest;
-                    temp = 0.2; 
+                    temp = 0.2;
                     break;
                 case TypeConversation.Insert:
                     modelName = MODEL_INSERT;
                     chatContext = analysistInsert;
-                    temp = 0.2; 
+                    temp = 0.2;
                     break;
                 default:
                     modelName = MODEL_COMUNICATION;
                     chatContext = comunication!;
-                    temp = 0.6; 
+                    temp = 0.6;
                     break;
             }
         }

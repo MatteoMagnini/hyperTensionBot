@@ -4,8 +4,8 @@ namespace HyperTensionBot.Server.ModelML {
     // model for classification a user message
     public class ClassificationModel {
         private readonly MLContext mlContext;
-        private ITransformer? model;
-        private ModelTrainer trainer;
+        private readonly ITransformer? model;
+        private readonly ModelTrainer trainer;
         private string? pathFile;
         private string? pathModel;
 
@@ -45,7 +45,7 @@ namespace HyperTensionBot.Server.ModelML {
 
             // update training set with new input 
             if (pathFile != null) {
-                using (StreamWriter file = new StreamWriter(pathFile, true)) {
+                using (StreamWriter file = new(pathFile, true)) {
 
                     file.WriteLine(input.Sentence + "\t" + result);
                 }

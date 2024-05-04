@@ -7,7 +7,7 @@ namespace HyperTensionBot.Server.LLM.Strategy {
     public class GPTService : ILLMService {
         private OpenAIAPI? api;
         private string? gptKey;
-        private List<ChatMessage> analisysRequest = new();
+        private readonly List<ChatMessage> analisysRequest = new();
         private ILogger<LLMService>? _logger;
 
         public GPTService(WebApplicationBuilder builder) {

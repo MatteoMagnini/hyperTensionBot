@@ -3,8 +3,6 @@ using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.LLM.Strategy;
 using ScottPlot;
-using ScottPlot.Renderable;
-using System;
 using System.Drawing;
 using System.Text;
 using Telegram.Bot;
@@ -154,7 +152,7 @@ namespace HyperTensionBot.Server.Bot {
         private static async Task SendPlot(TelegramBotClient bot, long id, Plot plot) {
             Bitmap im = plot.Render();
             Bitmap leg = plot.RenderLegend();
-            Bitmap b = new Bitmap(im.Width + leg.Width, im.Height);
+            Bitmap b = new(im.Width + leg.Width, im.Height);
             using Graphics g = Graphics.FromImage(b);
             g.Clear(System.Drawing.Color.White);
             g.DrawImage(im, 0, 0);
@@ -181,7 +179,7 @@ namespace HyperTensionBot.Server.Bot {
 
         private static async Task SendGeneralInfo(TelegramBotClient bot, Memory memory, long id) {
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             foreach (var s in memory.GetGeneralInfo(id)) {
                 sb.Append(s + "\n");
@@ -217,25 +215,61 @@ namespace HyperTensionBot.Server.Bot {
 
         public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, string message, long id) {
             string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message);
-            var parameters = RegexExtensions.ExtractParameters(outLLM); 
+            var parameters = RegexExtensions.ExtractParameters(outLLM);
             memory.SetTemporaryParametersRequest(id, parameters);
-            await SendMessagesExtension.SendButton(bot, $"Mi stai chiedendo di:\\{SendMessagesExtension.DefineRequestText(parameters)}",
-                    id, new string[] { "Sì, esatto!", "yesReq", "No", "noReq" }); 
+            await SendMessagesExtension.SendButton(bot, $"Stai facendo richiesta per:\n{SendMessagesExtension.DefineRequestText(parameters)}",
+                    id, new string[] { "Sì, esatto!", "yesReq", "No", "noReq" });
         }
 
         internal static async Task ValuteRequest(string resp, long id, TelegramBotClient bot, Memory memory, LLMService llm) {
             // if LLM correctly extract the parameters by requrest continue, else take it manually by user 
             if (resp == "yesReq") {
-                await ManageRequest(memory, id, bot, llm, memory.GetParameters(id)); 
+                await ManageRequest(memory, id, bot, llm, memory.GetParameters(id));
             }
             else if (resp == "noReq") {
-                await ModifyParameters(bot, id); 
+                // Set state to context and send button 
+                await SendMessagesExtension.SendChoiceRequest(bot, memory, id,
+                    new string[] {
+                            "Pressione", "PRESSIONE", "Frequenza", "FREQUENZA",
+                            "Entrambi", "ENTRAMBI", "Dati personali", "PERSONALE"
+                        }, ConversationInformation.RequestState.ChoiceContext, "il dato");
             }
         }
 
         // build parameters 
-        private static async Task ModifyParameters(TelegramBotClient bot, long id) {
-            await bot.SendTextMessageAsync(id, "Qui ci saranno le inline Keybord"); 
+        public static async Task ModifyParameters(TelegramBotClient bot, long id, Memory memory, string resp, int idMessage, LLMService llm) {
+            switch (memory.GetRequestState(id)) {
+                case ConversationInformation.RequestState.ChoiceContext:
+                    await TemporaryChoice(bot, memory, idMessage, id, resp, ConversationInformation.RequestState.ChoiceTimeSpan, 0,
+                        new string[] {
+                            "Ultimo giorno", "1", "Ultima settimana", "7",
+                            "Ultimo mese", "30", "Tutti i dati", "-1"}, "l'arco temporale");
+                    break;
+
+                case ConversationInformation.RequestState.ChoiceTimeSpan:
+                    await TemporaryChoice(bot, memory, idMessage, id, resp, ConversationInformation.RequestState.ChoiceFormat, 1,
+                        new string[] { "Elenco", "LISTA", "Grafico", "GRAFICO", "Media", "MEDIA" },
+                            "il formato");
+                    break;
+
+                case ConversationInformation.RequestState.ChoiceFormat:
+                    var param = memory.GetParameters(id);
+                    param[2] = resp;
+                    memory.SetTemporaryParametersRequest(id, param);
+
+                    await ManageRequest(memory, id, bot, llm, memory.GetParameters(id));
+                    break;
+            }
+
         }
+        private static async Task TemporaryChoice(TelegramBotClient bot, Memory memory, int idMessage, long id, string resp, ConversationInformation.RequestState state, int index, string[] choice, string text) {
+            
+            var param = memory.GetParameters(id);
+            param[index] = resp;
+            memory.SetTemporaryParametersRequest(id, param);
+
+            await SendMessagesExtension.SendChoiceRequest(bot, memory, id, choice, state, text);
+        }
+
     }
 }

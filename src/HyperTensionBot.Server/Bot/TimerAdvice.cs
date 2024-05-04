@@ -4,7 +4,7 @@ using Telegram.Bot;
 
 namespace HyperTensionBot.Server.Bot {
     public class TimerAdvice {
-        private System.Timers.Timer _timer;
+        private readonly System.Timers.Timer _timer;
 
         public TimerAdvice(Memory m, TelegramBotClient bot) {
             _timer = new System.Timers.Timer();
