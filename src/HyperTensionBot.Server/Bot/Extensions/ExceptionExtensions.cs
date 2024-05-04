@@ -3,8 +3,8 @@ namespace HyperTensionBot.Server.Bot.Extensions {
 
         // exception to warn that there is no data for the plot
         public class InsufficientData : Exception {
-            public InsufficientData() : base (
-                "Data for plot are less than 2"){ }
+            public InsufficientData() : base(
+                "Data for plot are less than 2") { }
         }
 
         // exception for data insert

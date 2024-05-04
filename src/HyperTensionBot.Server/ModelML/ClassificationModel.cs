@@ -4,8 +4,8 @@ namespace HyperTensionBot.Server.ModelML {
     // model for classification a user message
     public class ClassificationModel {
         private readonly MLContext mlContext;
-        private ITransformer? model;
-        private ModelTrainer trainer;
+        private readonly ITransformer? model;
+        private readonly ModelTrainer trainer;
         private string? pathFile;
         private string? pathModel;
 
@@ -42,7 +42,16 @@ namespace HyperTensionBot.Server.ModelML {
             var predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(model);
             // update training set with new input
             var result = predictionEngine.Predict(input).PredictedLabel;
-            return (Intent)Enum.Parse(typeof(Intent), result);
+
+            // update training set with new input 
+            if (pathFile != null) {
+                using (StreamWriter file = new(pathFile, true)) {
+
+                    file.WriteLine(input.Sentence + "\t" + result);
+                }
+            }
+
+            return (Intent)Enum.Parse(typeof(Intent), result!);
         }
     }
 }
