@@ -3,7 +3,7 @@ using OpenAI_API.Chat;
 namespace HyperTensionBot.Server.LLM.Strategy {
     public class LLMService {
 
-        private ILLMService _llm;
+        private readonly ILLMService _llm;
 
         public LLMService(ILLMService llm) {
             _llm = llm;

@@ -17,7 +17,7 @@ namespace HyperTensionBot.Server.Bot {
 
                     case Intent.Richiesta:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
-                        await Request.AskConfirmParameters(llm, bot, memory, message, chat.Id); 
+                        await Request.AskConfirmParameters(llm, bot, memory, message, chat.Id);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
 
@@ -89,7 +89,7 @@ namespace HyperTensionBot.Server.Bot {
                 date: date
             ), date);
 
-            StringBuilder text = new StringBuilder("Ho ricevuto la misurazione.\n\n");
+            StringBuilder text = new("Ho ricevuto la misurazione.\n\n");
             if (measurement[0] is not null)
                 text.AppendLine($"🔺 Pressione sistolica: {(int)measurement[0]!} mmHg\n🔻 Pressione diastolica: {(int)measurement[1]!} mmHg");
             if (measurement[2] is not null)
@@ -123,7 +123,7 @@ namespace HyperTensionBot.Server.Bot {
                 }
             }
             else if (resp == "noIns") {
-                await SendMessagesExtension.HandleRefuseRegisterMeasurement(chat, bot, memory);
+                await SendMessagesExtension.HandleRefuseRegisterMeasurement(chat, bot);
             }
         }
 

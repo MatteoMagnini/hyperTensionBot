@@ -3,7 +3,7 @@ using Microsoft.ML.Trainers;
 
 namespace HyperTensionBot.Server.ModelML {
     public class ModelTrainer {
-        private MLContext mlContext;
+        private readonly MLContext mlContext;
 
         public ModelTrainer(MLContext ml) {
             mlContext = ml;

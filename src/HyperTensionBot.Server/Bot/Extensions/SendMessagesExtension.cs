@@ -10,12 +10,26 @@ namespace HyperTensionBot.Server.Bot.Extensions {
 
         // manage button 
         public static async Task SendButton(TelegramBotClient bot, string text, long id, string[] s) {
-            await bot.SendTextMessageAsync(id, text,
-                replyMarkup: new InlineKeyboardMarkup(new InlineKeyboardButton[] {
-                new InlineKeyboardButton(s[0]) { CallbackData = s[1] },
-                new InlineKeyboardButton(s[2]) { CallbackData = s[3] },
-                })
-            );
+            // Check that array is not null 
+            if (s != null && s.Length % 2 == 0) {
+                // Crea una lista per contenere i bottoni
+                List<InlineKeyboardButton> buttons = new();
+
+                // add button 
+                for (int i = 0; i < s.Length; i += 2) {
+                    // Assicurati che ci sia una coppia di valori per creare un bottone
+                    if (i + 1 < s.Length) {
+                        buttons.Add(new InlineKeyboardButton(s[i]) { CallbackData = s[i + 1] });
+                    }
+                }
+
+                var inlineKeyboard = new InlineKeyboardMarkup(buttons.ToArray());
+
+                // Send messages with buttons 
+                await bot.SendTextMessageAsync(id, text, replyMarkup: inlineKeyboard);
+            }
+            else
+                throw new ArgumentException();
         }
 
         // messages for confermed and refused insert measurement 
@@ -33,7 +47,7 @@ namespace HyperTensionBot.Server.Bot.Extensions {
             );
         }
 
-        public static async Task HandleRefuseRegisterMeasurement(Chat chat, TelegramBotClient bot, Memory memory) {
+        public static async Task HandleRefuseRegisterMeasurement(Chat chat, TelegramBotClient bot) {
 
             await bot.SendTextMessageAsync(chat.Id,
                 new string[] {
@@ -56,36 +70,40 @@ namespace HyperTensionBot.Server.Bot.Extensions {
         }
 
         internal static string DefineRequestText(string[] parameters) {
-            StringBuilder sb = new("- Visionare i dati ");
+            StringBuilder sb = new("--- Visionare i dati ");
 
             if (parameters[0] == "ENTRAMBI")
-                sb.Append("di pressione arteriosa e frequenza cardiaca");
-            else if(parameters[0] == "PRESSIONE")
-                sb.Append("di pressione arteriosa");
+                sb.Append("di pressione arteriosa e frequenza cardiaca🤓");
+            else if (parameters[0] == "PRESSIONE")
+                sb.Append("di pressione arteriosa🤓");
             else if (parameters[0] == "FREQUENZA")
-                sb.Append("di frequenza cardiaca");
+                sb.Append("di frequenza cardiaca🤓");
             else if (parameters[0] == "PERSONALE")
-                sb.Append("personali indicati al dottore");
+                sb.Append("personali indicati al dottore🤓");
 
             if (parameters[1] == "-1")
-                sb.Append("\n- dal tuo primo inserimento");
+                sb.Append("\n--- dal tuo primo inserimento📅");
             else {
-                sb.Append("\n- con riferimento ");
-                if (parameters[1] == "1" || parameters[0] == "0")
-                    sb.Append("l'ultimo giorno");
+                sb.Append("\n--- con riferimento ");
+                if (parameters[1] == "1" || parameters[1] == "0")
+                    sb.Append("l'ultimo giorno📅");
                 else
-                    sb.Append($"gli ultimi {parameters[0]} giorni");
+                    sb.Append($"gli ultimi {parameters[1]} giorni📅");
             }
-                
+
 
             if (parameters[2] == "LISTA")
-                sb.Append($"\n- tramite un elenco");
+                sb.Append($"\n--- tramite un elenco📉");
             else if (parameters[2] == "GRAFICO")
-                sb.Append($"\n- tramite una rappresentazione grafica");
+                sb.Append($"\n--- tramite una rappresentazione grafica📉");
             else
-                sb.Append("\n- tramite la loro media");
+                sb.Append("\n--- tramite la loro media📉");
 
-            return sb.ToString(); 
+            return sb.ToString();
+        }
+        public static async Task SendChoiceRequest(TelegramBotClient bot, Memory memory, long id, string[] choice, ConversationInformation.RequestState state, string text) {
+            await SendButton(bot, $"Scegli {text} desiderato..", id, choice);
+            memory.SetRequestState(id, state);
         }
     }
 }

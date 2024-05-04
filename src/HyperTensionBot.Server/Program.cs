@@ -4,7 +4,6 @@ using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.LLM.Strategy;
 using HyperTensionBot.Server.ModelML;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using Telegram.Bot;
@@ -74,12 +73,10 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
         }
         else if (update.CallbackQuery?.Data != null && update.CallbackQuery?.Message?.Chat != null) {
             await Context.ManageButton(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, bot, memory, llm);
-
+            if (!update.CallbackQuery.Data.StartsWith("yes") && !update.CallbackQuery.Data.StartsWith("no"))
+                await Request.ModifyParameters(bot, chat.Id, memory, update.CallbackQuery.Data, update.CallbackQuery.Message.MessageId, llm);
             // removing inline keybord
-            await bot.EditMessageReplyMarkupAsync(update.CallbackQuery.Message.Chat, update.CallbackQuery.Message.MessageId, replyMarkup: null);
-        }
-        else if (true) {
-            // edit Inline Keyboro
+            await bot.DeleteMessageAsync(chat.Id, update.CallbackQuery.Message.MessageId);
         }
         else
             return Results.NotFound();
