@@ -25,8 +25,8 @@ namespace HyperTensionBot.Server.ModelML {
 
             var confModel = builder.Configuration.GetSection("ClassificationModel");
             if (confModel.Exists() && !string.IsNullOrEmpty(confModel["trainingData"]) && !string.IsNullOrEmpty(confModel["model"])) {
-                pathFile = confModel["trainingData"];
-                pathModel = confModel["model"] ?? throw new ArgumentException("Configuration model: path model is not set");
+                pathFile = Path.Combine(Directory.GetCurrentDirectory(), confModel["trainingData"]!) ;
+                pathModel = Path.Combine(Directory.GetCurrentDirectory(), confModel["model"]!) ?? throw new ArgumentException("Configuration model: path model is not set");
                 // delete old folder and create new
                 if (Directory.Exists(pathModel)) {
                     Directory.Delete(pathModel, true);

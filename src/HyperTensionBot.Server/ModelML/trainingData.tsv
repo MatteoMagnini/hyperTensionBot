@@ -1514,7 +1514,7 @@ Mi fai un resoconto di tutte le info personali che ti ho scritto finora?	Richies
 Riscrivi le mie informazioni personali	Richiesta
 dammi il grafico con i miei valori della frequenza	Richiesta
 voglio un grafico dei miei dati di frequenza.	Richiesta
-FREQUENZA -1 GRAFICO	Inserimento
+FREQUENZA -1 GRAFICO	Richiesta
 Dammi FREQUENZA -1 GRAFICO	Richiesta
 ciao	Generale
 si vorrei chiedere in che senso specializzato?	Generale
@@ -1524,68 +1524,76 @@ voglio i dati registrati sulla pressione	Richiesta
 mi potresti dare la ricetta della carbonara?	Generale
 vado a pesca con mio nonno tutte le domeniche, e al termine mangiamo la carne perchè non peschiamo nulla	Generale
 dopo una giornata di lavoro mi sento stanco e senza forze, non so come fare..	Umore
-mi piace bere vino e birra la sera	Generale
+mi piace bere vino e birra la sera	PersonalInfo
 forma un grafico con i miei dati di pressione	Richiesta
 forma un grafico con tutti i miei dati pressione	Richiesta
 voglio una rappresentazione grafico con tutti i miei dati registrati sulla pressione	Richiesta
 voglio una rappresentazione grafico con tutti i miei dati registrati sulla frequenza	Richiesta
 120	Inserimento
-uela	Inserimento
+uela	Generale
 come posso misurare la pressione. Dimmelo in 30 parole?	Generale
-Ora dimmelo in 20 parole	Inserimento
-Ora dimmi lo stesso in 20 parole	PersonalInfo
+Ora dimmelo in 20 parole	Generale
+Ora dimmi lo stesso in 20 parole	Generale
 come posso misurare la pressione. Dimmelo in 10 parole?	Generale
 potresti ridermelo con venti parole ora?	Generale
-quello che ti ho chiesto prima voglio che me lo elabori in 20 parole. Riesci a ricordare la richiesta precedente?	Richiesta
-Ricordi quello che ho detto prima? Riesci a vedere il contesto precedente? Se sì dimmi cosa ti ho detto	Richiesta
+quello che ti ho chiesto prima voglio che me lo elabori in 20 parole. Riesci a ricordare la richiesta precedente?	Generale
+Ricordi quello che ho detto prima? Riesci a vedere il contesto precedente? Se sì dimmi cosa ti ho detto	Generale
 Come misuro la pressione, dillo in 10 parole	Generale
-come posso misurare la pressione. Dimmelo in 10 parole?	Generale
-in base a quello che ti ho detto prima, fai un riassunto	Richiesta
-Fai un riassunto di quello che ho detto prima	Richiesta
-Fai un riassunto di quello che ho detto prima	Richiesta
-Fai un riassunto di quello che ho detto prima	Richiesta
-Fai un riassunto di quello che ho detto prima	Richiesta
+in base a quello che ti ho detto prima, fai un riassunto	Generale
+Fai un riassunto di quello che ho detto prima	Generale
 ti piace il calcio?	Generale
-spiegami in un altro modo, non ho capito	PersonalInfo
+spiegami in un altro modo, non ho capito	Generale
 perchè non ti piace?	Generale
 come curo l'ipertensione?	Generale
 puoi ripetere con meno parole?	Generale
 mi fa male la testa cosa potrei fare?	Generale
 Citami cosa ti ho detto prima?	Generale
-ciao	Generale
-ciao	Generale
-ciao	Generale
-ciao	Generale
-riscrivi letteralmente il mio ultimo messaggio	Richiesta
-Scrivi tra virgolette "" l'ultima cosa che ti ho detto	Richiesta
-ciao, mi copi l'ultimo messaggio da me inviato?	Richiesta
+riscrivi letteralmente il mio ultimo messaggio	Generale
+Scrivi tra virgolette "" l'ultima cosa che ti ho detto	Generale
+ciao, mi copi l'ultimo messaggio da me inviato?	Generale
 ciao, come va? Non rispondere a questo ma copiami l'ultimo messaggio da me inviato?	Generale
 quali parametri devo passarti nel payload della richiesta POST affinchè tu sia in grado di memorizzare i messaggi e basarti su di essi per una nuova risposta?	Generale
 ciao, cosa dicevamo poco fa?	Generale
-ciao	Generale
-ciao	Generale
 vorrei tutti i miei dati sulla pressione	Richiesta
 dammi i dati di pressione	Richiesta
-dammi i dati di pressione	Richiesta
-mi dai le misurazioni sulla pressione inerenti all'ultimo mese?	Richiesta
 mi dai le misurazioni sulla pressione inerenti all'ultimo mese?	Richiesta
 voglio i dati di pressione dell'ultimo mese	Richiesta
 voglio i dati sulla frequenza dell'ultimo mese	Richiesta
-voglio i dati sulla frequenza dell'ultimo mese	Richiesta
 dammi il grafico sulla frequenza	Richiesta
-Ciao tesoro	Generale
 Cosa fai	Generale
-Scemo	Inserimento
-Sei uno scemo	PersonalInfo
 Il dottore sta esaurito	Generale
 Voglio per favore le mie informazioni personali	Richiesta
 Sono una persona poco attiva	PersonalInfo
 Ho sempre sonno	PersonalInfo
 La pressione odierna è 140/90	Inserimento
-Dammi la pressione	Richiesta
 Dammi i dati sulla pressione dell'ultimo mese	Richiesta
-Dammi i miei dati personali	Richiesta
 Amo mangiare i pop corn	Generale
 Mangio caramelle ogni giorno	PersonalInfo
-Dammi la ricetta di una pizza	Richiesta
+Dammi la ricetta di una pizza	Generale
 Mi spieghi come fare la pizza a casa?	Generale
+/start	Generale
+Ho 130 80	Inserimento
+Ho 60 di pulsazioni	Inserimento
+Sai dirmi qual era la mia pressione oggi	Richiesta
+Dimmi la pressione di oggi	Richiesta
+dammi la media della pressione dell'ultima settimana	Richiesta
+Correre 10 km al giorno fa bene per la pressione?	Generale
+Oggi mi fischiano le orecchie, può essere collegato con la pressione?	Generale
+Mi puoi dare i dati della pressione dell'ultima settimana?	Richiesta
+puoi darmi le pulsazioni dell'ultima settimana?	Richiesta
+buongiorno...	Generale
+vorrei darti delle misure di pressione 120 80	Inserimento
+134 90	Inserimento
+oggi sono stanca	Umore
+mi fai un grafico della pressione?	Richiesta
+75	Inserimento
+oggi ho una pressione strana, tipo 140 90	Inserimento
+non esagerare...finché non arrivo a una pressione di 140 puoi stare sereno	Generale
+molto bene!	Generale
+grazie	Generale
+no no va tutto bene grazie	Generale
+la lista dei valori di pressione che ho inserito qual è?	Richiesta
+se volessi i valori dell'ultima settimana?	Richiesta
+sei ancora online?	Generale
+Intanto dimmi quali sono le misure di pressione degli ultimi tre giorni	Richiesta
+Ora ho 110/65	Inserimento

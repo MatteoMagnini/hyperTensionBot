@@ -83,15 +83,15 @@ namespace HyperTensionBot.Server.Bot {
 
             }
             catch (ArgumentNullException) {
-                await bot.SendTextMessageAsync(id, "Vorrei fornirti le tue misurazioni ma non sono ancora state registrate, ricordati di farlo quotidianamente.😢\n\n" +
-                    "(Pss..💕) Mi è stato riferito che il dottore non vede l'ora di studiare la tua situazione😁");
+                await bot.SendTextMessageAsync(id, "Vorrei fornirti le tue misurazioni ma non sono ancora state registrate, ricordati di farlo quotidianamente.\n\n" +
+                    "Mi è stato riferito che il dottore non vede l'ora di studiare la tua situazione😁");
             }
             catch (ArgumentException) {
-                await bot.SendTextMessageAsync(id, "Non sono riuscito a comprendere il tuo messaggio. \nRiscrivi la richiesta in maniera differente, così potrò aiutarti😁");
+                await bot.SendTextMessageAsync(id, "Non sono riuscito a comprendere il tuo messaggio. \nRiscrivi la richiesta in maniera differente, così potrò aiutarti");
             }
             catch (ExceptionExtensions.InsufficientData) {
-                await bot.SendTextMessageAsync(id, "Per poterti generare il grafico necessito di almeno due misurazioni, ricordati di fornirmi giornalmente i tuoi dati.😢\n\n" +
-                    "(Pss..💕) Mi è stato riferito che il dottore non vede l'ora di studiare la tua situazione😁");
+                await bot.SendTextMessageAsync(id, "Per poterti generare il grafico necessito di almeno due misurazioni, ricordati di fornirmi giornalmente i tuoi dati.\n\n" +
+                    "Mi è stato riferito che il dottore non vede l'ora di studiare la tua situazione😁");
             }
         }
 

@@ -54,11 +54,11 @@ namespace HyperTensionBot.Server.Bot {
                 }
             }
             catch (ArgumentNullException) {
-                await bot.SendTextMessageAsync(chat.Id, "Non sono presenti dati per soddsfare la tua richiesta❌\n" +
-                    "Inizia a inserire i tuoi dati, dopodichè sarà possibile accedere alle statistiche inerenti!.");
+                await bot.SendTextMessageAsync(chat.Id, "Non sono presenti dati per soddsfare la tua richiesta\n" +
+                    "Inizia a inserire i tuoi dati, dopodichè sarà possibile accedere alle statistiche presenti!.");
             }
             catch (ArgumentException) {
-                await bot.SendTextMessageAsync(chat.Id, "Non ho compreso i dati. Prova a riscrivere il messaggio in un altro modo😊\nProva inserendo prima i valori di pressione e poi la frequenza🤞.");
+                await bot.SendTextMessageAsync(chat.Id, "Non ho compreso i dati. Prova a riscrivere il messaggio inserendo prima la pressione e poi la frequenza.");
             }
 
             catch (ExceptionExtensions.ImpossibleSystolic) {
@@ -131,10 +131,10 @@ namespace HyperTensionBot.Server.Bot {
             // check sulla media nell'ultimo mese dopo un inserimento delle nuove misure
             StringBuilder sb = new();
             sb.Append("Ho analizzato le nuove medie registrate:\n");
-            if (average[0] < 135 && average[1] < 85)
-                await bot.SendTextMessageAsync(id, $"La media sulla pressione è {average[0]}/{average[1]} che rientra sotto i parametri ottimali di salute😁");
+            if (average[0] <= 140 && average[1] <= 90)
+                await bot.SendTextMessageAsync(id, $"La media sulla pressione è {average[0]}/{average[1]} che rientra nei parametri ottimali di salute. Molto bene!");
             else
-                await bot.SendTextMessageAsync(id, $"La media sulla pressione è {average[0]}/{average[1]}, e le consiglio di consultare il medico per analizzare la situazione in maneira più approfondita🧑🏽‍⚕️");
+                await bot.SendTextMessageAsync(id, $"La media sulla pressione è {average[0]}/{average[1]}. Le consiglio di consultare il medico per un'analisi più accurata");
         }
     }
 }
