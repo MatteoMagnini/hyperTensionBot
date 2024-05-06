@@ -1,5 +1,6 @@
 using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
+using ScottPlot.Drawing.Colormaps;
 using Telegram.Bot;
 
 namespace HyperTensionBot.Server.Bot {
@@ -11,14 +12,15 @@ namespace HyperTensionBot.Server.Bot {
             TimerStart(m, bot);
         }
 
+        // the timer runs an event every days
         private void TimerStart(Memory m, TelegramBotClient bot) {
-            // the timer runs an event every hour
-            _timer.Interval = TimeSpan.FromHours(48).TotalMilliseconds;
+            _timer.Interval = TimeSpan.FromDays(1).TotalMilliseconds;
             _timer.Elapsed += async (e, o) => await AdvicePatients(m, bot);
             _timer.AutoReset = true;
             _timer.Enabled = true;
         }
 
+        // check on the date of last insertion 
         private async Task AdvicePatients(Memory m, TelegramBotClient bot) {
             var patients = m.GetAllPatients();
             foreach (var p in patients) {
