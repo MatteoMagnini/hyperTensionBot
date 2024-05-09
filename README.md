@@ -13,6 +13,21 @@ The HyperTension Bot is a Telegram bot that helps the user to keep track of his 
 Note: [Telegram](https://telegram.org/) is required to use the bot.
 
 The bot is available at the following link: [HyperTension Bot](https://t.me/a_hypertension_bot)
+
+### How to run 
+Copy and configure the settings in the appsettings.json file into the secrets.json file.
+You will need:
+1. A Telegram bot token from any bot to run the bot.
+2. A Webhook URL from the ngrok service to receive HTTP requests from the bot.
+   Start it on port 5183 with a command similar to: > ngrok http 5183.
+3. An OpenAI key if you want to use the GPT model.
+   The URL of the server for the Ollama model if you wish to use that.
+      3.1. The choice of model family should be specified in Program.cs as a Strategy.
+4. A MongoDB connection URL.
+   If you want the database to run on your local machine, you should start the MongoDB server with the mongod command; otherwise, use the Atlas server URL.
+   For local DB, MongoDB Community Edition is required and can be downloaded from the following link: [MongoCommunity](https://www.mongodb.com/try/download/community). 
+   After running, the local URL will be similar to mongodb://localhost:27017/<DATABASE_NAME>
+
 #### Setup
 1. Start the bot by sending the command `/start` to the bot.
 2. The bot will ask you to provide your name and surname. Send your name to the bot.
