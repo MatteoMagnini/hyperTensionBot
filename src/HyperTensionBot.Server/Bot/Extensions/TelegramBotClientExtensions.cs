@@ -4,9 +4,11 @@ using Telegram.Bot.Types.Enums;
 namespace HyperTensionBot.Server.Bot.Extensions {
     public static class TelegramBotClientExtensions {
         public static WebApplicationBuilder ConfigureTelegramBot(this WebApplicationBuilder builder) {
+            
             var confBot = builder.Configuration.GetSection("Bot");
             var botToken = confBot["TelegramToken"] ?? throw new ArgumentException("Configuration element Bot:TelegramToken is not set");
-
+           
+            //var botToken = Environment.GetEnvironmentVariable("BOT_TOKEN") ?? throw new ArgumentException("Configuration element Bot:TelegramToken is not set");
             builder.Services.AddTransient(provider => new TelegramBotClient(botToken));
 
             return builder;
