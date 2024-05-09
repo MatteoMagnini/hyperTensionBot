@@ -17,7 +17,7 @@ builder.Services.AddSingleton<ConfigurationManager>(builder.Configuration);
 builder.Services.AddSingleton<Memory>();
 
 // add model and llm 
-builder.Services.AddSingleton(new ClassificationModel(builder));
+builder.Services.AddSingleton(new ClassificationModel());
 
 // change the strategy - LLM - with class Ollama o gpt
 builder.Services.AddSingleton(new LLMService(await OllamaService.CreateAsync(builder))); // new GPTService(builder))
