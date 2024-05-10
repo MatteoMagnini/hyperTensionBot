@@ -12,7 +12,7 @@ namespace HyperTensionBot.Server.ModelML {
         public ClassificationModel() {
             mlContext = new MLContext();
             trainer = new ModelTrainer(mlContext);
-            ConfigurePath(); 
+            ConfigurePath();
             if (!string.IsNullOrEmpty(pathModel) && !string.IsNullOrEmpty(pathFile)) {
                 trainer.Train(pathFile, pathModel);
                 model = mlContext.Model.Load(Path.Combine(pathModel, "model.zip"), out var modelInputSchema);
@@ -20,14 +20,14 @@ namespace HyperTensionBot.Server.ModelML {
         }
 
         private void ConfigurePath() {
-
-                pathFile = Path.Combine(Directory.GetCurrentDirectory(), "ModelML\\trainingData.tsv") ;
-                pathModel = Path.Combine(Directory.GetCurrentDirectory(), "bin\\Debug\\net7.0\\Model") ?? throw new ArgumentException("Configuration model: path model is not set");
-                // delete old folder and create new
-                if (Directory.Exists(pathModel)) {
-                    Directory.Delete(pathModel, true);
-                }
-                Directory.CreateDirectory(pathModel);
+            var sep = Path.DirectorySeparatorChar;
+            pathFile = Path.Combine(Directory.GetCurrentDirectory(), "ModelML" + sep + "trainingData.tsv") ;
+            pathModel = Path.Combine(Directory.GetCurrentDirectory(), "bin" + sep + "Debug" + sep + "net7.0" + sep + "Model") ?? throw new ArgumentException("Configuration model: path model is not set");
+            // delete old folder and create new
+            if (Directory.Exists(pathModel)) {
+                Directory.Delete(pathModel, true);
+            }
+            Directory.CreateDirectory(pathModel);
         }
 
         // method for predict
@@ -36,7 +36,7 @@ namespace HyperTensionBot.Server.ModelML {
             // update training set with new input
             var result = predictionEngine.Predict(input).PredictedLabel;
 
-            // update training set with new input 
+            // update training set with new input
             if (pathFile != null) {
                 using (StreamWriter file = new(pathFile, true)) {
 
