@@ -4,11 +4,11 @@ using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.LLM.Strategy;
 using HyperTensionBot.Server.ModelML;
-using Newtonsoft.Json;
-using System.Diagnostics;
 using Telegram.Bot;
-using Telegram.Bot.Types;
+using Telegram.Bot.Polling;
 using Telegram.Bot.Types.Enums;
+using System.Diagnostics;
+using TelegramUpdate = Telegram.Bot.Types.Update;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.ConfigureTelegramBot();
@@ -16,78 +16,104 @@ builder.ConfigureTelegramBot();
 builder.Services.AddSingleton<ConfigurationManager>(builder.Configuration);
 builder.Services.AddSingleton<Memory>();
 
-// add model and llm
+// Add model and llm
 builder.Services.AddSingleton(new ClassificationModel());
 
-// change the strategy - LLM - with class Ollama o gpt
+// Change the strategy - LLM - with class Ollama or gpt
 builder.Services.AddSingleton(new LLMService(await OllamaService.CreateAsync(builder))); // new GPTService(builder))
 
-bool internalPOST = false; // flag: exclude some POST request from LLM server
 var app = builder.Build();
 
-// configuring the bot and timer to alert patients
+// Configure the bot and timer to alert patients
 app.SetupTelegramBot();
 app.Services.GetRequiredService<LLMService>().SetLogger(app.Services.GetRequiredService<ILogger<LLMService>>());
 
-//docTimerAdvice timer = new(app.Services.GetRequiredService<Memory>(), app.Services.GetRequiredService<TelegramBotClient>());
+// Create a Telegram bot client
+var botClient = app.Services.GetRequiredService<TelegramBotClient>();
 
-// handle update
-app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memory memory, ILogger<Program> logger, ClassificationModel model, LLMService llm) => {
-    try {
-        if (!context.Request.HasJsonContentType()) {
-            throw new BadHttpRequestException("HTTP request must be of type application/json");
+await botClient.DeleteWebhookAsync();
+
+
+// Configure the receiver options for polling
+var receiverOptions = new ReceiverOptions
+{
+    AllowedUpdates = new[] { UpdateType.Message, UpdateType.CallbackQuery }
+};
+
+var cts = new CancellationTokenSource();
+
+// Start receiving updates using polling
+botClient.StartReceiving(
+    HandleUpdateAsync,
+    HandleErrorAsync,
+    receiverOptions,
+    cancellationToken: cts.Token
+);
+
+Console.WriteLine("Bot is listening for updates...");
+Console.ReadLine(); // Prevents the application from exiting immediately
+
+
+async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update, CancellationToken cancellationToken)
+{
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    var memory = app.Services.GetRequiredService<Memory>();
+    var model = app.Services.GetRequiredService<ClassificationModel>();
+    var llm = app.Services.GetRequiredService<LLMService>();
+    var internalPOST = false; // Initialize flag
+    TelegramBotClient localBotClient = (TelegramBotClient) botClient;
+
+    try
+    {
+        if (update.Type == UpdateType.Message && update.Message?.Text != null)
+        {
+            var messageText = update.Message.Text;
+            var chatId = update.Message.Chat.Id;
+            var from = update.Message.From;
+            var date = Time.Convert(update.Message.Date);
+
+            // Add message to model input and predict intent
+            var input = new ModelInput { Sentence = messageText };
+            var result = model.Predict(input);
+
+            memory.HandleUpdate(from, date, result, messageText);
+            logger.LogInformation("Chat {0} incoming {1}", chatId, update.Type switch
+            {
+                UpdateType.Message => $"message with text: {messageText}",
+                UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
+                _ => "update of unhandled type"
+            });
+            logger.LogInformation("Incoming message matches intent {0}", result);
+
+            // Manage operations
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            await Context.ControlFlow(localBotClient, llm, memory, result, messageText, update.Message.Chat, date);
+            stopwatch.Stop();
+            logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
         }
-        if (internalPOST)
-            return Results.Ok();
-
-        using var sr = new StreamReader(context.Request.Body);
-        var update = JsonConvert.DeserializeObject<Telegram.Bot.Types.Update>(await sr.ReadToEndAsync()) ?? throw new BadHttpRequestException("Could not deserialize JSON payload as Telegram bot update");
-        logger.LogDebug("Received update {0} of type {1}", update.Id, update.Type);
-
-        User? from = update.Message?.From ?? update.CallbackQuery?.From;
-        Chat chat = update.Message?.Chat ?? update.CallbackQuery?.Message?.Chat ?? throw new Exception("Unable to detect chat ID");
-
-        internalPOST = true; // possible POST calls for request to the LLM server
-        if (update.Message?.Text is not null) {
-            var messageText = update.Message?.Text;
-            if (messageText != null) {
-                var date = Time.Convert(update!.Message!.Date);
-                // add message to model input and predict intent
-                var input = new ModelInput { Sentence = messageText };
-                var result = model.Predict(input);
-
-                memory.HandleUpdate(from, date, result, messageText);
-                logger.LogInformation("Chat {0} incoming {1}", chat.Id, update.Type switch {
-                    UpdateType.Message => $"message with text: {update.Message?.Text}",
-                    UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
-                    _ => "update of unhandled type"
-                });
-                logger.LogInformation("Incoming message matches intent {0}", result);
-
-                // manage operations
-                Stopwatch stopwatch = Stopwatch.StartNew();
-                await Context.ControlFlow(bot, llm, memory, result, messageText, chat, date);
-                stopwatch.Stop();
-                logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
-            }
-        }
-        else if (update.CallbackQuery?.Data != null && update.CallbackQuery?.Message?.Chat != null) {
-            await Context.ManageButton(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, bot, memory, llm);
+        else if (update.Type == UpdateType.CallbackQuery && update.CallbackQuery?.Data != null)
+        {
+            var chatId = update.CallbackQuery.Message.Chat.Id;
+            await Context.ManageButton(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, localBotClient, memory, llm);
             if (!update.CallbackQuery.Data.StartsWith("yes") && !update.CallbackQuery.Data.StartsWith("no"))
-                await Request.ModifyParameters(bot, chat.Id, memory, update.CallbackQuery.Data, update.CallbackQuery.Message.MessageId, llm);
-            // removing inline keybord
-            await bot.DeleteMessageAsync(chat.Id, update.CallbackQuery.Message.MessageId);
+                await Request.ModifyParameters(localBotClient, chatId, memory, update.CallbackQuery.Data, update.CallbackQuery.Message.MessageId, llm);
+            // Removing inline keyboard
+            await localBotClient.DeleteMessageAsync(chatId, update.CallbackQuery.Message.MessageId);
         }
         else
-            return Results.NotFound();
-
-        internalPOST = false; // after request, reset flag
+        {
+            return;
+        }
     }
-    catch (Exception e) {
-        logger.LogDebug(e.Message);
-        return Results.Ok(); // system always online
+    catch (Exception e)
+    {
+        logger.LogError(e, "Error handling update");
     }
-    return Results.Ok();
-});
+}
 
-app.Run("http://localhost:5183");
+Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+{
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(exception, "Error occurred");
+    return Task.CompletedTask;
+}

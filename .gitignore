@@ -5,3 +5,4 @@ src/HyperTensionBot.Server/app/
 **/bin/*
 **/obj/*
 .idea
+*appsettings.json

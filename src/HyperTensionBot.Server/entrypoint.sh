@@ -1,18 +1,11 @@
 #!/bin/bash
 
-# Start MongoDB
-mongod --bind_ip 0.0.0.0 --dbpath /data/db &
+# Attendi che MongoDB sia avviato
+until nc -z -v -w30 mongodb 27017
+do
+  echo "Waiting for MongoDB to start..."
+  sleep 1
+done
 
-# Start ngrok
-ngrok start --all &
-
-# Wait for ngrok to start
-sleep 10
-
-# Update the webhook
-/update_webhook.sh
-
-# Start .NET
-dotnet HyperTensionBot.Server.dll
-
-echo "HyperTensionBot.Server started"
+# Mantieni il container in esecuzione
+tail -f /dev/null
