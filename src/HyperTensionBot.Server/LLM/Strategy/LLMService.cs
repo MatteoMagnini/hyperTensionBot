@@ -1,6 +1,7 @@
 using OpenAI_API.Chat;
 
 namespace HyperTensionBot.Server.LLM.Strategy {
+    // Allow use of gpt or ollama template used the same interface
     public class LLMService {
 
         private readonly ILLMService _llm;

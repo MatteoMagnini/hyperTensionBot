@@ -11,11 +11,9 @@ using Telegram.Bot.Types;
 using static HyperTensionBot.Server.Bot.ConversationInformation;
 
 namespace HyperTensionBot.Server.Database {
-    public class Memory {
 
-        // prendere tutti gli UserMemory metodi Get e toglierli dal codice formando invece delle query di interazione
-        // con il database in questa sezione apposita. -- Quindi ripescare tutto e comprendere quali sono le query che servono a seconda di...
-        // public ConcurrentDictionary<long, UserInformation> UserMemory { get; } = new();
+    // Service memory for chatbot. It's defined DB and their collections 
+    public class Memory {
 
         public MongoClient Client { get; }
         public IMongoDatabase Database { get; }
@@ -41,6 +39,7 @@ namespace HyperTensionBot.Server.Database {
             CreateScheme(Database);
         }
 
+        // Find the url connection for DB
         private string GetStringConnection(ConfigurationManager conf) {
             var section = conf.GetSection("MongoDB");
             if (!section.Exists() || section["connection"] is null)
@@ -49,6 +48,7 @@ namespace HyperTensionBot.Server.Database {
 
         }
 
+        // Create the scheme if it not defined, else acquire it. So equals with index 
         private void CreateScheme(IMongoDatabase db) {
 
             // information as idTelegram, name, surname, last update 
@@ -64,6 +64,7 @@ namespace HyperTensionBot.Server.Database {
 
         }
 
+        // allow for greater search speed
         private void AddIndexToCollection() {
             // create index and option of that. 
             var index = new CreateIndexOptions();
@@ -75,11 +76,12 @@ namespace HyperTensionBot.Server.Database {
             Chat?.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(option, index));
         }
 
+        // Define standard filter for research on id Telegram
         public static FilterDefinition<BsonDocument> GetFilter(long id) {
             return Builders<BsonDocument>.Filter.Eq("id", id);
         }
 
-        // metodo che deve prendere le informazioni di un nuovo utente e le deve salvare
+        // save ne winformation for user 
         // chat information - posso integrare l'unica informazione necessaria che è la data dell'ultimo messaggio. 
         public void HandleUpdate(User? from, DateTime date, Intent i, string mex) {
 
@@ -92,7 +94,7 @@ namespace HyperTensionBot.Server.Database {
             Update.InsertNewMex(Chat, date, from, i, mex);
         }
 
-        // use Ram and not Db 
+        // use Ram and not Db for measurements before confirm
         public void SetTemporaryMeasurement(Chat chat, Measurement measurement, DateTime date) {
             _chatMemory.AddOrUpdate(chat.Id, new ConversationInformation(chat.Id, date) { TemporaryMeasurement = measurement }, (_, existing) => {
                 existing.TemporaryMeasurement = measurement;
@@ -106,7 +108,7 @@ namespace HyperTensionBot.Server.Database {
             return User.FindAsync(new BsonDocument()).Result.ToList();
         }
 
-        // gisce collection delle misurazioni
+        // saved measurement in DB 
         public void PersistMeasurement(long id) {
             if (!_chatMemory.TryGetValue(id, out var chatInformation)) {
                 throw new Exception($"Tried persisting measurement but no information available about chat {id}");

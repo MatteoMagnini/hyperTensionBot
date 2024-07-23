@@ -6,18 +6,20 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace HyperTensionBot.Server.Bot.Extensions {
+    // Static class to send messages for variety of scenes in the chat
     public static class SendMessagesExtension {
 
         // manage button 
         public static async Task SendButton(TelegramBotClient bot, string text, long id, string[] s) {
             // Check that array is not null 
             if (s != null && s.Length % 2 == 0) {
-                // Crea una lista per contenere i bottoni
+
+                // List of bot button
                 List<InlineKeyboardButton> buttons = new();
 
                 // add button 
                 for (int i = 0; i < s.Length; i += 2) {
-                    // Assicurati che ci sia una coppia di valori per creare un bottone
+                    // A Button is added if theres a pair (key, value) to send at user 
                     if (i + 1 < s.Length) {
                         buttons.Add(new InlineKeyboardButton(s[i]) { CallbackData = s[i + 1] });
                     }

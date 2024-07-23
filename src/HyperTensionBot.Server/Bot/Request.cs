@@ -9,18 +9,20 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace HyperTensionBot.Server.Bot {
+    // Manage data requests from User
     public static class Request {
 
+        // set days parameter to search data
         private static int days;
+
+        // The datas in DB are preleved and inserted in list 
         private static List<Measurement> measurementsFormatted = new();
 
-        // manage request
-
-        // because there is a obsolete method in GetFirstMeasurement().. 
+        // take measurements
         private static string SettingsValue(Memory m, long id, ref bool pressure, ref bool frequence, string x, int d) {
             days = d;
 
-            // info di control days è la data della prima misurazione
+            // first measure and date 
             var firstMeasurement = m.GetFirstMeasurement(id);
             ControlDays(firstMeasurement);
 
@@ -48,13 +50,14 @@ namespace HyperTensionBot.Server.Bot {
 
 
         public static async Task ManageRequest(Memory mem, long id, TelegramBotClient bot, LLMService llm, string[] parameters) {
-            // 0 => contesto, 1 => giorni, 2 => formato
+            // 0 => context, 1 => days, 2 => format
             try {
                 bool pressure = false;
                 bool frequence = false;
 
                 var text = SettingsValue(mem, id, ref pressure, ref frequence, parameters[0], int.Parse(parameters[1]));
 
+                // selection right choice with parameters 
                 if (parameters[0] != "PERSONALE") {
                     switch (parameters[2]) {
                         case "GRAFICO":
@@ -80,7 +83,6 @@ namespace HyperTensionBot.Server.Bot {
                 }
                 else
                     await SendGeneralInfo(bot, mem, id);
-
             }
             catch (ArgumentNullException) {
                 await bot.SendTextMessageAsync(id, "Vorrei fornirti le tue misurazioni ma non sono ancora state registrate, ricordati di farlo quotidianamente.\n\n" +
@@ -102,6 +104,7 @@ namespace HyperTensionBot.Server.Bot {
             }
         }
 
+        // find all measurements when predicate is true
         private static List<Measurement> ProcessesRequest(Memory m, long id, Predicate<Measurement> p) {
             var result = m.GetAllMeasurements(id).FindAll(p);
             if (result is null || result.Count == 0) {
@@ -110,6 +113,7 @@ namespace HyperTensionBot.Server.Bot {
             return result;
         }
 
+        // create plot 
         private static Plot CreatePlot(bool includePress, bool includeFreq) {
             var plot = new Plot(600, 400);
 
@@ -149,6 +153,7 @@ namespace HyperTensionBot.Server.Bot {
             return plot;
         }
 
+        // Send plot, list with measurements, personal info or average 
         private static async Task SendPlot(TelegramBotClient bot, long id, Plot plot) {
             Bitmap im = plot.Render();
             Bitmap leg = plot.RenderLegend();
@@ -213,6 +218,7 @@ namespace HyperTensionBot.Server.Bot {
             return average;
         }
 
+        // Ask confirm to extracted parameters. They are extracted by LLM. 
         public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, string message, long id) {
             string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message);
             var parameters = RegexExtensions.ExtractParameters(outLLM);
@@ -236,7 +242,7 @@ namespace HyperTensionBot.Server.Bot {
             }
         }
 
-        // build parameters 
+        // build parameters if LLM has wrong
         public static async Task ModifyParameters(TelegramBotClient bot, long id, Memory memory, string resp, int idMessage, LLMService llm) {
             switch (memory.GetRequestState(id)) {
                 case ConversationInformation.RequestState.ChoiceContext:
@@ -263,7 +269,7 @@ namespace HyperTensionBot.Server.Bot {
 
         }
         private static async Task TemporaryChoice(TelegramBotClient bot, Memory memory, int idMessage, long id, string resp, ConversationInformation.RequestState state, int index, string[] choice, string text) {
-            
+
             var param = memory.GetParameters(id);
             param[index] = resp;
             memory.SetTemporaryParametersRequest(id, param);

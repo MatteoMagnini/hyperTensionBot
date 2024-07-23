@@ -3,6 +3,7 @@ using OpenAI_API.Chat;
 using Telegram.Bot.Types;
 
 namespace HyperTensionBot.Server.Bot {
+    // contains all information to an user. It use first time at new user. 
     public class UserInformation {
         public UserInformation(User from, DateTime date) {
             TelegramId = from.Id;
@@ -14,6 +15,7 @@ namespace HyperTensionBot.Server.Bot {
             ChatComunication = Prompt.GeneralContext();
         }
 
+        // define property
         public long TelegramId { get; init; }
 
         public string? FirstName { get; init; }

@@ -19,6 +19,7 @@ namespace HyperTensionBot.Server.Bot.Extensions {
             return result;
         }
 
+        // When the ML model predict a new insertion, the text passed to LLM for a first check and this method use the regex to extract
         public static double?[] ExtractMeasurement(string message) {
             var match = Regex.Match(message, @"(?<v1>\d{2,3})(?:\D+(?<v2>\d{2,3}))?(?:\D+(?<v3>\d{2,3}))?");
 

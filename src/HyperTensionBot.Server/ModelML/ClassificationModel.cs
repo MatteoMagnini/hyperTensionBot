@@ -19,9 +19,10 @@ namespace HyperTensionBot.Server.ModelML {
             }
         }
 
+        // Defined path to ML model and training set 
         private void ConfigurePath() {
             var sep = Path.DirectorySeparatorChar;
-            pathFile = Path.Combine(Directory.GetCurrentDirectory(), "ModelML" + sep + "trainingData.tsv") ;
+            pathFile = Path.Combine(Directory.GetCurrentDirectory(), "ModelML" + sep + "trainingData.tsv");
             pathModel = Path.Combine(Directory.GetCurrentDirectory(), "bin" + sep + "Debug" + sep + "net7.0" + sep + "Model") ?? throw new ArgumentException("Configuration model: path model is not set");
             // delete old folder and create new
             if (Directory.Exists(pathModel)) {

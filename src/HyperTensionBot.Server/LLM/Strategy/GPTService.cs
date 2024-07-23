@@ -3,13 +3,14 @@ using OpenAI_API.Chat;
 using OpenAI_API.Models;
 
 namespace HyperTensionBot.Server.LLM.Strategy {
-    // questa classe è stata sostituita da OllamaService ed è in fase di cancellazione 
+    // Gpt service: configuration and manage request to models 
     public class GPTService : ILLMService {
         private OpenAIAPI? api;
         private string? gptKey;
         private readonly List<ChatMessage> analisysRequest = new();
         private ILogger<LLMService>? _logger;
 
+        // Configuration 
         public GPTService(WebApplicationBuilder builder) {
             ConfigureKey(builder);
             analisysRequest = Prompt.RequestContext();
@@ -23,6 +24,7 @@ namespace HyperTensionBot.Server.LLM.Strategy {
             api = new OpenAIAPI(gptKey);
         }
 
+        // Send text messages to gtp model. It's pèossibile choice model, tokens, temperature ecc.. 
         public async Task<string> AskLLM(TypeConversation t, string userMessage = "", List<ChatMessage>? conversation = null) {
             if (api is not null) {
                 if (t == TypeConversation.Communication)

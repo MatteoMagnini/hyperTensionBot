@@ -25,6 +25,7 @@ namespace HyperTensionBot.Server.Database {
             measurements?.InsertOne(document);
         }
 
+        // Take last measurement 
         public static Measurement LastMeasurement(IMongoCollection<BsonDocument>? measurements, IMongoCollection<BsonDocument>? user, long id) {
 
             var date = DateLastMeasurement(user, id);
@@ -37,7 +38,7 @@ namespace HyperTensionBot.Server.Database {
             return new Measurement((double?)measure["Systolic"], (double?)measure["Diastolic"],
                     (double?)measure["HeartRate"], Time.Convert((DateTime)measure["Date"]));
         }
-
+        // take last data measurement 
         private static DateTime? DateLastMeasurement(IMongoCollection<BsonDocument>? user, long id) {
             var doc = user.FindAsync(Memory.GetFilter(id)).Result.FirstOrDefault();
             return Time.Convert((DateTime)doc["DateLastMeasurement"]);
