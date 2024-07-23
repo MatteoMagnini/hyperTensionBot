@@ -73,27 +73,31 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update
             var date = Time.Convert(update.Message.Date);
 
             // Add message to model input and predict intent
-            var input = new ModelInput { Sentence = messageText };
-            var result = model.Predict(input);
+            if (messageText == "/start")
+                await SendMessagesExtension.SendStartMessage(localBotClient, chatId);
+            else {
+                ModelInput input = new ModelInput { Sentence = messageText };
+                var result = model.Predict(input);
 
-            memory.HandleUpdate(from, date, result, messageText);
-            logger.LogInformation("Chat {0} incoming {1}", chatId, update.Type switch
-            {
-                UpdateType.Message => $"message with text: {messageText}",
-                UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
-                _ => "update of unhandled type"
-            });
-            logger.LogInformation("Incoming message matches intent {0}", result);
+                memory.HandleUpdate(from, date, result, messageText);
+                logger.LogInformation("Chat {0} incoming {1}", chatId, update.Type switch {
+                    UpdateType.Message => $"message with text: {messageText}",
+                    UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
+                    _ => "update of unhandled type"
+                });
+                logger.LogInformation("Incoming message matches intent {0}", result);
 
-            // Manage operations
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            await Context.ControlFlow(localBotClient, llm, memory, result, messageText, update.Message.Chat, date);
-            stopwatch.Stop();
-            logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
+                // Manage operations
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                await Context.ControlFlow(localBotClient, llm, memory, result, messageText, update.Message.Chat, date);
+                stopwatch.Stop();
+                logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
+            }
+            
         }
         else if (update.Type == UpdateType.CallbackQuery && update.CallbackQuery?.Data != null)
         {
-            var chatId = update.CallbackQuery.Message.Chat.Id;
+            var chatId = update.CallbackQuery.Message!.Chat.Id;
             await Context.ManageButton(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, localBotClient, memory, llm);
 
             if (!update.CallbackQuery.Data.StartsWith("yes") && !update.CallbackQuery.Data.StartsWith("no"))

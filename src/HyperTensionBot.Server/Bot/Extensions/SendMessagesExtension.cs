@@ -21,29 +21,29 @@ namespace HyperTensionBot.Server.Bot.Extensions {
         // Start Message
         public static async Task SendStartMessage(TelegramBotClient bot, long id) {
             await bot.SendTextMessageAsync(id,
-               @"👋 **Benvenuto al nostro Bot per l'Ipertensione e la Frequenza Cardiaca!**
+                @"
+👋 Benvenuto al nostro Bot per l'Ipertensione e la Frequenza Cardiaca!
+Sono qui per aiutarti a gestire la tua salute cardiovascolare. 🩺
 
-                Sono qui per aiutarti a gestire la tua salute cardiovascolare. 🩺
+📌 Misurazioni di Pressione Arteriosa:
+- Prima di effettuare le misurazioni, attendi qualche minuto in posizione seduta.
+- Evita di farlo subito dopo i pasti, il fumo di sigarette, il consumo di alcolici o lo sforzo fisico.
+- Posiziona il bracciale a uno o due centimetri sopra la piega del gomito.
+- Durante la misurazione, mantieni il braccio rilassato e appoggiato in modo che il bracciale si trovi all'altezza del cuore.
 
-                📌 **Misurazioni di Pressione Arteriosa:**
-                - Prima di effettuare le misurazioni, attendi qualche minuto in posizione seduta.
-                - Evita di farlo subito dopo i pasti, il fumo di sigarette, il consumo di alcolici o lo sforzo fisico.
-                - Posiziona il bracciale a uno o due centimetri sopra la piega del gomito.
-                - Durante la misurazione, mantieni il braccio rilassato e appoggiato in modo che il bracciale si trovi all'altezza del cuore.
+🔍 Come Funziono:
+- Sono in grado di rispondere alle tue domande generali e specifiche sull'ipertensione.
+- Posso acquisire e memorizzare le tue misurazioni di pressione arteriosa e frequenza cardiaca.
+- Fornisco visualizzazioni dei dati raccolti, sia in formato lista che grafico.
+- Calcolo anche le medie dei dati per te.
 
-                🔍 **Come Funziono:**
-                - Sono in grado di rispondere alle tue domande generali e specifiche sull'ipertensione.
-                - Posso acquisire e memorizzare le tue misurazioni di pressione arteriosa e frequenza cardiaca.
-                - Fornisco visualizzazioni dei dati raccolti, sia in formato lista che grafico.
-                - Calcolo anche le medie dei dati per te.
+🤖 Attenzione:
+- Comprendo ciò che mi dici, ma potrei commettere errori. Verifica sempre le analisi che ti fornisco.
+- Per ottenere risultati precisi, specifica il tipo di dato (pressione, frequenza o dati personali), la finestra temporale in giorni e il formato desiderato (lista, grafico o media) durante le richieste, o per gli inserimenti specifica se si tratta di pressione o frequenza.
 
-                🤖 **Attenzione:**
-                - Comprendo ciò che mi dici, ma potrei commettere errori. Verifica sempre le analisi che ti fornisco.
-                - Per ottenere risultati precisi, specifica il tipo di dato (pressione, frequenza o dati personali), la finestra temporale in giorni e il formato desiderato (lista, grafico o media)
-                  durante le richieste, o per gli inserimenti specifica se si tratta di pressione o frequenza.
-
-                Se hai domande o hai bisogno di assistenza, non esitare a chiedere! 🌟"); 
+Se hai domande o hai bisogno di assistenza, non esitare a chiedere! 🌟");
         }
+
 
         // manage button 
         public static async Task SendButton(TelegramBotClient bot, string text, long id, string[] s) {

@@ -1632,32 +1632,9 @@ aggiungo un'altra misurazione 145 67 90	Inserimento
 ho fatto un'altra misurazione 89 110	Inserimento
 potresti graficarmi tutti i valori di pressione che hai acquisito?	Richiesta
 Dammi il grafico dei valori della pressione degli altri pazienti	Richiesta
-/start	Generale
-/start	Generale
-/start	Generale
-/start	Generale
-/start	Generale
-/start	Generale
-/start	Generale
-120 90	Inserimento
-Ciao, come stai?	Generale
-Ho 130 80	Inserimento
 dammi qualche informazione su come tenere sotto controllo la pressione	Generale
-Ciao	Generale
-120 90	Inserimento
-/start	Generale
-/start	Generale
 Dammi il grafico dei valori della pressione di quest'anno	Richiesta
-Dammi il grafico dei valori della pressione di oggi	Richiesta
-buongiorno	Generale
-Ciao	Generale
 oggi la mia pressione è 120 80	Inserimento
-Ciao	Generale
-Ciao	Generale
-/start	Generale
-/start	Generale
 Ehy	Inserimento
-/start	Generale
-/start	Generale
-/start	Generale
-/start	Generale
+La pressione di oggi è 125 85	Inserimento
+ue	Generale
