@@ -16,7 +16,7 @@ builder.ConfigureTelegramBot();
 builder.Services.AddSingleton<ConfigurationManager>(builder.Configuration);
 builder.Services.AddSingleton<Memory>();
 
-// Add model and llm
+// add model and llm
 builder.Services.AddSingleton(new ClassificationModel());
 
 // Change the strategy - LLM - with class Ollama or gpt
@@ -95,6 +95,7 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update
         {
             var chatId = update.CallbackQuery.Message.Chat.Id;
             await Context.ManageButton(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, localBotClient, memory, llm);
+
             if (!update.CallbackQuery.Data.StartsWith("yes") && !update.CallbackQuery.Data.StartsWith("no"))
                 await Request.ModifyParameters(localBotClient, chatId, memory, update.CallbackQuery.Data, update.CallbackQuery.Message.MessageId, llm);
             // Removing inline keyboard

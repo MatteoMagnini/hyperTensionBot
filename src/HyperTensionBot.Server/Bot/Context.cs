@@ -8,10 +8,15 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace HyperTensionBot.Server.Bot {
+    // Manage all predicted intent of ML model. After prediction this class is responsable to workflow
     public static class Context {
+        private static string START = "/start"; 
 
         public static async Task ControlFlow(TelegramBotClient bot, LLMService llm, Memory memory, Intent context, string message, Chat chat, DateTime date) {
             try {
+                if (message == START)
+                    await SendMessagesExtension.SendStartMessage(bot, chat.Id); 
+
                 int idMessage;
                 switch (context) {
 
@@ -72,6 +77,7 @@ namespace HyperTensionBot.Server.Bot {
             }
         }
 
+        // Storage datas. The seguent methods manage insert intent
         private static async Task StorageGeneralData(TelegramBotClient bot, string message, Chat chat, Memory memory) {
             memory.GetGeneralInfo(chat.Id).Add(message);
             await bot.SendTextMessageAsync(chat.Id, "Queste informazioni sono preziose per il dottore: più dati fornisci migliore sarà l'analisi!💪");
@@ -128,7 +134,7 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         public static async Task CheckAverage(int?[] average, TelegramBotClient bot, long id) {
-            // check sulla media nell'ultimo mese dopo un inserimento delle nuove misure
+            // check avarage after new insertion on last month's datas 
             StringBuilder sb = new();
             sb.Append("Ho analizzato le nuove medie registrate:\n");
             if (average[0] <= 140 && average[1] <= 90)

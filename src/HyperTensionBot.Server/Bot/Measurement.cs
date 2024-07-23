@@ -1,6 +1,7 @@
 using HyperTensionBot.Server.Bot.Extensions;
 
 namespace HyperTensionBot.Server.Bot {
+    // Measurement class with all fields and property necessary
     public class Measurement {
         public double? SystolicPressure { get; init; }
 
@@ -18,7 +19,7 @@ namespace HyperTensionBot.Server.Bot {
             HeartRate = heartRate;
             Date = date;
         }
-
+        // Check if the new Measurement is in possible range of values 
         private void Check(double? systolicPressure, double? diastolicPressure, double? heartRate) {
             if (systolicPressure != null &&
                 (systolicPressure < 50 || systolicPressure > 250))

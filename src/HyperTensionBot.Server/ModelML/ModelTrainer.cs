@@ -2,6 +2,8 @@ using Microsoft.ML;
 using Microsoft.ML.Trainers;
 
 namespace HyperTensionBot.Server.ModelML {
+
+    // Responsible of training ML model 
     public class ModelTrainer {
         private readonly MLContext mlContext;
 

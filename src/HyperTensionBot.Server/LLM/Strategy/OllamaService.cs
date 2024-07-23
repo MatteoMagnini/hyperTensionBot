@@ -5,17 +5,20 @@ using OpenAI_API.Chat;
 using System.Text;
 
 namespace HyperTensionBot.Server.LLM {
+
+    // allow ollama service. It used for comunicate with model in the server 
     public class OllamaService : ILLMService {
 
         private readonly HttpClient _httpClient = new();
-        // URL dell'API del LLM
+        // URL for LLM
         private readonly string? _llmApiUrl;
 
         // set names to different model 
-        private readonly string MODEL_COMUNICATION = "mixtral";
-        private readonly string MODEL_REQUEST = "mixtral";
-        private readonly string MODEL_INSERT = "mixtral";
+        private readonly string MODEL_COMUNICATION = "llama3";
+        private readonly string MODEL_REQUEST = "llama3";
+        private readonly string MODEL_INSERT = "llama3";
 
+        // Lists contains requests of insertion and data request. They are used for the context at prompt 
         private readonly List<ChatMessage> analysistInsert;
         private readonly List<ChatMessage> analysisRequest;
 
@@ -104,6 +107,7 @@ namespace HyperTensionBot.Server.LLM {
             return "Non è possibile rispondere a queste domande. Riprova più tardi. ";
         }
 
+        // Set parameter for each conversation model
         private void AssignInput(TypeConversation t, ref List<ChatMessage> chatContext, List<ChatMessage>? comunication, ref string modelName, ref double temp) {
             switch (t) {
                 case TypeConversation.Request:

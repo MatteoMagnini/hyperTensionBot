@@ -1571,7 +1571,6 @@ Amo mangiare i pop corn	Generale
 Mangio caramelle ogni giorno	PersonalInfo
 Dammi la ricetta di una pizza	Generale
 Mi spieghi come fare la pizza a casa?	Generale
-/start	Generale
 Ho 130 80	Inserimento
 Ho 60 di pulsazioni	Inserimento
 Sai dirmi qual era la mia pressione oggi	Richiesta
@@ -1590,7 +1589,6 @@ mi fai un grafico della pressione?	Richiesta
 oggi ho una pressione strana, tipo 140 90	Inserimento
 non esagerare...finché non arrivo a una pressione di 140 puoi stare sereno	Generale
 molto bene!	Generale
-grazie	Generale
 no no va tutto bene grazie	Generale
 la lista dei valori di pressione che ho inserito qual è?	Richiesta
 se volessi i valori dell'ultima settimana?	Richiesta
@@ -1606,6 +1604,42 @@ ti autorizzo	Generale
 voglio la lista dei miei valori	Richiesta
 pressione 60 123	Inserimento
 Press 90 130	Inserimento
+Ciao! Come stai?	Generale
+tesoro buongiorno	Generale
+no nessuna	Generale
+vorrei il grafico delle pressioni dell'ultima settimana	Richiesta
+Dimmi i miei dati sulla pressione di quest'anno	Richiesta
+ok scusa, ecco un altro valore 140 89	Inserimento
+ora mi fai il grafico?	Richiesta
+no aspetta	Generale
+il grafico così fa schifo	Generale
+voglio il grafico dell'ultima settimana	Richiesta
+forniscimi il grafico dei miei dati.	Richiesta
+per piacere mi fai vedere il grafico dei valori di pressione nell'ultima settimana	Richiesta
+scusa mi sento male oggi	Umore
+forniscimi tutti i dati personali riferiti al dottore.	Richiesta
+tesoro sto malissimo	PersonalInfo
+156 89	Inserimento
+graficami tutti i valori che hai	Richiesta
+120 90	Inserimento
+140 90	Inserimento
+ultimi due giorni'	Richiesta
+Volevo inserire la mia pressione	Generale
+ultimi due giorni?	Richiesta
+Dammi il grafico dei valori di oggi	Richiesta
+Dammi il grafico dei valori della pressione di oggi	Richiesta
+aggiungo un'altra misurazione 145 67 90	Inserimento
+ho fatto un'altra misurazione 89 110	Inserimento
+potresti graficarmi tutti i valori di pressione che hai acquisito?	Richiesta
+Dammi il grafico dei valori della pressione degli altri pazienti	Richiesta
+/start	Generale
+/start	Generale
+/start	Generale
+/start	Generale
+/start	Generale
+/start	Generale
+/start	Generale
+120 90	Inserimento
 Ciao, come stai?	Generale
 Ho 130 80	Inserimento
 dammi qualche informazione su come tenere sotto controllo la pressione	Generale
@@ -1623,9 +1657,6 @@ Ciao	Generale
 /start	Generale
 /start	Generale
 Ehy	Inserimento
-/start	Generale
-/start	Generale
-/start	Generale
 /start	Generale
 /start	Generale
 /start	Generale

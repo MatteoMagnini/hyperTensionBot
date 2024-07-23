@@ -1,4 +1,5 @@
 namespace HyperTensionBot.Server.Bot {
+    // Contains information of user during the session 
     public class ConversationInformation {
         public ConversationInformation(long telegramChatId, DateTime? date = null, RequestState state = RequestState.ChoiceContext) {
             TelegramChatId = telegramChatId;

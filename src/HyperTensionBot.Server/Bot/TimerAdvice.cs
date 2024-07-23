@@ -1,9 +1,9 @@
 using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
-using ScottPlot.Drawing.Colormaps;
 using Telegram.Bot;
 
 namespace HyperTensionBot.Server.Bot {
+    // timer for advice users when they not send new insertions 
     public class TimerAdvice {
         private readonly System.Timers.Timer _timer;
 

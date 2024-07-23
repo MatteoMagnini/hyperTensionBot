@@ -1,23 +1,61 @@
 using HyperTensionBot.Server.Database;
+using ScottPlot.Drawing.Colormaps;
+using ScottPlot.Plottable.AxisManagers;
+using ScottPlot.Renderable;
+using ScottPlot.Styles;
+using ScottPlot;
+using System.IO;
+using System.Net.NetworkInformation;
 using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using static ScottPlot.Plottable.PopulationPlot;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HyperTensionBot.Server.Bot.Extensions {
+    // Static class to send messages for variety of scenes in the chat
     public static class SendMessagesExtension {
+
+        // Start Message
+        public static async Task SendStartMessage(TelegramBotClient bot, long id) {
+            await bot.SendTextMessageAsync(id,
+               @"👋 **Benvenuto al nostro Bot per l'Ipertensione e la Frequenza Cardiaca!**
+
+                Sono qui per aiutarti a gestire la tua salute cardiovascolare. 🩺
+
+                📌 **Misurazioni di Pressione Arteriosa:**
+                - Prima di effettuare le misurazioni, attendi qualche minuto in posizione seduta.
+                - Evita di farlo subito dopo i pasti, il fumo di sigarette, il consumo di alcolici o lo sforzo fisico.
+                - Posiziona il bracciale a uno o due centimetri sopra la piega del gomito.
+                - Durante la misurazione, mantieni il braccio rilassato e appoggiato in modo che il bracciale si trovi all'altezza del cuore.
+
+                🔍 **Come Funziono:**
+                - Sono in grado di rispondere alle tue domande generali e specifiche sull'ipertensione.
+                - Posso acquisire e memorizzare le tue misurazioni di pressione arteriosa e frequenza cardiaca.
+                - Fornisco visualizzazioni dei dati raccolti, sia in formato lista che grafico.
+                - Calcolo anche le medie dei dati per te.
+
+                🤖 **Attenzione:**
+                - Comprendo ciò che mi dici, ma potrei commettere errori. Verifica sempre le analisi che ti fornisco.
+                - Per ottenere risultati precisi, specifica il tipo di dato (pressione, frequenza o dati personali), la finestra temporale in giorni e il formato desiderato (lista, grafico o media)
+                  durante le richieste, o per gli inserimenti specifica se si tratta di pressione o frequenza.
+
+                Se hai domande o hai bisogno di assistenza, non esitare a chiedere! 🌟"); 
+        }
 
         // manage button 
         public static async Task SendButton(TelegramBotClient bot, string text, long id, string[] s) {
             // Check that array is not null 
             if (s != null && s.Length % 2 == 0) {
-                // Crea una lista per contenere i bottoni
+
+                // List of bot button
                 List<InlineKeyboardButton> buttons = new();
 
                 // add button 
                 for (int i = 0; i < s.Length; i += 2) {
-                    // Assicurati che ci sia una coppia di valori per creare un bottone
+                    // A Button is added if theres a pair (key, value) to send at user 
                     if (i + 1 < s.Length) {
                         buttons.Add(new InlineKeyboardButton(s[i]) { CallbackData = s[i + 1] });
                     }

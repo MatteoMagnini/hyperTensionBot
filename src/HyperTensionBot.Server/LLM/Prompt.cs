@@ -1,6 +1,7 @@
 using OpenAI_API.Chat;
 
 namespace HyperTensionBot.Server.LLM {
+    // prompt and context chat for each type conversation 
     public static class Prompt {
 
         public static List<ChatMessage> GeneralContext() {
