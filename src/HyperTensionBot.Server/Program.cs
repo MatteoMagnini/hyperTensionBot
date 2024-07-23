@@ -52,6 +52,7 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
             var messageText = update.Message?.Text;
             if (messageText != null) {
                 var date = Time.Convert(update!.Message!.Date);
+
                 // add message to model input and predict intent
                 var input = new ModelInput { Sentence = messageText };
                 var result = model.Predict(input);
