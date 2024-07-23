@@ -16,22 +16,22 @@ builder.ConfigureTelegramBot();
 builder.Services.AddSingleton<ConfigurationManager>(builder.Configuration);
 builder.Services.AddSingleton<Memory>();
 
-// add model and llm 
+// add model and llm
 builder.Services.AddSingleton(new ClassificationModel());
 
 // change the strategy - LLM - with class Ollama o gpt
 builder.Services.AddSingleton(new LLMService(await OllamaService.CreateAsync(builder))); // new GPTService(builder))
 
-bool internalPOST = false; // flag: exclude some POST request from LLM server 
+bool internalPOST = false; // flag: exclude some POST request from LLM server
 var app = builder.Build();
 
-// configuring the bot and timer to alert patients 
+// configuring the bot and timer to alert patients
 app.SetupTelegramBot();
 app.Services.GetRequiredService<LLMService>().SetLogger(app.Services.GetRequiredService<ILogger<LLMService>>());
 
-TimerAdvice timer = new(app.Services.GetRequiredService<Memory>(), app.Services.GetRequiredService<TelegramBotClient>());
+//docTimerAdvice timer = new(app.Services.GetRequiredService<Memory>(), app.Services.GetRequiredService<TelegramBotClient>());
 
-// handle update 
+// handle update
 app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memory memory, ILogger<Program> logger, ClassificationModel model, LLMService llm) => {
     try {
         if (!context.Request.HasJsonContentType()) {
@@ -47,7 +47,7 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
         User? from = update.Message?.From ?? update.CallbackQuery?.From;
         Chat chat = update.Message?.Chat ?? update.CallbackQuery?.Message?.Chat ?? throw new Exception("Unable to detect chat ID");
 
-        internalPOST = true; // possible POST calls for request to the LLM server 
+        internalPOST = true; // possible POST calls for request to the LLM server
         if (update.Message?.Text is not null) {
             var messageText = update.Message?.Text;
             if (messageText != null) {
@@ -85,9 +85,9 @@ app.MapPost("/webhook", async (HttpContext context, TelegramBotClient bot, Memor
     }
     catch (Exception e) {
         logger.LogDebug(e.Message);
-        return Results.Ok(); // system always online 
+        return Results.Ok(); // system always online
     }
     return Results.Ok();
 });
 
-app.Run();
+app.Run("http://localhost:5183");
