@@ -1640,10 +1640,22 @@ Dammi il grafico dei valori della pressione degli altri pazienti	Richiesta
 /start	Generale
 /start	Generale
 120 90	Inserimento
+Ciao, come stai?	Generale
+Ho 130 80	Inserimento
+dammi qualche informazione su come tenere sotto controllo la pressione	Generale
+Ciao	Generale
+120 90	Inserimento
+/start	Generale
+/start	Generale
+Dammi il grafico dei valori della pressione di quest'anno	Richiesta
+Dammi il grafico dei valori della pressione di oggi	Richiesta
+buongiorno	Generale
+Ciao	Generale
+oggi la mia pressione è 120 80	Inserimento
+Ciao	Generale
+Ciao	Generale
 /start	Generale
 /start	Generale
 Ehy	Inserimento
-/start	Generale
-/start	Generale
 /start	Generale
 /start	Generale

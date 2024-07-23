@@ -1,3 +1,5 @@
+*ngrok.yml
+src/HyperTensionBot.Server/app/
 **/.vs/*
 **/.vscode/*
 **/bin/*

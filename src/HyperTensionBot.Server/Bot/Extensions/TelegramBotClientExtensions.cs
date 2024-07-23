@@ -17,7 +17,6 @@ namespace HyperTensionBot.Server.Bot.Extensions {
 
         public static WebApplication SetupTelegramBot(this WebApplication app) {
             var logger = app.Services.GetRequiredService<ILogger<Program>>();
-
             var confBot = app.Configuration.GetSection("Bot");
             var botWebhookUrl = confBot["WebhookUrlBase"];
             if (botWebhookUrl == null) {
