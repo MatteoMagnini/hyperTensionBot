@@ -12,6 +12,7 @@ services:
       - webnet
 
   app:
+    image: hyper-tension-bot
     build:
       context: .
       dockerfile: Dockerfile
