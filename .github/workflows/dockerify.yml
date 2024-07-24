@@ -32,11 +32,19 @@ jobs:
       - name: Get Version
         id: get-version
         run: echo ::set-output name=version::$(python setup.py get_project_version | tail -n 1)
+        
+      - name: Generate appsettings.json
+        run: |
+          cd src/HyperTensionBot.Server
+          ruby generate_appsettings.rb
+        env:
+          SECRET_TELEGRAM_TOKEN: ${{ secrets.SECRET_TELEGRAM_TOKEN }}
+          SECRET_KEY_OPENAI: ${{ secrets.SECRET_KEY_OPENAI }}
 
       - name: Create Docker Image
         run: |
-          cd src/HyperTensionBot.Server
-          ../../.github/scripts/retry.sh "docker build -t pikalab/${{env.PROJECT_NAME}}:${{ steps.get-version.outputs.version }} ."
+          ../../.github/scripts/retry.sh "docker-compose -f docker-compose.yml build"
+          ../../.github/scripts/retry.sh "docker tag hyper-tension-bot:latest pikalab/${{env.PROJECT_NAME}}:${{ steps.get-version.outputs.version }}"
         shell: bash
 
       - name: Push Image on Docker Hub

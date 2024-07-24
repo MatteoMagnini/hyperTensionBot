@@ -20,7 +20,7 @@ builder.Services.AddSingleton<Memory>();
 builder.Services.AddSingleton(new ClassificationModel());
 
 // Change the strategy - LLM - with class Ollama or gpt
-builder.Services.AddSingleton(new LLMService(await OllamaService.CreateAsync(builder))); // new GPTService(builder))
+builder.Services.AddSingleton(new LLMService(await OllamaService.CreateAsync(builder)));
 
 var app = builder.Build();
 
@@ -50,9 +50,11 @@ botClient.StartReceiving(
     cancellationToken: cts.Token
 );
 
-Console.WriteLine("Bot is listening for updates...");
-Console.ReadLine(); // Prevents the application from exiting immediately
+app.Lifetime.ApplicationStarted.Register(() => Console.WriteLine("Bot is listening for updates..."));
+app.Lifetime.ApplicationStopping.Register(() => cts.Cancel());
 
+// Ensure the application doesn't exit immediately
+await app.RunAsync();
 
 async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update, CancellationToken cancellationToken)
 {
@@ -93,7 +95,7 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update
                 stopwatch.Stop();
                 logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
             }
-            
+
         }
         else if (update.Type == UpdateType.CallbackQuery && update.CallbackQuery?.Data != null)
         {
