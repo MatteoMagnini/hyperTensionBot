@@ -8,8 +8,6 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-    networks:
-      - webnet
 
   app:
     image: hyper-tension-bot
@@ -22,12 +20,6 @@ services:
     environment:
       - TELEGRAM_BOT_TOKEN=6484731080:AAEvP8_0pvlAWqx2b3Lj1qESwU0WgrAGUtM
       - MONGODB_CONNECTION_STRING=mongodb://mongodb:27017
-    networks:
-      - webnet
 
 volumes:
   mongo-data:
-
-networks:
-  webnet:
-    driver: bridge
