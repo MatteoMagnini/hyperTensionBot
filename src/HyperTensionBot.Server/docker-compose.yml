@@ -18,7 +18,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      - TELEGRAM_BOT_TOKEN=6484731080:AAEvP8_0pvlAWqx2b3Lj1qESwU0WgrAGUtM
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - MONGODB_CONNECTION_STRING=mongodb://mongodb:27017
 
 volumes:
