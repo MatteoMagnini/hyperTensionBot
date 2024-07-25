@@ -248,8 +248,8 @@ namespace HyperTensionBot.Server.Bot {
                 case ConversationInformation.RequestState.ChoiceContext:
                     await TemporaryChoice(bot, memory, idMessage, id, resp, ConversationInformation.RequestState.ChoiceTimeSpan, 0,
                         new string[] {
-                            "Ultimo giorno", "1", "Ultima settimana", "7",
-                            "Ultimo mese", "30", "Tutti i dati", "-1"}, "l'arco temporale");
+                            "Giorno", "1", "Settimana", "7",
+                            "Mese", "30", "Tutti", "-1"}, "l'arco temporale");
                     break;
 
                 case ConversationInformation.RequestState.ChoiceTimeSpan:

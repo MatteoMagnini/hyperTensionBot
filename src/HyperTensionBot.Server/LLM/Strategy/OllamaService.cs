@@ -71,8 +71,6 @@ namespace HyperTensionBot.Server.LLM {
                 List<ChatMessage> chatContext = new();
                 AssignInput(t, ref chatContext, comunicationChat, ref modelName, ref temp);
 
-                //modelName = (t == TypeConversation.Communication)? MODEL_COMUNICATION: MODEL_REQUEST;
-
                 // build payload JSON
                 var jsonPayload = new {
                     model = modelName,
@@ -113,7 +111,7 @@ namespace HyperTensionBot.Server.LLM {
                 case TypeConversation.Request:
                     modelName = MODEL_REQUEST;
                     chatContext = analysisRequest;
-                    temp = 0.2;
+                    temp = 0.1;
                     break;
                 case TypeConversation.Insert:
                     modelName = MODEL_INSERT;
@@ -123,7 +121,7 @@ namespace HyperTensionBot.Server.LLM {
                 default:
                     modelName = MODEL_COMUNICATION;
                     chatContext = comunication!;
-                    temp = 0.6;
+                    temp = 0.8;
                     break;
             }
         }

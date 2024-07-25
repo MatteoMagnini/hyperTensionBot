@@ -33,8 +33,8 @@ namespace HyperTensionBot.Server.Bot {
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
                     case Intent.Inserimento:
-                        // var result = await llm.HandleAskAsync(TypeConversation.Insert, message); // non è consigliabile procedere tramite LLM sul parser dei parametri
-                        await StorageData(bot, message, chat, memory, date);
+                        var result = await llm.HandleAskAsync(TypeConversation.Insert, message);
+                        await StorageData(bot, result, chat, memory, date);
                         break;
 
                     case Intent.Umore:
@@ -102,7 +102,6 @@ namespace HyperTensionBot.Server.Bot {
                 text.AppendLine($"❤️ Frequenza: {(int)measurement[2]!} bpm\n\nHo capito bene?");
 
             await SendMessagesExtension.SendButton(bot, text.ToString(), chat.Id, new string[] { "Sì, registra!", "yesIns", "No", "noIns" });
-
         }
 
         // manage button
