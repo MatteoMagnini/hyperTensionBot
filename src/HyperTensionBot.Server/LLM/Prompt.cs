@@ -1,13 +1,4 @@
-using HyperTensionBot.Server.Bot;
-using Microsoft.VisualBasic;
 using OpenAI_API.Chat;
-using ScottPlot.Palettes;
-using static ScottPlot.Plottable.PopulationPlot;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Reflection.Metadata;
-using System.Text.RegularExpressions;
-using System;
-using Telegram.Bot.Types;
 
 namespace HyperTensionBot.Server.LLM {
     // prompt and context chat for each type conversation 
@@ -67,6 +58,6 @@ namespace HyperTensionBot.Server.LLM {
                 new ChatMessage(ChatMessageRole.User, "70"),
                 new ChatMessage(ChatMessageRole.Assistant, "0 0 70"),
             };
-    }
+        }
     }
 }

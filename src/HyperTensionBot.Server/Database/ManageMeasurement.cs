@@ -2,7 +2,6 @@ using HyperTensionBot.Server.Bot;
 using HyperTensionBot.Server.Bot.Extensions;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Drawing.Printing;
 
 namespace HyperTensionBot.Server.Database {
 
@@ -45,9 +44,9 @@ namespace HyperTensionBot.Server.Database {
             var doc = user.FindAsync(Memory.GetFilter(id)).Result.FirstOrDefault();
             var date = doc["DateLastMeasurement"];
             if (!date.IsBsonNull)
-                return date; 
+                return date;
             else
-                return null; 
+                return null;
         }
     }
 }

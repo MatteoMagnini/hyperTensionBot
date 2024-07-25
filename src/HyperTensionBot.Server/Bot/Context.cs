@@ -10,12 +10,12 @@ using Telegram.Bot.Types;
 namespace HyperTensionBot.Server.Bot {
     // Manage all predicted intent of ML model. After prediction this class is responsable to workflow
     public static class Context {
-        private static string START = "/start"; 
+        private static readonly string START = "/start";
 
         public static async Task ControlFlow(TelegramBotClient bot, LLMService llm, Memory memory, Intent context, string message, Chat chat, DateTime date) {
             try {
                 if (message == START)
-                    await SendMessagesExtension.SendStartMessage(bot, chat.Id); 
+                    await SendMessagesExtension.SendStartMessage(bot, chat.Id);
 
                 int idMessage;
                 switch (context) {

@@ -2,8 +2,10 @@ using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.LLM.Strategy;
-using ScottPlot;
-using System.Drawing;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.ImageSharp;
+using OxyPlot.Series;
 using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -113,61 +115,118 @@ namespace HyperTensionBot.Server.Bot {
             return result;
         }
 
-        // create plot 
-        private static Plot CreatePlot(bool includePress, bool includeFreq) {
-            var plot = new Plot(600, 400);
+        private static PlotModel CreatePlot(bool includePress, bool includeFreq) {
+            // Imposta il titolo del grafico in base ai dati inclusi
+            string title = "Misurazioni della Pressione e Frequenza Cardiaca";
+            if (includePress && includeFreq) {
+                title = "Grafico Pressione e Frequenza Cardiaca";
+            }
+            else if (includePress) {
+                title = "Grafico solo Pressione";
+            }
+            else if (includeFreq) {
+                title = "Grafico solo Frequenza Cardiaca";
+            }
+
+            var plotModel = new PlotModel {
+                Title = title,
+                DefaultFont = "DejaVu Sans",
+                IsLegendVisible = true
+            };
+
+            plotModel.Axes.Add(new DateTimeAxis {
+                Position = AxisPosition.Bottom,
+                StringFormat = "dd/MM/yyyy",
+                Title = "Data",
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dot,
+                TitleFontSize = 12,
+                TitleFontWeight = FontWeights.Bold
+            });
+
+            plotModel.Axes.Add(new LinearAxis {
+                Position = AxisPosition.Left,
+                Title = "Pressione (mmHg) / Frequenza (bpm)",
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dot,
+                TitleFontSize = 12,
+                TitleFontWeight = FontWeights.Bold
+            });
 
             if (includePress) {
-                double[] datePressure = measurementsFormatted.Where(m => m.SystolicPressure != null).Select(x => x.Date.ToOADate()).ToArray();
-                double?[] systolic = measurementsFormatted.Select(m => m.SystolicPressure).Where(x => x != null).ToArray();
-                double?[] diastolic = measurementsFormatted.Select(m => m.DiastolicPressure).Where(x => x != null).ToArray();
-                if (systolic.Length > 1 && diastolic.Length > 1) {
-                    plot.AddScatterLines(datePressure, systolic.Where(d => d.HasValue).Select(d => d!.Value).ToArray(),
-                        System.Drawing.Color.Chocolate, 1, LineStyle.Solid, "Pressione Sistolica");
-                    plot.AddScatterPoints(datePressure, systolic.Where(d => d.HasValue).Select(d => d!.Value).ToArray(),
-                        System.Drawing.Color.Black, 7);
-                    plot.AddScatterLines(datePressure, diastolic.Where(d => d.HasValue).Select(d => d!.Value).ToArray(),
-                        System.Drawing.Color.Blue, 1, LineStyle.Solid, "Pressione Diastolica");
-                    plot.AddScatterPoints(datePressure, diastolic.Where(d => d.HasValue).Select(d => d!.Value).ToArray(),
-                        System.Drawing.Color.Black, 7);
+                var systolicSeries = new LineSeries {
+                    Title = "Pressione Sistolica",
+                    Color = OxyColors.Chocolate,
+                    LineStyle = LineStyle.Solid,
+                    MarkerType = MarkerType.None // Rimuove i markers
+                };
+                var diastolicSeries = new LineSeries {
+                    Title = "Pressione Diastolica",
+                    Color = OxyColors.Blue,
+                    LineStyle = LineStyle.Solid,
+                    MarkerType = MarkerType.None // Rimuove i markers
+                };
+
+                var systolicPoints = measurementsFormatted
+                    .Where(m => m.SystolicPressure != null)
+                    .Select(m => new DataPoint(DateTimeAxis.ToDouble(m.Date), m.SystolicPressure!.Value))
+                    .ToList();
+
+                var diastolicPoints = measurementsFormatted
+                    .Where(m => m.DiastolicPressure != null)
+                    .Select(m => new DataPoint(DateTimeAxis.ToDouble(m.Date), m.DiastolicPressure!.Value))
+                    .ToList();
+
+                if (systolicPoints.Count > 1 && diastolicPoints.Count > 1) {
+                    systolicSeries.Points.AddRange(systolicPoints);
+                    diastolicSeries.Points.AddRange(diastolicPoints);
+
+                    plotModel.Series.Add(systolicSeries);
+                    plotModel.Series.Add(diastolicSeries);
                 }
-                else throw new ExceptionExtensions.InsufficientData();
-            }
-            if (includeFreq) {
-                double[] dateFrequence = measurementsFormatted.Where(m => m.HeartRate != null).Select(x => x.Date.ToOADate()).ToArray();
-                double?[] frequence = measurementsFormatted.Select(m => m.HeartRate).Where(x => x != null).ToArray();
-                if (frequence.Length > 1) {
-                    plot.AddScatterLines(dateFrequence, frequence.Where(d => d.HasValue).Select(d => d!.Value).ToArray(),
-                        System.Drawing.Color.Red, 1, LineStyle.Solid, "Frequenza cardiaca");
-                    plot.AddScatterPoints(dateFrequence, frequence.Where(d => d.HasValue).Select(d => d!.Value).ToArray(),
-                        System.Drawing.Color.Black, 7);
-                }
-                else
+                else {
                     throw new ExceptionExtensions.InsufficientData();
+                }
             }
 
-            plot.XAxis.DateTimeFormat(true);
-            plot.YLabel("Pressione (mmHg) / Frequenza (bpm)");
-            plot.XLabel("Data");
+            if (includeFreq) {
+                var heartRateSeries = new LineSeries {
+                    Title = "Frequenza Cardiaca",
+                    Color = OxyColors.Red,
+                    LineStyle = LineStyle.Solid,
+                    MarkerType = MarkerType.None // Rimuove i markers
+                };
 
-            return plot;
+                var heartRatePoints = measurementsFormatted
+                    .Where(m => m.HeartRate != null)
+                    .Select(m => new DataPoint(DateTimeAxis.ToDouble(m.Date), m.HeartRate!.Value))
+                    .ToList();
+
+                if (heartRatePoints.Count > 1) {
+                    heartRateSeries.Points.AddRange(heartRatePoints);
+                    plotModel.Series.Add(heartRateSeries);
+                }
+                else {
+                    throw new ExceptionExtensions.InsufficientData();
+                }
+            }
+
+            return plotModel;
         }
 
-        // Send plot, list with measurements, personal info or average 
-        private static async Task SendPlot(TelegramBotClient bot, long id, Plot plot) {
-            Bitmap im = plot.Render();
-            Bitmap leg = plot.RenderLegend();
-            Bitmap b = new(im.Width + leg.Width, im.Height);
-            using Graphics g = Graphics.FromImage(b);
-            g.Clear(System.Drawing.Color.White);
-            g.DrawImage(im, 0, 0);
-            g.DrawImage(leg, im.Width, (b.Height - b.Height) / 2);
-            using (var ms = new MemoryStream()) {
-                b.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                ms.Position = 0;
-                await bot.SendPhotoAsync(id, new InputFileStream(ms));
+
+
+        // Send plot to chat 
+        private static async Task SendPlot(TelegramBotClient bot, long id, PlotModel plotModel) {
+            using (var stream = new MemoryStream()) {
+                var pngExporter = new PngExporter(width: 600, height: 400);
+                pngExporter.Export(plotModel, stream);
+                stream.Position = 0;
+
+                await bot.SendPhotoAsync(id, new InputFileStream(stream));
             }
         }
+
 
         private static async Task SendDataList(TelegramBotClient bot, long id, bool press, bool freq, string mex) {
             var sbPress = new StringBuilder("\n\n");
