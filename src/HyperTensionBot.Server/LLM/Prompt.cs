@@ -1,4 +1,13 @@
+using HyperTensionBot.Server.Bot;
+using Microsoft.VisualBasic;
 using OpenAI_API.Chat;
+using ScottPlot.Palettes;
+using static ScottPlot.Plottable.PopulationPlot;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Reflection.Metadata;
+using System.Text.RegularExpressions;
+using System;
+using Telegram.Bot.Types;
 
 namespace HyperTensionBot.Server.LLM {
     // prompt and context chat for each type conversation 
@@ -26,7 +35,8 @@ namespace HyperTensionBot.Server.LLM {
                 new ChatMessage(ChatMessageRole.User, "Analyze the message to identify three specific parameters based on the detailed instructions. Precisely select each parameter based on the content and context of the request after a recursive analysis. " +
                     "For Context, assign one of these labels: 'PRESSIONE', 'FREQUENZA', 'ENTRAMBI', 'PERSONALE', where - PERSONALE - refers to contexts of personal information. " +
                     "For Time Span, establish the mentioned time span and assign a positive numerical value corresponding to days, use 1 for recent data, or -1 for non-specific or total requests. " +
-                    "For Format, identify the requested format and assign 'MEDIA', 'GRAFICO', or 'LISTA', with -LIST- being the default and mandatory option if the context is -PERSONALE-. sintax to the examples already present in the chat and respond as a robot with just the 3 words you are allowed."),
+                    "For Format, identify the requested format and assign 'MEDIA', 'GRAFICO', or 'LISTA', with -LIST- being the default and mandatory option if the context is -PERSONALE-. " +
+                    "The syntax to use is shown in the prompt. The only words in capital letters are the 3 words. Reply like a robot with only the 3 words you are allowed without adding anything else."),
                 new ChatMessage(ChatMessageRole.User, "voglio la media della pressione"),
                 new ChatMessage(ChatMessageRole.Assistant, "PRESSIONE -1 MEDIA"),
                 new ChatMessage(ChatMessageRole.User, "Lista della frequenza di oggi?"),
@@ -38,13 +48,12 @@ namespace HyperTensionBot.Server.LLM {
 
         public static List<ChatMessage> InsertContest() {
             return new List<ChatMessage> {
-                new ChatMessage(ChatMessageRole.User, "Da questo momento in poi ha un solo e preciso compito: analizza i messaggi che ricevi e produci nel seguente ordine questi parametri numerici senza nient'altro: " +
-                "Il primo ed il secondo numero indicano la pressione citata nel testo o rispettivamente 0 0 se non si parla di presssione. Il primo valore è la pressione sistolica che è il numero più grande tra i due, mentre il secondo la diastolica numero inferiore." +
-                "Come terzo e ultimo numero indica la frequenza o 0 se la frequenza non è presente nel messaggio." +
-                "Tipicamente messaggi con soli valori numerici, senza altre parole, vengono intercettati nel seguente modo: se i valori sono 2 sono di pressione, se singolo vi è solo la frequenza, contrariamente 3 valori indica la presenza di tutti i parametri richiesti" +
-                "Analizza almeno 3 volte il messaggio e il contesto fornito della chat e riporta con precisione, nell'ordine descritto i 3 valori richiesti con pressione e frequenza, senza " +
-                "riportare qualsiasi altra informazione o segno di punteggiatura. Ricorda che i numeri da produrre sono sempre 3 che essi siano presenti o meno nel testo: dove un parametro non è catturabile ricorda di porre lo 0 nella corretta posizione descritta in precedenza."),
-
+                new ChatMessage(ChatMessageRole.User, "From now on, you have one precise task: analyze the messages you receive and produce the following numerical parameters in the specified order, without anything else: " +
+                "The first and second numbers indicate the mentioned blood pressure in the text or 0 if there is no blood pressure. The first value represents the systolic pressure(the larger number), while the second " +
+                "represents the diastolic pressure(the smaller number). The third and final number indicates the heart rate or 0 if the heart rate is not present in the message. Typically, messages with only numeric values, " +
+                "without other words, are intercepted as follows: if there are 2 values, they refer to blood pressure; if there’s a single value, it represents the heart rate; conversely, 3 values indicate the presence " +
+                "of all the required parameters.Analyze the message and context provided in the chat at least 3 times, and accurately report the 3 requested values for blood pressure and heart rate, without including any other " +
+                "information or punctuation marks.Remember that you should always produce 3 numbers, whether they are present in the text or not.If a parameter cannot be captured, replace it with 0 in the correct position as described above."),
                 new ChatMessage(ChatMessageRole.User, "Ho misurato la pressione ed è 120 su 80"),
                 new ChatMessage(ChatMessageRole.Assistant, "120 80 0"),
                 new ChatMessage(ChatMessageRole.User, "Ho appena misurato la frequenza: 90"),
@@ -58,6 +67,6 @@ namespace HyperTensionBot.Server.LLM {
                 new ChatMessage(ChatMessageRole.User, "70"),
                 new ChatMessage(ChatMessageRole.Assistant, "0 0 70"),
             };
-        }
+    }
     }
 }
