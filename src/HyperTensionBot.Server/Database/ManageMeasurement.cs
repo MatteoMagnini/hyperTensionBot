@@ -2,6 +2,7 @@ using HyperTensionBot.Server.Bot;
 using HyperTensionBot.Server.Bot.Extensions;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Drawing.Printing;
 
 namespace HyperTensionBot.Server.Database {
 
@@ -38,10 +39,15 @@ namespace HyperTensionBot.Server.Database {
             return new Measurement((double?)measure["Systolic"], (double?)measure["Diastolic"],
                     (double?)measure["HeartRate"], Time.Convert((DateTime)measure["Date"]));
         }
+
         // take last data measurement 
-        private static DateTime? DateLastMeasurement(IMongoCollection<BsonDocument>? user, long id) {
+        private static BsonValue? DateLastMeasurement(IMongoCollection<BsonDocument>? user, long id) {
             var doc = user.FindAsync(Memory.GetFilter(id)).Result.FirstOrDefault();
-            return Time.Convert((DateTime)doc["DateLastMeasurement"]);
+            var date = doc["DateLastMeasurement"];
+            if (!date.IsBsonNull)
+                return date; 
+            else
+                return null; 
         }
     }
 }

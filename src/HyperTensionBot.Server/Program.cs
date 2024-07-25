@@ -102,15 +102,14 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update
             var chatId = update.CallbackQuery.Message!.Chat.Id;
             await Context.ManageButton(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, localBotClient, memory, llm);
 
-            if (!update.CallbackQuery.Data.StartsWith("yes") && !update.CallbackQuery.Data.StartsWith("no"))
+            if (!update.CallbackQuery.Data.StartsWith("yes") && !update.CallbackQuery.Data.StartsWith("no")) {
                 await Request.ModifyParameters(localBotClient, chatId, memory, update.CallbackQuery.Data, update.CallbackQuery.Message.MessageId, llm);
+            }
             // Removing inline keyboard
             await localBotClient.DeleteMessageAsync(chatId, update.CallbackQuery.Message.MessageId);
         }
         else
-        {
             return;
-        }
     }
     catch (Exception e)
     {

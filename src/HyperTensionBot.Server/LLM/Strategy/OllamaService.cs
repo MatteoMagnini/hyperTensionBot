@@ -134,7 +134,7 @@ namespace HyperTensionBot.Server.LLM {
 
             // Rimuovi i caratteri di newline e ritorna la risposta
             resp = resp!.Replace("\\n", "");
-            if (t != TypeConversation.Communication && _logger is not null) _logger.LogDebug(resp);
+            if (t != TypeConversation.Communication && _logger is not null) _logger.LogInformation(resp);
             return resp;
         }
     }
