@@ -254,6 +254,10 @@ namespace HyperTensionBot.Server.Bot {
                 if (freq && m.HeartRate != null)
                     sbFreq.AppendLine($"❤️ Frequenza {m.HeartRate} bpm misurata il {m.Date}");
             }
+            if (!press) {
+                sbPress.Clear();
+                sbFreq.Insert(0, '\n');
+            }
             await bot.SendTextMessageAsync(id, $"{mex}{sbPress}{sbFreq}");
         }
 
@@ -295,11 +299,17 @@ namespace HyperTensionBot.Server.Bot {
 
         // Ask confirm to extracted parameters. They are extracted by LLM. 
         public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, string message, long id) {
-            string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message);
-            var parameters = RegexExtensions.ExtractParameters(outLLM);
-            memory.SetTemporaryParametersRequest(id, parameters);
-            await SendMessagesExtension.SendButton(bot, $"Stai facendo richiesta per:\n{SendMessagesExtension.DefineRequestText(parameters)}",
-                    id, new string[] { "Sì, esatto!", "yesReq", "No", "noReq" });
+            try {
+                string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message);
+                var parameters = RegexExtensions.ExtractParameters(outLLM);
+                Console.WriteLine(parameters);
+                memory.SetTemporaryParametersRequest(id, parameters);
+                await SendMessagesExtension.SendButton(bot, $"Stai facendo richiesta per:\n{SendMessagesExtension.DefineRequestText(parameters)}",
+                        id, new string[] { "Sì, esatto!", "yesReq", "No", "noReq" });
+            } catch (ArgumentException) {
+                await bot.SendTextMessageAsync(id, "Non sono riuscito a comprendere la richiesta, potresti rifurmulare con altre parole?");
+            }
+            
         }
 
         internal static async Task ValuteRequest(string resp, long id, TelegramBotClient bot, Memory memory, LLMService llm) {

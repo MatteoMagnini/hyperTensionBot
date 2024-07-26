@@ -25,7 +25,6 @@ namespace HyperTensionBot.Server.Bot {
                         await Request.AskConfirmParameters(llm, bot, memory, message, chat.Id);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
-
                     // ask conferme and storage data 
                     case Intent.PersonalInfo:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
@@ -65,7 +64,6 @@ namespace HyperTensionBot.Server.Bot {
             catch (ArgumentException) {
                 await bot.SendTextMessageAsync(chat.Id, "Non ho compreso i dati. Prova a riscrivere il messaggio inserendo prima la pressione e poi la frequenza.");
             }
-
             catch (ExceptionExtensions.ImpossibleSystolic) {
                 await bot.SendTextMessageAsync(chat.Id, "La pressione sistolica potrebbe essere errata. Ripeti la misurazione e se i dati si ripetono contatta subito il dottore.");
             }
