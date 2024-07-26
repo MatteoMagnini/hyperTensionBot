@@ -5,6 +5,7 @@ using HyperTensionBot.Server.LLM.Strategy;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.ImageSharp;
+using OxyPlot.Legends;
 using OxyPlot.Series;
 using System.Text;
 using Telegram.Bot;
@@ -116,7 +117,6 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         private static PlotModel CreatePlot(bool includePress, bool includeFreq) {
-            // Imposta il titolo del grafico in base ai dati inclusi
             string title = "Misurazioni della Pressione e Frequenza Cardiaca";
             if (includePress && includeFreq) {
                 title = "Grafico Pressione e Frequenza Cardiaca";
@@ -140,16 +140,28 @@ namespace HyperTensionBot.Server.Bot {
                 Title = "Data",
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
-                TitleFontSize = 12,
                 TitleFontWeight = FontWeights.Bold
             });
 
+            string yAxisTitle;
+            if (includePress && includeFreq) {
+                yAxisTitle = "Pressione (mmHg) / Frequenza (bpm)";
+            }
+            else if (includePress) {
+                yAxisTitle = "Pressione (mmHg)";
+            }
+            else if (includeFreq) {
+                yAxisTitle = "Frequenza (bpm)";
+            }
+            else {
+                yAxisTitle = "Valori";
+            }
+
             plotModel.Axes.Add(new LinearAxis {
                 Position = AxisPosition.Left,
-                Title = "Pressione (mmHg) / Frequenza (bpm)",
+                Title = yAxisTitle,
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
-                TitleFontSize = 12,
                 TitleFontWeight = FontWeights.Bold
             });
 
@@ -158,13 +170,11 @@ namespace HyperTensionBot.Server.Bot {
                     Title = "Pressione Sistolica",
                     Color = OxyColors.Chocolate,
                     LineStyle = LineStyle.Solid,
-                    MarkerType = MarkerType.None // Rimuove i markers
                 };
                 var diastolicSeries = new LineSeries {
                     Title = "Pressione Diastolica",
                     Color = OxyColors.Blue,
                     LineStyle = LineStyle.Solid,
-                    MarkerType = MarkerType.None // Rimuove i markers
                 };
 
                 var systolicPoints = measurementsFormatted
@@ -211,15 +221,21 @@ namespace HyperTensionBot.Server.Bot {
                 }
             }
 
+            // Configure legends 
+            plotModel.Legends.Add(new Legend {
+                LegendPlacement = LegendPlacement.Outside,
+                LegendPosition = LegendPosition.RightTop,
+                LegendOrientation = LegendOrientation.Vertical,
+                LegendSymbolPlacement = LegendSymbolPlacement.Left,
+            });
+
             return plotModel;
         }
-
-
 
         // Send plot to chat 
         private static async Task SendPlot(TelegramBotClient bot, long id, PlotModel plotModel) {
             using (var stream = new MemoryStream()) {
-                var pngExporter = new PngExporter(width: 600, height: 400);
+                var pngExporter = new PngExporter(width: 800, height: 500);
                 pngExporter.Export(plotModel, stream);
                 stream.Position = 0;
 
