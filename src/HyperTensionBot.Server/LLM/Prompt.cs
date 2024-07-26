@@ -1,13 +1,4 @@
-using HyperTensionBot.Server.Bot;
-using Microsoft.VisualBasic;
 using OpenAI_API.Chat;
-using ScottPlot.Palettes;
-using static ScottPlot.Plottable.PopulationPlot;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Reflection.Metadata;
-using System.Text.RegularExpressions;
-using System;
-using Telegram.Bot.Types;
 
 namespace HyperTensionBot.Server.LLM {
     // prompt and context chat for each type conversation 
@@ -33,15 +24,21 @@ namespace HyperTensionBot.Server.LLM {
         public static List<ChatMessage> RequestContext() {
             return new List<ChatMessage> {
                 new ChatMessage(ChatMessageRole.User, "Analyze the message to identify three specific parameters based on the detailed instructions. Precisely select each parameter based on the content and context of the request after a recursive analysis. " +
-                    "For Context, assign one of these labels: 'PRESSIONE', 'FREQUENZA', 'ENTRAMBI', 'PERSONALE', where - PERSONALE - refers to contexts of personal information. " +
+                    "For Context, assign one of these labels: 'PRESSIONE', 'FREQUENZA', 'ENTRAMBI', 'PERSONALE', where PERSONALE refers to contexts of personal information. " +
                     "For Time Span, establish the mentioned time span and assign a positive numerical value corresponding to days, use 1 for recent data, or -1 for non-specific or total requests. " +
-                    "For Format, identify the requested format and assign 'MEDIA', 'GRAFICO', or 'LISTA', with -LIST- being the default and mandatory option if the context is -PERSONALE-. " +
+                    "For Format, identify the requested format and assign 'MEDIA', 'GRAFICO', or 'LISTA', with LISTA being the default and mandatory option if the context is PERSONALE. " +
                     "The syntax to use is shown in the prompt. The only words in capital letters are the 3 words. Reply like a robot with only the 3 words you are allowed without adding anything else."),
                 new ChatMessage(ChatMessageRole.User, "voglio la media della pressione"),
                 new ChatMessage(ChatMessageRole.Assistant, "PRESSIONE -1 MEDIA"),
-                new ChatMessage(ChatMessageRole.User, "Lista della frequenza di oggi?"),
-                new ChatMessage(ChatMessageRole.Assistant, "FREQUENZA 0 LISTA"),
-                new ChatMessage(ChatMessageRole.User, "Grafico delle misure dell'ultimo mese"),
+                new ChatMessage(ChatMessageRole.User, "Dammi i dati di frequenza"),
+                new ChatMessage(ChatMessageRole.Assistant, "FREQUENZA 1 LISTA"),
+                new ChatMessage(ChatMessageRole.User, "Forniscimi tutti i dati"),
+                new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI -1 LISTA"),
+                new ChatMessage(ChatMessageRole.User, "Ricordami le informazioni personali riferite al dottore"),
+                new ChatMessage(ChatMessageRole.Assistant, "PERSONALE -1 LISTA"),
+                new ChatMessage(ChatMessageRole.User, "Frequenza pressione due settimane"),
+                new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI 14 LISTA"),
+                new ChatMessage(ChatMessageRole.User, "Rappresentazione delle misure dell'ultimo mese"),
                 new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI 30 GRAFICO"),
             };
         }
@@ -67,6 +64,6 @@ namespace HyperTensionBot.Server.LLM {
                 new ChatMessage(ChatMessageRole.User, "70"),
                 new ChatMessage(ChatMessageRole.Assistant, "0 0 70"),
             };
-    }
+        }
     }
 }

@@ -10,12 +10,12 @@ using Telegram.Bot.Types;
 namespace HyperTensionBot.Server.Bot {
     // Manage all predicted intent of ML model. After prediction this class is responsable to workflow
     public static class Context {
-        private static string START = "/start"; 
+        private static readonly string START = "/start";
 
         public static async Task ControlFlow(TelegramBotClient bot, LLMService llm, Memory memory, Intent context, string message, Chat chat, DateTime date) {
             try {
                 if (message == START)
-                    await SendMessagesExtension.SendStartMessage(bot, chat.Id); 
+                    await SendMessagesExtension.SendStartMessage(bot, chat.Id);
 
                 int idMessage;
                 switch (context) {
@@ -25,7 +25,6 @@ namespace HyperTensionBot.Server.Bot {
                         await Request.AskConfirmParameters(llm, bot, memory, message, chat.Id);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
-
                     // ask conferme and storage data 
                     case Intent.PersonalInfo:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
@@ -65,7 +64,6 @@ namespace HyperTensionBot.Server.Bot {
             catch (ArgumentException) {
                 await bot.SendTextMessageAsync(chat.Id, "Non ho compreso i dati. Prova a riscrivere il messaggio inserendo prima la pressione e poi la frequenza.");
             }
-
             catch (ExceptionExtensions.ImpossibleSystolic) {
                 await bot.SendTextMessageAsync(chat.Id, "La pressione sistolica potrebbe essere errata. Ripeti la misurazione e se i dati si ripetono contatta subito il dottore.");
             }

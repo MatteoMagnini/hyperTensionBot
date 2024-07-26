@@ -1,18 +1,9 @@
 using HyperTensionBot.Server.Database;
-using ScottPlot.Drawing.Colormaps;
-using ScottPlot.Plottable.AxisManagers;
-using ScottPlot.Renderable;
-using ScottPlot.Styles;
-using ScottPlot;
-using System.IO;
-using System.Net.NetworkInformation;
 using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
-using static ScottPlot.Plottable.PopulationPlot;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HyperTensionBot.Server.Bot.Extensions {
     // Static class to send messages for variety of scenes in the chat

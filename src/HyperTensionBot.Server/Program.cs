@@ -4,10 +4,10 @@ using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.LLM.Strategy;
 using HyperTensionBot.Server.ModelML;
+using System.Diagnostics;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types.Enums;
-using System.Diagnostics;
 using TelegramUpdate = Telegram.Bot.Types.Update;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,8 +35,7 @@ await botClient.DeleteWebhookAsync();
 
 
 // Configure the receiver options for polling
-var receiverOptions = new ReceiverOptions
-{
+var receiverOptions = new ReceiverOptions {
     AllowedUpdates = new[] { UpdateType.Message, UpdateType.CallbackQuery }
 };
 
@@ -56,19 +55,15 @@ app.Lifetime.ApplicationStopping.Register(() => cts.Cancel());
 // Ensure the application doesn't exit immediately
 await app.RunAsync();
 
-async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update, CancellationToken cancellationToken)
-{
+async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update, CancellationToken cancellationToken) {
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     var memory = app.Services.GetRequiredService<Memory>();
     var model = app.Services.GetRequiredService<ClassificationModel>();
     var llm = app.Services.GetRequiredService<LLMService>();
-    var internalPOST = false; // Initialize flag
-    TelegramBotClient localBotClient = (TelegramBotClient) botClient;
+    TelegramBotClient localBotClient = (TelegramBotClient)botClient;
 
-    try
-    {
-        if (update.Type == UpdateType.Message && update.Message?.Text != null)
-        {
+    try {
+        if (update.Type == UpdateType.Message && update.Message?.Text != null) {
             var messageText = update.Message.Text;
             var chatId = update.Message.Chat.Id;
             var from = update.Message.From;
@@ -78,7 +73,7 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update
             if (messageText == "/start")
                 await SendMessagesExtension.SendStartMessage(localBotClient, chatId);
             else {
-                ModelInput input = new ModelInput { Sentence = messageText };
+                ModelInput input = new() { Sentence = messageText };
                 var result = model.Predict(input);
 
                 memory.HandleUpdate(from, date, result, messageText);
@@ -97,8 +92,7 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update
             }
 
         }
-        else if (update.Type == UpdateType.CallbackQuery && update.CallbackQuery?.Data != null)
-        {
+        else if (update.Type == UpdateType.CallbackQuery && update.CallbackQuery?.Data != null) {
             var chatId = update.CallbackQuery.Message!.Chat.Id;
             await Context.ManageButton(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, localBotClient, memory, llm);
 
@@ -111,14 +105,12 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update
         else
             return;
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
         logger.LogError(e, "Error handling update");
     }
 }
 
-Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
-{
+Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken) {
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogError(exception, "Error occurred");
     return Task.CompletedTask;

@@ -21,4 +21,6 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 COPY --from=build /src/ModelML/trainingData.tsv /app/ModelML/trainingData.tsv
 
+RUN apt-get update && apt-get install -y fonts-dejavu
+
 ENTRYPOINT ["dotnet", "HyperTensionBot.Server.dll"]
