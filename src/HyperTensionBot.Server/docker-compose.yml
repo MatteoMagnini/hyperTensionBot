@@ -23,3 +23,5 @@ services:
 
 volumes:
   matteo.magnini-volume:
+    external: true
+    name: matteo.magnini-volume
