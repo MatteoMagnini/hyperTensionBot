@@ -33,6 +33,9 @@ var botClient = app.Services.GetRequiredService<TelegramBotClient>();
 
 await botClient.DeleteWebhookAsync();
 
+// Configure Timer Advice
+TimerAdvice timer = new(app.Services.GetRequiredService<Memory>(), botClient);
+
 
 // Configure the receiver options for polling
 var receiverOptions = new ReceiverOptions {

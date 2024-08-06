@@ -18,11 +18,14 @@ namespace HyperTensionBot.Server.Bot {
                     await SendMessagesExtension.SendStartMessage(bot, chat.Id);
 
                 int idMessage;
+
+
                 switch (context) {
 
                     case Intent.Richiesta:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
-                        await Request.AskConfirmParameters(llm, bot, memory, message, chat.Id);
+                        var contRe = ManageChat.GetContext(chat.Id, memory.Chat);
+                        await Request.AskConfirmParameters(llm, bot, memory, message, chat.Id, contRe);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
                     // ask conferme and storage data 
@@ -32,7 +35,8 @@ namespace HyperTensionBot.Server.Bot {
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
                     case Intent.Inserimento:
-                        var result = await llm.HandleAskAsync(TypeConversation.Insert, message);
+                        var cont = ManageChat.GetContext(chat.Id, memory.Chat);
+                        var result = await llm.HandleAskAsync(TypeConversation.Insert, message, context: cont);
                         await StorageData(bot, result, chat, memory, date);
                         break;
 

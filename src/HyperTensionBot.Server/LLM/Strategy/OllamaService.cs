@@ -62,23 +62,26 @@ namespace HyperTensionBot.Server.LLM {
         public void SetLogger(ILogger<LLMService> logger) { _logger = logger; }
 
         // connection and interaction with server for request to LLM 
-        public async Task<string> AskLLM(TypeConversation t, string message, List<ChatMessage>? comunicationChat = null) {
+        public async Task<string> AskLLM(TypeConversation t, string message, List<ChatMessage>? comunicationChat = null, List<ChatMessage>? context = null) {
 
             if (_llmApiUrl != "") {
 
                 string modelName = "";
                 double temp = 0;
                 List<ChatMessage> chatContext = new();
-                AssignInput(t, ref chatContext, comunicationChat, ref modelName, ref temp);
+                AssignInput(t, ref chatContext, comunicationChat, ref modelName, ref temp, context);
 
                 // build payload JSON
                 var jsonPayload = new {
                     model = modelName,
                     prompt = chatContext!.First().Content + "\n The request is: " + message,
-                    messages = chatContext,
+                    messages = chatContext.Select(msg => new {
+                        role = msg.Role.ToString().ToLower(),
+                        content = msg.Content
+                    }).ToList(),
                     stream = false,
                     options = new {
-                        temperature = temp // value for deterministic or crestive response 
+                        temperature = temp // value for deterministic or creative response 
                     },
                 };
 
@@ -106,16 +109,20 @@ namespace HyperTensionBot.Server.LLM {
         }
 
         // Set parameter for each conversation model
-        private void AssignInput(TypeConversation t, ref List<ChatMessage> chatContext, List<ChatMessage>? comunication, ref string modelName, ref double temp) {
+        private void AssignInput(TypeConversation t, ref List<ChatMessage> chatContext, List<ChatMessage>? comunication, ref string modelName, ref double temp, List<ChatMessage>? context) {
             switch (t) {
                 case TypeConversation.Request:
                     modelName = MODEL_REQUEST;
                     chatContext = analysisRequest;
+                    if (context is not null)
+                        chatContext.AddRange(context);
                     temp = 0.1;
                     break;
                 case TypeConversation.Insert:
                     modelName = MODEL_INSERT;
                     chatContext = analysistInsert;
+                    if (context is not null)
+                        chatContext.AddRange(context);
                     temp = 0.2;
                     break;
                 default:
