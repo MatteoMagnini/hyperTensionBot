@@ -44,7 +44,7 @@ jobs:
       - name: Create Docker Image
         run: |
           cd src/HyperTensionBot.Server
-          ../../.github/scripts/retry.sh "docker-compose -f docker-compose.yml build"
+          ../../.github/scripts/retry.sh "docker compose -f docker-compose.yml build"
           ../../.github/scripts/retry.sh "docker tag ${{env.PROJECT_NAME}} pikalab/${{env.PROJECT_NAME}}:${{ steps.get-version.outputs.version }}"
         shell: bash
 
