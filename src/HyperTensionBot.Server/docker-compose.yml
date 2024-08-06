@@ -7,7 +7,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - matteo.magnini-volume:/data/db
+      - matteo.magnini-volume:/persistent/hyper-tension-bot/data/db
 
   app:
     image: hyper-tension-bot
