@@ -2,6 +2,7 @@ using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.LLM.Strategy;
+using OpenAI_API.Chat;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.ImageSharp;
@@ -47,6 +48,8 @@ namespace HyperTensionBot.Server.Bot {
             }
             if (d != -1)
                 return $"negli ultimi {d} giorni";
+            else if (d == 1 || d == 0)
+                return "dell'ultimo giorno";
             else
                 return "";
         }
@@ -298,18 +301,19 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         // Ask confirm to extracted parameters. They are extracted by LLM. 
-        public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, string message, long id) {
+        public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, string message, long id, List<ChatMessage> context) {
             try {
-                string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message);
+                string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message, context: context);
                 var parameters = RegexExtensions.ExtractParameters(outLLM);
                 Console.WriteLine(parameters);
                 memory.SetTemporaryParametersRequest(id, parameters);
                 await SendMessagesExtension.SendButton(bot, $"Stai facendo richiesta per:\n{SendMessagesExtension.DefineRequestText(parameters)}",
                         id, new string[] { "Sì, esatto!", "yesReq", "No", "noReq" });
-            } catch (ArgumentException) {
+            }
+            catch (ArgumentException) {
                 await bot.SendTextMessageAsync(id, "Non sono riuscito a comprendere la richiesta, potresti rifurmulare con altre parole?");
             }
-            
+
         }
 
         internal static async Task ValuteRequest(string resp, long id, TelegramBotClient bot, Memory memory, LLMService llm) {
@@ -351,8 +355,8 @@ namespace HyperTensionBot.Server.Bot {
                     await ManageRequest(memory, id, bot, llm, memory.GetParameters(id));
                     break;
             }
-
         }
+
         private static async Task TemporaryChoice(TelegramBotClient bot, Memory memory, int idMessage, long id, string resp, ConversationInformation.RequestState state, int index, string[] choice, string text) {
 
             var param = memory.GetParameters(id);

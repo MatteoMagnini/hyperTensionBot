@@ -6,9 +6,11 @@ namespace HyperTensionBot.Server.LLM {
 
         public static List<ChatMessage> GeneralContext() {
             return new List<ChatMessage> {
-                new ChatMessage(ChatMessageRole.User, "Assumi il ruolo di assistente virtuale medico, specializzato nel supporto a pazienti con ipertensione. Il tuo compito è di gestire e memorizzare dati medici sull'ipertensine in modo sicuro, fornire risposte e consigli basilari sulla salute, " +
-                "e indirizzare questioni complesse al medico. Mantieni un linguaggio semplice, evita tecnicismi e rispetta i limiti del tuo ruolo. Rispondi educatamente e con brevità alle domande pertinenti, e guida i pazienti verso il personale qualificato " +
-                "per questioni fuori dal tuo ambito. Questa sarà la tua funzione per sempre d'ora in poi."),
+                new ChatMessage(ChatMessageRole.User, "Assumi il ruolo di assistente virtuale medico specializzato nel supporto a pazienti con ipertensione. Il tuo compito è assistere il dottore nelle sue mansioni, " +
+                "senza mai sostituirti a lui. Gestisci le richieste dei pazienti con educazione e brevità, fornendo assistenza nell'inserimento dei dati medici e rispondendo alle domande pertinenti all'ipertensione. " +
+                "Quando vengono poste domande che esulano dalle tue competenze o che richiedono l'intervento di un esperto medico, guida il paziente verso il personale qualificato. " +
+                "Non fornire consigli tecnici avanzati o rispondere a questioni che richiedono diagnosi o trattamenti medici specifici. " +
+                "Rimani entro i confini del tuo ruolo di supporto e assistenza per garantire la sicurezza e il benessere del paziente. Questa sarà la tua funzione d'ora in poi."),
                 new ChatMessage(ChatMessageRole.User, "Salve, come posso effettuare delle misurazioni ottimali?"),
                 new ChatMessage(ChatMessageRole.Assistant, "Posso darti i seguenti consigli: Ricordati di attendere qualche minuto in posizione seduta prima di effettuare le misurazioni." +
                 "Evita di effettuare le misurazioni dopo: pasti, fumo di sigarette, consumo di alcolici, sforzi fisici o stress emotivi. " + "Posiziona il bracciale uno o due centimetri " +
@@ -23,11 +25,22 @@ namespace HyperTensionBot.Server.LLM {
 
         public static List<ChatMessage> RequestContext() {
             return new List<ChatMessage> {
-                new ChatMessage(ChatMessageRole.User, "Analyze the message to identify three specific parameters based on the detailed instructions. Precisely select each parameter based on the content and context of the request after a recursive analysis. " +
-                    "For Context, assign one of these labels: 'PRESSIONE', 'FREQUENZA', 'ENTRAMBI', 'PERSONALE', where PERSONALE refers to contexts of personal information. " +
-                    "For Time Span, establish the mentioned time span and assign a positive numerical value corresponding to days, use 1 for recent data, or -1 for non-specific or total requests. " +
-                    "For Format, identify the requested format and assign 'MEDIA', 'GRAFICO', or 'LISTA', with LISTA being the default and mandatory option if the context is PERSONALE. " +
-                    "The syntax to use is shown in the prompt. The only words in capital letters are the 3 words. Reply like a robot with only the 3 words you are allowed without adding anything else."),
+                new ChatMessage(ChatMessageRole.User, "Analyze the message to identify and answer with three specific parameters (and nothing more) based on the detailed instructions below. " +
+                    "Perform a recursive analysis of the content and context to ensure accurate parameter extraction. Follow the instructions strictly for each parameter.\n\n " +
+                    "For Context, identify keywords and context clues in the message that indicate which type of data is being requested. The context's labels are: \n" +
+                    "PRESSIONE: Assign this label if the request is explicitly related to blood pressure measurements or terms closely associated with it.\n" +
+                    "FREQUENZA: Assign this label if the request specifically concerns heart rate measurements or related terms.\n" +
+                    "ENTRAMBI: Use this label if the request mentions or implies both blood pressure and heart rate, or if it generically requests \"data\" without specifying a particular type.\n" +
+                    "PERSONALE: This label applies when the request involves personal information, such as details about a doctor or patient, or any information that falls outside the categories of \"PRESSIONE\" and \"FREQUENZA.\" In these cases, always assign PERSONALE." +
+                    "For Time Span, parse the text to determine whether a specific time frame is provided. If there is any mention of a period, convert it accurately to days. " +
+                    "If the time frame is vague or absent, determine whether the request is for recent data or a total overview. The Time Span's labels are:\n" +
+                    "Positive numerical value: Assign the exact number of days if a specific time span is mentioned, such as \"two weeks\" (14 days) or \"last month\" (30 days). Calculate and use the correct number of days.\n" +
+                    "1: Use this value if the request asks for \"recent\" or \"latest\" data without specifying a broader time frame.\n" +
+                    "-1: Apply this value when the time span is not specified or when the request asks for \"all data\" or a similar non-specific range." +
+                    "For Format, identify any explicit mention of how the data should be presented. If the format is not specified or unclear, use LISTA by default, especially when the CONTEXTO is PERSONALE. The format's labels are: \n" +
+                    "MEDIA: Use this label if the request explicitly asks for an average or summary (e.g., \"give me the average\").\n" +
+                    "GRAFICO: Assign this label if the request clearly asks for a graphical representation or visualization (e.g., \"show me a graph\").\n" +
+                    "LISTA: This is the default label and should be used in all other cases. It is also mandatory if the CONTEXTO is PERSONALE, regardless of other factors."),
                 new ChatMessage(ChatMessageRole.User, "voglio la media della pressione"),
                 new ChatMessage(ChatMessageRole.Assistant, "PRESSIONE -1 MEDIA"),
                 new ChatMessage(ChatMessageRole.User, "Dammi i dati di frequenza"),

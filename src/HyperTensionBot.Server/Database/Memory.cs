@@ -150,19 +150,24 @@ namespace HyperTensionBot.Server.Database {
 
             // get all messages with type = General 
             var messages = ManageChat.GetMessages(chat.Id, Chat, Intent.Generale.ToString());
-
             var chatToLLM = Prompt.GeneralContext();
-            chatToLLM.AddRange(new List<ChatMessage> {
-                new ChatMessage(ChatMessageRole.User, messages[messages.Count - 1]["messages"].ToString()),
-                new ChatMessage(ChatMessageRole.User, messages[messages.Count - 2]["messages"].ToString()),
-            });
+            if (messages.Count > 2) {
+                chatToLLM.AddRange(new List<ChatMessage> {
+                    new ChatMessage(ChatMessageRole.User, messages[messages.Count-2]["messages"].ToString()),
+                    new ChatMessage(ChatMessageRole.User, messages[messages.Count-3]["messages"].ToString())
+                });
+            }
+
 
             return chatToLLM;
         }
 
         internal DateTime? GetFirstMeasurement(long id) {
             var document = User.FindAsync(GetFilter(id)).Result.FirstOrDefault();
-            return Time.Convert((DateTime)document["DateFirstMeasurement"]);
+            if (document is not null) {
+                return Time.Convert((DateTime)document["DateFirstMeasurement"]);
+            }
+            else { throw new ArgumentNullException(); }
         }
 
         public bool IsPressureLastMeasurement(long id) {
