@@ -27,7 +27,7 @@ namespace HyperTensionBot.Server.Bot {
                 var timePassed = DateTime.Now - Time.Convert((DateTime)p["DateLastMeasurement"]);
                 if (timePassed.Hours > TimeSpan.FromDays(2).Hours) {
                     await bot.SendTextMessageAsync((long)p["id"],
-                        $"Salve {p["name"]}, sono passate circa {timePassed.Days} giorni dalla tua ultima misurazione\n\n" +
+                        $"Salve {p["name"]}, sono passati circa 2 giorni dalla tua ultima misurazione\n\n" +
                         $"Facciamo un altro check sulla pressione e sulla frequenza assieme...\n" +
                         $"Il dottore non vede l'ora di valutare i nuovi dati🧑🏽‍⚕️");
                 }
