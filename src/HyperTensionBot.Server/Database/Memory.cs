@@ -87,7 +87,7 @@ namespace HyperTensionBot.Server.Database {
 
             // update info of User as name,..., Time and number of messages 
             if (from != null) {
-                Update.UpdateUser(User, date, i, from, mex);
+                Update.UpdateUser(User, date, i, from, mex, false);
                 _logger.LogTrace("Updated user memory");
             }
 

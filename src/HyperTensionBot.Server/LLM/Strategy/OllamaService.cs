@@ -125,9 +125,14 @@ namespace HyperTensionBot.Server.LLM {
                         chatContext.AddRange(context);
                     temp = 0.2;
                     break;
-                default:
+                case TypeConversation.Communication:
                     modelName = MODEL_COMUNICATION;
                     chatContext = comunication!;
+                    temp = 0.8;
+                    break;
+                case TypeConversation.Advice:
+                    modelName = MODEL_COMUNICATION;
+                    chatContext = context!;
                     temp = 0.8;
                     break;
             }

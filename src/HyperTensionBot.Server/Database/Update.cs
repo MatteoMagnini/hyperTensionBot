@@ -9,19 +9,24 @@ namespace HyperTensionBot.Server.Database {
     // Manage database at new messages. 
     internal static class Update {
 
-        internal static void UpdateUser(IMongoCollection<BsonDocument>? User, DateTime date, Intent i, User from, string mex) {
+        internal static void UpdateUser(IMongoCollection<BsonDocument>? User, DateTime date, Intent i, User from, string mex, bool adv) {
             var user = User.FindAsync(Memory.GetFilter(from.Id)).Result.FirstOrDefault();
             bool insert = i.ToString().Equals("Inserimento");
             if (user is not null) {
                 var update = Builders<BsonDocument>.Update.Set("LastConversationUpdate", date)
                                                           .Inc("NumberMessages", 1);
-                if (insert) {
 
-                    var doc = User.FindAsync(Memory.GetFilter(from.Id)).Result.FirstOrDefault();
+                var doc = User.FindAsync(Memory.GetFilter(from.Id)).Result.FirstOrDefault();
+                // update date measurement
+                if (insert) {
                     if (!doc.Contains("DateFirstMeasurement")) {
                         update = update.Set("DateFirstMeasurement", date);
                     }
                     update = update.Set("DateLastMeasurement", date);
+                }
+                // update date of notify 
+                if (adv) {
+                    update = update.Set("DateDeactivate", date);
                 }
                 User?.UpdateManyAsync(Memory.GetFilter(from.Id), update);
             }
@@ -35,6 +40,7 @@ namespace HyperTensionBot.Server.Database {
                     {"name", userInfo.FullName },
                     {"LastConversationUpdate", date},
                     {"NumberMessages", 1},
+                    {"DateDeactivate", DateTime.MinValue}
                 };
                 if (dateMeasure is not null) {
                     document.Add("DateFirstMeasurement", dateMeasure);
