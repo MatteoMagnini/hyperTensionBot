@@ -34,7 +34,7 @@ var botClient = app.Services.GetRequiredService<TelegramBotClient>();
 await botClient.DeleteWebhookAsync();
 
 // Configure Timer Advice
-TimerAdvice timer = new(app.Services.GetRequiredService<Memory>(), botClient);
+TimerAdvice timer = new(app.Services.GetRequiredService<Memory>(), botClient, app.Services.GetRequiredService<LLMService>());
 
 
 // Configure the receiver options for polling
@@ -93,13 +93,20 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update
                 stopwatch.Stop();
                 logger.LogInformation($"Tempo di elaborazione impiegato: {stopwatch.ElapsedMilliseconds / 1000} s");
             }
-
         }
         else if (update.Type == UpdateType.CallbackQuery && update.CallbackQuery?.Data != null) {
             var chatId = update.CallbackQuery.Message!.Chat.Id;
-            await Context.ManageButton(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, localBotClient, memory, llm);
+            var from = update.CallbackQuery.From;
 
-            if (!update.CallbackQuery.Data.StartsWith("yes") && !update.CallbackQuery.Data.StartsWith("no")) {
+            // buttons for requests and insertions 
+            if (update.CallbackQuery.Data.StartsWith("yes") || update.CallbackQuery.Data.StartsWith("no")) {
+                await Context.ManageButton(update.CallbackQuery.Data, update.CallbackQuery.From, update.CallbackQuery.Message.Chat, localBotClient, memory, llm);
+            }
+            else if (update.CallbackQuery.Data == "sil" || update.CallbackQuery.Data == "adv") {
+                // buttons for advice
+                timer.DeactivateNotify(update.CallbackQuery.Message.Date, from, update.CallbackQuery.Data);
+            }
+            else {
                 await Request.ModifyParameters(localBotClient, chatId, memory, update.CallbackQuery.Data, update.CallbackQuery.Message.MessageId, llm);
             }
             // Removing inline keyboard

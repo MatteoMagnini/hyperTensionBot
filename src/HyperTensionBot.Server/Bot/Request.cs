@@ -305,7 +305,6 @@ namespace HyperTensionBot.Server.Bot {
             try {
                 string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message, context: context);
                 var parameters = RegexExtensions.ExtractParameters(outLLM);
-                Console.WriteLine(parameters);
                 memory.SetTemporaryParametersRequest(id, parameters);
                 await SendMessagesExtension.SendButton(bot, $"Stai facendo richiesta per:\n{SendMessagesExtension.DefineRequestText(parameters)}",
                         id, new string[] { "Sì, esatto!", "yesReq", "No", "noReq" });

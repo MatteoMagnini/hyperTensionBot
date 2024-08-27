@@ -22,25 +22,15 @@ namespace HyperTensionBot.Server.LLM {
                 "Il mio sistema sarà in grado di salvarli e garantire la privacy dei tuoi dati.")
             };
         }
-
         public static List<ChatMessage> RequestContext() {
             return new List<ChatMessage> {
-                new ChatMessage(ChatMessageRole.User, "Analyze the message to identify and answer with three specific parameters (and nothing more) based on the detailed instructions below. " +
-                    "Perform a recursive analysis of the content and context to ensure accurate parameter extraction. Follow the instructions strictly for each parameter.\n\n " +
-                    "For Context, identify keywords and context clues in the message that indicate which type of data is being requested. The context's labels are: \n" +
-                    "PRESSIONE: Assign this label if the request is explicitly related to blood pressure measurements or terms closely associated with it.\n" +
-                    "FREQUENZA: Assign this label if the request specifically concerns heart rate measurements or related terms.\n" +
-                    "ENTRAMBI: Use this label if the request mentions or implies both blood pressure and heart rate, or if it generically requests \"data\" without specifying a particular type.\n" +
-                    "PERSONALE: This label applies when the request involves personal information, such as details about a doctor or patient, or any information that falls outside the categories of \"PRESSIONE\" and \"FREQUENZA.\" In these cases, always assign PERSONALE." +
-                    "For Time Span, parse the text to determine whether a specific time frame is provided. If there is any mention of a period, convert it accurately to days. " +
-                    "If the time frame is vague or absent, determine whether the request is for recent data or a total overview. The Time Span's labels are:\n" +
-                    "Positive numerical value: Assign the exact number of days if a specific time span is mentioned, such as \"two weeks\" (14 days) or \"last month\" (30 days). Calculate and use the correct number of days.\n" +
-                    "1: Use this value if the request asks for \"recent\" or \"latest\" data without specifying a broader time frame.\n" +
-                    "-1: Apply this value when the time span is not specified or when the request asks for \"all data\" or a similar non-specific range." +
-                    "For Format, identify any explicit mention of how the data should be presented. If the format is not specified or unclear, use LISTA by default, especially when the CONTEXTO is PERSONALE. The format's labels are: \n" +
-                    "MEDIA: Use this label if the request explicitly asks for an average or summary (e.g., \"give me the average\").\n" +
-                    "GRAFICO: Assign this label if the request clearly asks for a graphical representation or visualization (e.g., \"show me a graph\").\n" +
-                    "LISTA: This is the default label and should be used in all other cases. It is also mandatory if the CONTEXTO is PERSONALE, regardless of other factors."),
+                new ChatMessage(ChatMessageRole.User, "Identify the three parameters (CONTEXT, TIME SPAN, FORMAT) from the input message and return them in a simple list.Do not provide any explanations or justifications. " +
+                "CONTEXT should be 'PRESSIONE' if the message explicitly mentions blood pressure or related terms, 'FREQUENZA' if it mentions heart rate or related terms, 'ENTRAMBI' if it mentions both or is a generic request, " +
+            "'PERSONALE' if it requires personal information. " +
+            "TIME SPAN should be converted to the exact number of days if the message specifies a time frame, or 1 if no time frame is specified, or - 1 if all available data is requested. " +
+            "FORMAT should be 'MEDIA' if the message explicitly requests an average or summary, 'GRAFICO' if it requests a graphical representation, 'LISTA' otherwise.If the message is PERSONALE, use LISTA by default. " +
+            "Use a recursive analysis to ensure accurate parameter extraction and follow the instructions strictly for each parameter. " +
+                "Example. input message = 'voglio la media della pressione'; output = 'PRESSIONE, -1, MEDIA'."),
                 new ChatMessage(ChatMessageRole.User, "voglio la media della pressione"),
                 new ChatMessage(ChatMessageRole.Assistant, "PRESSIONE -1 MEDIA"),
                 new ChatMessage(ChatMessageRole.User, "Dammi i dati di frequenza"),
@@ -76,6 +66,15 @@ namespace HyperTensionBot.Server.LLM {
                 new ChatMessage(ChatMessageRole.Assistant, "130 90 0"),
                 new ChatMessage(ChatMessageRole.User, "70"),
                 new ChatMessage(ChatMessageRole.Assistant, "0 0 70"),
+            };
+        }
+        public static List<ChatMessage> AdviceContest() {
+            return new List<ChatMessage> {
+                new ChatMessage(ChatMessageRole.User, "Genera un messaggio di avviso gentile per un paziente iperteso che non ha inserito le misurazioni " +
+                    "della pressione arteriosa negli ultimi giorni. Il messaggio deve essere chiaro, conciso e rispettoso. Assicurati di includere il motivo per cui è importante inserire" +
+                    " le misurazioni regolarmente. Restituisci solo il testo del messaggio in lingua italiana, senza alcuna intestazione o nota in modo da essere direttamente inoltrato al paziente."),
+                new ChatMessage(ChatMessageRole.Assistant, "Ciao, sono passati due giorni dalla tua ultima misurazione della pressione arteriosa. Per favore, ricordati di inserire le tue misurazioni " +
+                    "il prima possibile, così il dottore potrà tenere sotto controllo la tua salute.")
             };
         }
     }
