@@ -26,7 +26,7 @@ namespace HyperTensionBot.Server.Bot {
 
         // the timer runs an event every days
         private void TimerStart() {
-            _timer.Interval = TimeSpan.FromDays(1).TotalMilliseconds;
+            _timer.Interval = TimeSpan.FromDays(2).TotalMilliseconds;
             _timer.Elapsed += async (e, o) => await AdvicePatients();
             _timer.AutoReset = true;
             _timer.Enabled = true;
@@ -36,19 +36,20 @@ namespace HyperTensionBot.Server.Bot {
         private async Task AdvicePatients() {
             var patients = _mem.GetAllPatients();
             foreach (var p in patients) {
-                // if DateDeactivate don't exists, add date min value to DB
+                // if DateDeactivate don't exists, add min date value to DB
                 if (!p.Contains("DateDeactivate")) {
                     var update = Builders<BsonDocument>.Update.Set("DateDeactivate", DateTime.MinValue);
-                    _mem.User!.UpdateOne(Memory.GetFilter((long)p["id"]), update);
+                    _mem.User!.UpdateOne(Memory.GetFilter(p["id"].AsInt64), update);
                 }
-
-                var timeSilence = DateTime.Now - Time.Convert((DateTime)p["DateDeactivate"]);
+                // update patient after update field
+                var pUp = await _mem.User!.Find(Memory.GetFilter(p["id"].AsInt64)).FirstOrDefaultAsync();
+                var timeSilence = DateTime.Now - Time.Convert((DateTime)pUp["DateDeactivate"]);
                 if (timeSilence > TimeSpan.FromDays(7)) {
                     // Check time passed and send mex 
-                    var timePassed = DateTime.Now - Time.Convert((DateTime)p["DateLastMeasurement"]);
+                    var timePassed = DateTime.Now - Time.Convert((DateTime)pUp["DateLastMeasurement"]);
                     if (timePassed > TimeSpan.FromDays(2)) {
                         await SendMessagesExtension.SendButton(_bot, await _llm.HandleAskAsync(TypeConversation.Advice,
-                            "", context: Prompt.AdviceContest()), (long)p["id"],
+                            "", context: Prompt.AdviceContest()), pUp["id"].AsInt64,
                             new string[] { "Silenzia per una settimana", "sil", "Continua a ricevere avvisi", "adv" });
                     }
                 }

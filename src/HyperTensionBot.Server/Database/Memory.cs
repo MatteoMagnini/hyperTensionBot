@@ -81,8 +81,7 @@ namespace HyperTensionBot.Server.Database {
             return Builders<BsonDocument>.Filter.Eq("id", id);
         }
 
-        // save ne winformation for user 
-        // chat information - posso integrare l'unica informazione necessaria che è la data dell'ultimo messaggio. 
+        // save new information for user 
         public void HandleUpdate(User? from, DateTime date, Intent i, string mex) {
 
             // update info of User as name,..., Time and number of messages 
@@ -126,7 +125,7 @@ namespace HyperTensionBot.Server.Database {
             });
         }
 
-        // informazioni personali - occorre splittare nei metodi di inserimento in database e una che invece resta di ritorno Lista per la stampa. 
+        // getter personal information and measurements
         public List<string> GetGeneralInfo(long id) {
             // get all messages with type = personal messages 
             var messages = ManageChat.GetMessages(id, Chat, Intent.PersonalInfo.ToString());
@@ -145,7 +144,7 @@ namespace HyperTensionBot.Server.Database {
 
         }
 
-        // inserimento del messaggio in Messaggi collection e restituisco la lista dei messaggi di quell'id Telegram come richiesto 
+        // insert message into collection and return all messages for that user
         public List<ChatMessage> AddMessageLLM(Chat chat, string message) {
 
             // get all messages with type = General 
@@ -157,8 +156,6 @@ namespace HyperTensionBot.Server.Database {
                     new ChatMessage(ChatMessageRole.User, messages[messages.Count-3]["messages"].ToString())
                 });
             }
-
-
             return chatToLLM;
         }
 

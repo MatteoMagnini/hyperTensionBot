@@ -43,6 +43,12 @@ namespace HyperTensionBot.Server.LLM {
                 new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI 14 LISTA"),
                 new ChatMessage(ChatMessageRole.User, "Rappresentazione delle misure dell'ultimo mese"),
                 new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI 30 GRAFICO"),
+                new ChatMessage(ChatMessageRole.User, "Grafico"),
+                new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI -1 GRAFICO"),
+                new ChatMessage(ChatMessageRole.User, "Media"),
+                new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI -1 MEDIA"),
+                new ChatMessage(ChatMessageRole.User, "Misurazioni"),
+                new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI -1 LISTA"),
             };
         }
 
