@@ -22,6 +22,7 @@ namespace HyperTensionBot.Server.Bot {
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await Request.AskConfirmParameters(llm, bot, memory, chat.Id, message);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", "Elaborazione completata");
                         break;
 
                     // ask conferme and storage data 
@@ -29,11 +30,13 @@ namespace HyperTensionBot.Server.Bot {
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await StorageGeneralData(bot, message, chat, memory);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", "Elaborazione completata");
                         break;
 
                     case Intent.Inserimento:
                         var result = await llm.HandleAskAsync(TypeConversation.Insert, message);
                         await StorageData(bot, result, chat, memory, date);
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", "Elaborazione completata");
                         break;
 
                     case Intent.Umore:
