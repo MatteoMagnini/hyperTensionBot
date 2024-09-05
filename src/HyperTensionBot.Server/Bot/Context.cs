@@ -20,8 +20,7 @@ namespace HyperTensionBot.Server.Bot {
 
                     case Intent.Richiesta:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
-                        var contRe = ManageChat.GetContext(chat.Id, memory.Chat, message);
-                        await Request.AskConfirmParameters(llm, bot, memory, chat.Id, contRe);
+                        await Request.AskConfirmParameters(llm, bot, memory, chat.Id, message);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
 
@@ -33,27 +32,30 @@ namespace HyperTensionBot.Server.Bot {
                         break;
 
                     case Intent.Inserimento:
-                        var cont = ManageChat.GetContext(chat.Id, memory.Chat, message);
-                        var result = await llm.HandleAskAsync(TypeConversation.Insert, context: cont);
+                        var result = await llm.HandleAskAsync(TypeConversation.Insert, message);
                         await StorageData(bot, result, chat, memory, date);
                         break;
 
                     case Intent.Umore:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
+                        var respLLM = await llm.HandleAskAsync(TypeConversation.Communication, message, comunicationChat: memory.AddMessageLLM(chat));
                         await bot.SendTextMessageAsync(
-                            chat.Id, await llm.HandleAskAsync(TypeConversation.Communication,
-                                comunicationChat: memory.AddMessageLLM(chat, message)));
+                            chat.Id, respLLM);
                         if (memory.GetFirstMeasurement(chat.Id).HasValue)
                             await CheckAverage(Request.AverageData(memory, chat.Id, 30, true, false), bot, chat.Id);
 
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
+
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", respLLM);
                         break;
 
                     case Intent.Generale:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
-                        await bot.SendTextMessageAsync(
-                            chat.Id, await llm.HandleAskAsync(TypeConversation.Communication, memory.AddMessageLLM(chat, message)));
+                        respLLM = await llm.HandleAskAsync(TypeConversation.Communication, message, comunicationChat: memory.AddMessageLLM(chat));
+                        await bot.SendTextMessageAsync(chat.Id, respLLM);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
+
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", respLLM);
                         break;
                 }
             }

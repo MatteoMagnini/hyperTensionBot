@@ -90,7 +90,7 @@ namespace HyperTensionBot.Server.Database {
                 _logger.LogTrace("Updated user memory");
             }
 
-            Update.InsertNewMex(Chat, date, from, i, mex);
+            Update.InsertNewMex(Chat, date, from!.Id, i.ToString(), mex);
         }
 
         // use Ram and not Db for measurements before confirm
@@ -145,17 +145,21 @@ namespace HyperTensionBot.Server.Database {
         }
 
         // insert message into collection and return all messages for that user
-        public List<ChatMessage> AddMessageLLM(Chat chat, string message) {
+        public List<ChatMessage> AddMessageLLM(Chat chat) {
 
-            // get all messages with type = General 
-            var messages = ManageChat.GetMessages(chat.Id, Chat, Intent.Generale.ToString());
+            // get all messages with
+            var messages = ManageChat.GetMessages(chat.Id, Chat);
             var chatToLLM = Prompt.GeneralContext();
-            if (messages.Count > 2) {
-                chatToLLM.AddRange(new List<ChatMessage> {
-                    new ChatMessage(ChatMessageRole.User, messages[messages.Count-2]["messages"].ToString()),
-                    new ChatMessage(ChatMessageRole.User, messages[messages.Count-2]["messages"].ToString()),
-                    new ChatMessage(ChatMessageRole.User, message),
-                });
+
+            // select last 6 message for specific id chat. Not last. 
+            if (messages.Count >= 5) {
+                var selection = messages.GetRange(messages.Count - 6, 5);
+                foreach (var mex in selection) {
+                    if (mex["type"] == "Risposta")
+                        chatToLLM.Add(new ChatMessage(ChatMessageRole.Assistant, mex["messages"].ToString()));
+                    else
+                        chatToLLM.Add(new ChatMessage(ChatMessageRole.User, mex["messages"].ToString()));
+                }
             }
             return chatToLLM;
         }

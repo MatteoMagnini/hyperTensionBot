@@ -2,7 +2,6 @@ using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
 using HyperTensionBot.Server.LLM.Strategy;
-using OpenAI_API.Chat;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.ImageSharp;
@@ -299,9 +298,9 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         // Ask confirm to extracted parameters. They are extracted by LLM. 
-        public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, long id, List<ChatMessage> context) {
+        public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, long id, string message) {
             try {
-                string outLLM = await llm.HandleAskAsync(TypeConversation.Request, context: context);
+                string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message: message);
                 var parameters = RegexExtensions.ExtractParameters(outLLM);
                 memory.SetTemporaryParametersRequest(id, parameters);
                 await SendMessagesExtension.SendButton(bot, $"Stai facendo richiesta per:\n{SendMessagesExtension.DefineRequestText(parameters)}",

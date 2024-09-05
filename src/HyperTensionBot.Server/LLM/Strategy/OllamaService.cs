@@ -21,6 +21,7 @@ namespace HyperTensionBot.Server.LLM {
         // Lists contains requests of insertion and data request. They are used for the context at prompt 
         private readonly List<ChatMessage> analysistInsert;
         private readonly List<ChatMessage> analysisRequest;
+        private readonly List<ChatMessage> advice;
 
         private ILogger<LLMService>? _logger;
 
@@ -30,6 +31,7 @@ namespace HyperTensionBot.Server.LLM {
 
             analysisRequest = Prompt.RequestContext();
             analysistInsert = Prompt.InsertContest();
+            advice = Prompt.AdviceContest();
         }
 
         private static string ConfigureUrl(WebApplicationBuilder builder) {
@@ -43,7 +45,7 @@ namespace HyperTensionBot.Server.LLM {
 
             var llm = new OllamaService(builder);
 
-            //await llm.CheckConnection(llm);
+            await llm.CheckConnection(llm);
 
             return llm;
         }
@@ -62,22 +64,25 @@ namespace HyperTensionBot.Server.LLM {
         public void SetLogger(ILogger<LLMService> logger) { _logger = logger; }
 
         // connection and interaction with server for request to LLM 
-        public async Task<string> AskLLM(TypeConversation t, List<ChatMessage>? comunicationChat = null, List<ChatMessage>? context = null) {
+        public async Task<string> AskLLM(TypeConversation t, string message, List<ChatMessage>? comunicationChat = null) {
 
             if (_llmApiUrl != "") {
 
                 string modelName = "";
                 double temp = 0;
                 List<ChatMessage> chatContext = new();
-                AssignInput(t, ref chatContext, comunicationChat, ref modelName, ref temp, context);
+                AssignInput(t, ref chatContext, comunicationChat, ref modelName, ref temp, message);
+
+                var context = chatContext.Select(msg => new {
+                            role = msg.Role.ToString().ToLower(), // 'user' o 'assistant'
+                            content = msg.Content
+                        }).ToList();
+                context.Add(new { role = "user", content = message });
 
                 // build payload JSON
                 var jsonPayload = new {
                     model = modelName,
-                    messages = chatContext.Select(msg => new {
-                        role = msg.Role.ToString().ToLower(), // 'user' o 'assistant'
-                        content = msg.Content
-                    }).ToList(),
+                    messages = context,
                     stream = false,
                     options = new {
                         temperature = temp // value for deterministic or creative response 
@@ -106,7 +111,8 @@ namespace HyperTensionBot.Server.LLM {
                             await Console.Out.WriteLineAsync("La risposta elaborata è vuota.");
                             return "Errore: la risposta dell'LLM è vuota.";
                         }
-                    } else {
+                    }
+                    else {
                         var errorResponse = await response.Content.ReadAsStringAsync();
                         await Console.Out.WriteLineAsync($"Errore API: {response.StatusCode}, Contenuto: {errorResponse}");
                         return "Si è verificato un errore nella generazione del testo.";
@@ -127,20 +133,16 @@ namespace HyperTensionBot.Server.LLM {
         // Set parameter for each conversation model
         // The chatContext is the list of messages that will be sent to LLM: the examples in the Prompt section and the last 2 messages of the user chat.
         // The context contains the last 2 user messages that will be added to the chat context
-        private void AssignInput(TypeConversation t, ref List<ChatMessage> chatContext, List<ChatMessage>? comunication, ref string modelName, ref double temp, List<ChatMessage>? context) {
+        private void AssignInput(TypeConversation t, ref List<ChatMessage> chatContext, List<ChatMessage>? comunication, ref string modelName, ref double temp, string? message) {
             switch (t) {
                 case TypeConversation.Request:
                     modelName = MODEL_REQUEST;
                     chatContext = analysisRequest;
-                    if (context is not null)
-                        chatContext.AddRange(context);
                     temp = 0.1;
                     break;
                 case TypeConversation.Insert:
                     modelName = MODEL_INSERT;
                     chatContext = analysistInsert;
-                    if (context is not null)
-                        chatContext.AddRange(context);
                     temp = 0.1;
                     break;
                 case TypeConversation.Communication:
@@ -150,7 +152,7 @@ namespace HyperTensionBot.Server.LLM {
                     break;
                 case TypeConversation.Advice:
                     modelName = MODEL_COMUNICATION;
-                    chatContext = context!;
+                    chatContext = advice;
                     temp = 0.7;
                     break;
             }

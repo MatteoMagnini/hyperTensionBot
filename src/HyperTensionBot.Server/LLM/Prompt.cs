@@ -6,7 +6,7 @@ namespace HyperTensionBot.Server.LLM {
 
         public static List<ChatMessage> GeneralContext() {
             return new List<ChatMessage> {
-                new ChatMessage(ChatMessageRole.User, "Assumi il ruolo di assistente virtuale medico specializzato nel supporto a pazienti con ipertensione. Il tuo compito è assistere il dottore nelle sue mansioni, " +
+                new ChatMessage(ChatMessageRole.System, "Assumi il ruolo di assistente virtuale medico specializzato nel supporto a pazienti con ipertensione. Il tuo compito è assistere il dottore nelle sue mansioni, " +
                     "senza mai sostituirti a lui. Gestisci le richieste dei pazienti cordialmente e privilegiando risposte brevi quando possibile. Fornisci assistenza nell'inserimento dei dati medici e rispondendo " +
                     "alle domande pertinenti all'ipertensione. Quando vengono poste domande che esulano dalle tue competenze o che richiedono l'intervento di un esperto medico, guida il paziente verso il " +
                     "personale qualificato. Non fornire consigli tecnici avanzati o rispondere a questioni che richiedono diagnosi o trattamenti medici specifici. " +
@@ -24,7 +24,7 @@ namespace HyperTensionBot.Server.LLM {
         }
         public static List<ChatMessage> RequestContext() {
             return new List<ChatMessage> {
-                new ChatMessage(ChatMessageRole.User, "Identify the three parameters (CONTEXT, TIME SPAN, FORMAT) from the input message and return them in a simple list.Do not provide any explanations or justifications. " +
+                new ChatMessage(ChatMessageRole.System, "Identify the three parameters (CONTEXT, TIME SPAN, FORMAT) from the input message and return them in a simple list.Do not provide any explanations or justifications. " +
                     "CONTEXT should be 'PRESSIONE' if the message explicitly mentions blood pressure or related terms, 'FREQUENZA' if it mentions heart rate or related terms, 'ENTRAMBI' if it mentions both or is a generic request, " +
                     "'PERSONALE' if it requires personal information. " +
                     "TIME SPAN should be converted to the exact number of days if the message specifies a time frame, or 1 if no time frame is specified, or - 1 if all available data is requested. " +
@@ -54,7 +54,7 @@ namespace HyperTensionBot.Server.LLM {
 
         public static List<ChatMessage> InsertContest() {
             return new List<ChatMessage> {
-                new ChatMessage(ChatMessageRole.User, "From now on, you have one precise task: analyze the messages you receive and produce the following numerical parameters in the specified order, without anything else: " +
+                new ChatMessage(ChatMessageRole.System, "From now on, you have one precise task: analyze the messages you receive and produce the following numerical parameters in the specified order, without anything else: " +
                     "The first and second numbers indicate the mentioned blood pressure in the text or 0 if there is no blood pressure. The first value represents the systolic pressure(the larger number), while the second " +
                     "represents the diastolic pressure(the smaller number). The third and final number indicates the heart rate or 0 if the heart rate is not present in the message. Typically, messages with only numeric values, " +
                     "without other words, are intercepted as follows: if there are 2 values, they refer to blood pressure; if there’s a single value, it represents the heart rate; conversely, 3 values indicate the presence " +
@@ -76,7 +76,7 @@ namespace HyperTensionBot.Server.LLM {
         }
         public static List<ChatMessage> AdviceContest() {
             return new List<ChatMessage> {
-                new ChatMessage(ChatMessageRole.User, "Genera un messaggio di avviso cordiale ed empatico per un paziente iperteso che non ha inserito le misurazioni della pressione arteriosa " +
+                new ChatMessage(ChatMessageRole.System, "Genera un messaggio di avviso cordiale ed empatico per un paziente iperteso che non ha inserito le misurazioni della pressione arteriosa " +
                     "negli ultimi giorni. Invia un messaggio cordiale e sintetico con lo scopo di notificare. Puoi motivare leggermente il paziente ad inviare misurazioni quotidianamente. " +
                     "Restituisci esclusivamente il messaggio in lingua italiana, in modo che sia inoltrato direttamente al paziente e sia libero da virgolette, presenza di nomi di persona " +
                     "o altro che non corrisponde a questa richiesta."),

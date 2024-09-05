@@ -25,7 +25,7 @@ namespace HyperTensionBot.Server.LLM.Strategy {
         }
 
         // Send text messages to gtp model. It's pèossibile choice model, tokens, temperature ecc.. 
-        public async Task<string> AskLLM(TypeConversation t, List<ChatMessage>? conversation = null, List<ChatMessage>? context = null) {
+        public async Task<string> AskLLM(TypeConversation t, string message, List<ChatMessage>? conversation = null) {
             if (api is not null) {
                 /*
                 if (t == TypeConversation.Communication)

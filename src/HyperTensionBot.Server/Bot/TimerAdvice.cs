@@ -48,9 +48,8 @@ namespace HyperTensionBot.Server.Bot {
                     // Check time passed and send mex 
                     var timePassed = DateTime.Now - Time.Convert((DateTime)pUp["DateLastMeasurement"]);
                     if (timePassed > TimeSpan.FromDays(2)) {
-                        await SendMessagesExtension.SendButton(_bot, await _llm.HandleAskAsync(TypeConversation.Advice,
-                            context: Prompt.AdviceContest()), pUp["id"].AsInt64,
-                            new string[] { "Silenzia per una settimana", "sil", "Continua a ricevere avvisi", "adv" });
+                        await SendMessagesExtension.SendButton(_bot, await _llm.HandleAskAsync(TypeConversation.Advice, "Genera il messaggio di avviso per il paziente iperteso"),
+                            pUp["id"].AsInt64, new string[] { "Silenzia per una settimana", "sil", "Continua a ricevere avvisi", "adv" });
                     }
                 }
             }
