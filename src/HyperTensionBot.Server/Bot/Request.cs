@@ -90,7 +90,7 @@ namespace HyperTensionBot.Server.Bot {
                 else
                     await SendGeneralInfo(bot, mem, id);
             }
-            catch (Exception ex) when (ex is KeyNotFoundException || ex is ArgumentNullException) { 
+            catch (Exception ex) when (ex is KeyNotFoundException || ex is ArgumentNullException) {
                 await bot.SendTextMessageAsync(id, "Vorrei fornirti le tue misurazioni ma non sono ancora state registrate, ricordati di farlo quotidianamente.\n\n" +
                     "Mi è stato riferito che il dottore non vede l'ora di studiare la tua situazione😁");
             }
@@ -299,9 +299,9 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         // Ask confirm to extracted parameters. They are extracted by LLM. 
-        public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, string message, long id, List<ChatMessage> context) {
+        public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, long id, List<ChatMessage> context) {
             try {
-                string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message, context: context);
+                string outLLM = await llm.HandleAskAsync(TypeConversation.Request, context: context);
                 var parameters = RegexExtensions.ExtractParameters(outLLM);
                 memory.SetTemporaryParametersRequest(id, parameters);
                 await SendMessagesExtension.SendButton(bot, $"Stai facendo richiesta per:\n{SendMessagesExtension.DefineRequestText(parameters)}",

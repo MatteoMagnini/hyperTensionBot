@@ -19,13 +19,14 @@ namespace HyperTensionBot.Server.Database {
             return chat.FindAsync(filter).Result.ToList();
         }
 
-        internal static List<ChatMessage> GetContext(long id, IMongoCollection<BsonDocument>? chat) {
+        internal static List<ChatMessage> GetContext(long id, IMongoCollection<BsonDocument>? chat, string mex) {
             List<ChatMessage> context = new();
             var contT = GetMessages(id, chat);
             if (contT.Count > 2) {
                 context.AddRange(new List<ChatMessage> {
-                    new ChatMessage(ChatMessageRole.User, contT[contT.Count-2]["messages"].ToString()),
                     new ChatMessage(ChatMessageRole.User, contT[contT.Count-3]["messages"].ToString()),
+                    new ChatMessage(ChatMessageRole.User, contT[contT.Count-2]["messages"].ToString()),
+                    new ChatMessage(ChatMessageRole.User, mex),
                 });
             }
 

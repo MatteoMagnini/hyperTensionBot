@@ -153,7 +153,8 @@ namespace HyperTensionBot.Server.Database {
             if (messages.Count > 2) {
                 chatToLLM.AddRange(new List<ChatMessage> {
                     new ChatMessage(ChatMessageRole.User, messages[messages.Count-2]["messages"].ToString()),
-                    new ChatMessage(ChatMessageRole.User, messages[messages.Count-3]["messages"].ToString())
+                    new ChatMessage(ChatMessageRole.User, messages[messages.Count-2]["messages"].ToString()),
+                    new ChatMessage(ChatMessageRole.User, message),
                 });
             }
             return chatToLLM;

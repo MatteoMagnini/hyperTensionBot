@@ -10,40 +10,38 @@ using Telegram.Bot.Types;
 namespace HyperTensionBot.Server.Bot {
     // Manage all predicted intent of ML model. After prediction this class is responsable to workflow
     public static class Context {
-        private static readonly string START = "/start";
 
         public static async Task ControlFlow(TelegramBotClient bot, LLMService llm, Memory memory, Intent context, string message, Chat chat, DateTime date) {
             try {
-                if (message == START)
-                    await SendMessagesExtension.SendStartMessage(bot, chat.Id);
 
                 int idMessage;
-
 
                 switch (context) {
 
                     case Intent.Richiesta:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
-                        var contRe = ManageChat.GetContext(chat.Id, memory.Chat);
-                        await Request.AskConfirmParameters(llm, bot, memory, message, chat.Id, contRe);
+                        var contRe = ManageChat.GetContext(chat.Id, memory.Chat, message);
+                        await Request.AskConfirmParameters(llm, bot, memory, chat.Id, contRe);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
+
                     // ask conferme and storage data 
                     case Intent.PersonalInfo:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await StorageGeneralData(bot, message, chat, memory);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
+
                     case Intent.Inserimento:
-                        var cont = ManageChat.GetContext(chat.Id, memory.Chat);
-                        var result = await llm.HandleAskAsync(TypeConversation.Insert, message, context: cont);
+                        var cont = ManageChat.GetContext(chat.Id, memory.Chat, message);
+                        var result = await llm.HandleAskAsync(TypeConversation.Insert, context: cont);
                         await StorageData(bot, result, chat, memory, date);
                         break;
 
                     case Intent.Umore:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await bot.SendTextMessageAsync(
-                            chat.Id, await llm.HandleAskAsync(TypeConversation.Communication, message,
+                            chat.Id, await llm.HandleAskAsync(TypeConversation.Communication,
                                 comunicationChat: memory.AddMessageLLM(chat, message)));
                         if (memory.GetFirstMeasurement(chat.Id).HasValue)
                             await CheckAverage(Request.AverageData(memory, chat.Id, 30, true, false), bot, chat.Id);
@@ -51,12 +49,10 @@ namespace HyperTensionBot.Server.Bot {
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
 
-                    // LLM 
                     case Intent.Generale:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await bot.SendTextMessageAsync(
-                            chat.Id, await llm.HandleAskAsync(TypeConversation.Communication, message, memory.AddMessageLLM(chat, message)));
-
+                            chat.Id, await llm.HandleAskAsync(TypeConversation.Communication, memory.AddMessageLLM(chat, message)));
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
                         break;
                 }

@@ -25,13 +25,14 @@ namespace HyperTensionBot.Server.LLM.Strategy {
         }
 
         // Send text messages to gtp model. It's pèossibile choice model, tokens, temperature ecc.. 
-        public async Task<string> AskLLM(TypeConversation t, string userMessage = "", List<ChatMessage>? conversation = null, List<ChatMessage>? context = null) {
+        public async Task<string> AskLLM(TypeConversation t, List<ChatMessage>? conversation = null, List<ChatMessage>? context = null) {
             if (api is not null) {
+                /*
                 if (t == TypeConversation.Communication)
                     conversation!.Add(new ChatMessage(ChatMessageRole.User, userMessage));
                 else
                     analisysRequest.Add(new ChatMessage(ChatMessageRole.User, userMessage));
-
+                */
                 var response = await api.Chat.CreateChatCompletionAsync(
                     model: Model.ChatGPTTurbo,
                     messages: (IList<ChatMessage>?)(t == TypeConversation.Communication ? conversation : analisysRequest),
