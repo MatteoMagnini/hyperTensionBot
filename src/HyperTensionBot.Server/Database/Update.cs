@@ -7,7 +7,7 @@ using Telegram.Bot.Types;
 namespace HyperTensionBot.Server.Database {
 
     // Manage database at new messages. 
-    internal static class Update {
+    public static class Update {
 
         internal static void UpdateUser(IMongoCollection<BsonDocument>? User, DateTime date, Intent i, User from, string mex, bool adv) {
             var user = User.FindAsync(Memory.GetFilter(from.Id)).Result.FirstOrDefault();
@@ -50,12 +50,12 @@ namespace HyperTensionBot.Server.Database {
             }
         }
 
-        internal static void InsertNewMex(IMongoCollection<BsonDocument>? chat, DateTime date, User? from, Intent i, string mex) {
+        public static void InsertNewMex(IMongoCollection<BsonDocument>? chat, DateTime date, long id, string i, string mex) {
 
             var documentMex = new BsonDocument {
-                {"id", from?.Id},
+                {"id", id},
                 {"messages", mex},
-                {"type", i.ToString()},
+                {"type", i},
                 {"Date", date},
             };
             chat?.InsertOne(documentMex);

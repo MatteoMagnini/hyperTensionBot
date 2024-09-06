@@ -10,8 +10,8 @@ namespace HyperTensionBot.Server.LLM.Strategy {
             _llm = llm;
         }
 
-        public async Task<string> HandleAskAsync(TypeConversation t, string message, List<ChatMessage>? comunicationChat = null, List<ChatMessage>? context = null) {
-            return await _llm.AskLLM(t, message, comunicationChat, context);
+        public async Task<string> HandleAskAsync(TypeConversation t, string message, List<ChatMessage>? comunicationChat = null) {
+            return await _llm.AskLLM(t, message, comunicationChat);
         }
 
         public void SetLogger(ILogger<LLMService> logger) {

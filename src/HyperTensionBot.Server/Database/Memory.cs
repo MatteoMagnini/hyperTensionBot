@@ -81,8 +81,7 @@ namespace HyperTensionBot.Server.Database {
             return Builders<BsonDocument>.Filter.Eq("id", id);
         }
 
-        // save ne winformation for user 
-        // chat information - posso integrare l'unica informazione necessaria che è la data dell'ultimo messaggio. 
+        // save new information for user 
         public void HandleUpdate(User? from, DateTime date, Intent i, string mex) {
 
             // update info of User as name,..., Time and number of messages 
@@ -91,7 +90,7 @@ namespace HyperTensionBot.Server.Database {
                 _logger.LogTrace("Updated user memory");
             }
 
-            Update.InsertNewMex(Chat, date, from, i, mex);
+            Update.InsertNewMex(Chat, date, from!.Id, i.ToString(), mex);
         }
 
         // use Ram and not Db for measurements before confirm
@@ -126,7 +125,7 @@ namespace HyperTensionBot.Server.Database {
             });
         }
 
-        // informazioni personali - occorre splittare nei metodi di inserimento in database e una che invece resta di ritorno Lista per la stampa. 
+        // getter personal information and measurements
         public List<string> GetGeneralInfo(long id) {
             // get all messages with type = personal messages 
             var messages = ManageChat.GetMessages(id, Chat, Intent.PersonalInfo.ToString());
@@ -145,20 +144,23 @@ namespace HyperTensionBot.Server.Database {
 
         }
 
-        // inserimento del messaggio in Messaggi collection e restituisco la lista dei messaggi di quell'id Telegram come richiesto 
-        public List<ChatMessage> AddMessageLLM(Chat chat, string message) {
+        // insert message into collection and return all messages for that user
+        public List<ChatMessage> AddMessageLLM(Chat chat) {
 
-            // get all messages with type = General 
-            var messages = ManageChat.GetMessages(chat.Id, Chat, Intent.Generale.ToString());
+            // get all messages with
+            var messages = ManageChat.GetMessages(chat.Id, Chat);
             var chatToLLM = Prompt.GeneralContext();
-            if (messages.Count > 2) {
-                chatToLLM.AddRange(new List<ChatMessage> {
-                    new ChatMessage(ChatMessageRole.User, messages[messages.Count-2]["messages"].ToString()),
-                    new ChatMessage(ChatMessageRole.User, messages[messages.Count-3]["messages"].ToString())
-                });
+
+            // select last 6 message for specific id chat. Not last. 
+            if (messages.Count >= 5) {
+                var selection = messages.GetRange(messages.Count - 6, 5);
+                foreach (var mex in selection) {
+                    if (mex["type"] == "Risposta")
+                        chatToLLM.Add(new ChatMessage(ChatMessageRole.Assistant, mex["messages"].ToString()));
+                    else
+                        chatToLLM.Add(new ChatMessage(ChatMessageRole.User, mex["messages"].ToString()));
+                }
             }
-
-
             return chatToLLM;
         }
 

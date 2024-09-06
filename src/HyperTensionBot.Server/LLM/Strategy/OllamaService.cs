@@ -21,6 +21,7 @@ namespace HyperTensionBot.Server.LLM {
         // Lists contains requests of insertion and data request. They are used for the context at prompt 
         private readonly List<ChatMessage> analysistInsert;
         private readonly List<ChatMessage> analysisRequest;
+        private readonly List<ChatMessage> advice;
 
         private ILogger<LLMService>? _logger;
 
@@ -30,6 +31,7 @@ namespace HyperTensionBot.Server.LLM {
 
             analysisRequest = Prompt.RequestContext();
             analysistInsert = Prompt.InsertContest();
+            advice = Prompt.AdviceContest();
         }
 
         private static string ConfigureUrl(WebApplicationBuilder builder) {
@@ -53,7 +55,7 @@ namespace HyperTensionBot.Server.LLM {
             llm._httpClient.Timeout = TimeSpan.FromSeconds(200);    // over 200 seconds for the request, it can be an error
 
             // try get request
-            var response = await llm._httpClient.GetAsync(llm._llmApiUrl!.Replace("/api/generate", ""));
+            var response = await llm._httpClient.GetAsync(llm._llmApiUrl!.Replace("/api/chat", ""));
 
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException("Errore di connessione al server");
@@ -62,68 +64,86 @@ namespace HyperTensionBot.Server.LLM {
         public void SetLogger(ILogger<LLMService> logger) { _logger = logger; }
 
         // connection and interaction with server for request to LLM 
-        public async Task<string> AskLLM(TypeConversation t, string message, List<ChatMessage>? comunicationChat = null, List<ChatMessage>? context = null) {
+        public async Task<string> AskLLM(TypeConversation t, string message, List<ChatMessage>? comunicationChat = null) {
 
             if (_llmApiUrl != "") {
 
                 string modelName = "";
                 double temp = 0;
                 List<ChatMessage> chatContext = new();
-                AssignInput(t, ref chatContext, comunicationChat, ref modelName, ref temp, context);
+                AssignInput(t, ref chatContext, comunicationChat, ref modelName, ref temp, message);
+
+                var context = chatContext.Select(msg => new {
+                            role = msg.Role.ToString().ToLower(), // 'user' o 'assistant'
+                            content = msg.Content
+                        }).ToList();
+                context.Add(new { role = "user", content = message });
 
                 // build payload JSON
                 var jsonPayload = new {
                     model = modelName,
-                    prompt = chatContext!.First().Content + "\n The request is: " + message,
-                    messages = chatContext.Select(msg => new {
-                        role = msg.Role.ToString().ToLower(),
-                        content = msg.Content
-                    }).ToList(),
+                    messages = context,
                     stream = false,
                     options = new {
                         temperature = temp // value for deterministic or creative response 
                     },
                 };
-
+                string jsonString = JsonConvert.SerializeObject(jsonPayload);
+                await Console.Out.WriteLineAsync($"Payload JSON: {jsonString}");
                 var content = new StringContent(JsonConvert.SerializeObject(jsonPayload), Encoding.UTF8, "application/json");
 
                 // send POST request 
                 try {
                     var response = await _httpClient.PostAsync(_llmApiUrl, content);
-
+                    await Console.Out.WriteLineAsync("Richiesta inviata");
                     if (response.IsSuccessStatusCode) {
-
                         var jsonResponse = await response.Content.ReadAsStringAsync();
+                        await Console.Out.WriteLineAsync($"Risposta LLM JSON: {jsonResponse}");
 
-                        // extracting text by LLM response 
-                        return ParserResponse(jsonResponse, t);
+                        // Controllo e log della risposta prima di processarla
+                        string parsedResponse = ParserResponse(jsonResponse, t);
+                        await Console.Out.WriteLineAsync($"Risposta elaborata: {parsedResponse}");
+
+                        if (!string.IsNullOrWhiteSpace(parsedResponse)) {
+                            return parsedResponse;
+                        }
+                        else {
+                            await Console.Out.WriteLineAsync("La risposta elaborata è vuota.");
+                            return "Errore: la risposta dell'LLM è vuota.";
+                        }
                     }
-
-                    return "Si è verificato un errore nella generazione del testo.";
+                    else {
+                        var errorResponse = await response.Content.ReadAsStringAsync();
+                        await Console.Out.WriteLineAsync($"Errore API: {response.StatusCode}, Contenuto: {errorResponse}");
+                        return "Si è verificato un errore nella generazione del testo.";
+                    }
                 }
                 catch (TaskCanceledException) {
                     return "Errore dal server";
                 }
+                catch (Exception ex) {
+                    // Another log
+                    await Console.Out.WriteLineAsync($"Eccezione durante la richiesta: {ex.Message}");
+                    return "Errore durante la richiesta all'LLM.";
+                }
             }
-            return "Non è possibile rispondere a queste domande. Riprova più tardi. ";
+            return "Non è possibile rispondere a queste domande. Riprova più tardi.";
         }
 
         // Set parameter for each conversation model
-        private void AssignInput(TypeConversation t, ref List<ChatMessage> chatContext, List<ChatMessage>? comunication, ref string modelName, ref double temp, List<ChatMessage>? context) {
+        // The chatContext is the list of messages that will be sent to LLM: the examples in the Prompt section and the last 2 messages of the user chat.
+        // The context contains the last 2 user messages that will be added to the chat context
+        private void AssignInput(TypeConversation t, ref List<ChatMessage> chatContext, List<ChatMessage>? comunication, ref string modelName, ref double temp, string? message) {
             switch (t) {
                 case TypeConversation.Request:
                     modelName = MODEL_REQUEST;
                     chatContext = analysisRequest;
-                    if (context is not null)
-                        chatContext.AddRange(context);
                     temp = 0.1;
                     break;
                 case TypeConversation.Insert:
                     modelName = MODEL_INSERT;
                     chatContext = analysistInsert;
-                    if (context is not null)
-                        chatContext.AddRange(context);
-                    temp = 0.2;
+                    temp = 0.1;
                     break;
                 case TypeConversation.Communication:
                     modelName = MODEL_COMUNICATION;
@@ -132,8 +152,8 @@ namespace HyperTensionBot.Server.LLM {
                     break;
                 case TypeConversation.Advice:
                     modelName = MODEL_COMUNICATION;
-                    chatContext = context!;
-                    temp = 0.8;
+                    chatContext = advice;
+                    temp = 0.7;
                     break;
             }
         }
@@ -142,7 +162,7 @@ namespace HyperTensionBot.Server.LLM {
             JObject jsonObj = JObject.Parse(response);
 
             // Estrai il valore della chiave 'response'
-            var resp = jsonObj["response"]?.ToString();
+            var resp = jsonObj["message"]!["content"]!.ToString();
 
             // Rimuovi i caratteri di newline e ritorna la risposta
             resp = resp!.Replace("\\n", "");

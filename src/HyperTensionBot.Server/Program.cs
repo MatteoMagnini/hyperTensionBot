@@ -85,7 +85,7 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, TelegramUpdate update
                     UpdateType.CallbackQuery => $"callback with data: {update.CallbackQuery?.Data}",
                     _ => "update of unhandled type"
                 });
-                logger.LogInformation("Incoming message matches intent {0}", result);
+                logger.LogInformation($"Incoming message matches intent {result}");
 
                 // Manage operations
                 Stopwatch stopwatch = Stopwatch.StartNew();

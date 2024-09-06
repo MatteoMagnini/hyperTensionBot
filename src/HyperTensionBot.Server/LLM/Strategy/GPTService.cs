@@ -24,14 +24,15 @@ namespace HyperTensionBot.Server.LLM.Strategy {
             api = new OpenAIAPI(gptKey);
         }
 
-        // Send text messages to gtp model. It's pèossibile choice model, tokens, temperature ecc.. 
-        public async Task<string> AskLLM(TypeConversation t, string userMessage = "", List<ChatMessage>? conversation = null, List<ChatMessage>? context = null) {
+        // Send text messages to gpt model. It's pèossibile choice model, tokens, temperature ecc.. 
+        public async Task<string> AskLLM(TypeConversation t, string message, List<ChatMessage>? conversation = null) {
             if (api is not null) {
+                /*
                 if (t == TypeConversation.Communication)
                     conversation!.Add(new ChatMessage(ChatMessageRole.User, userMessage));
                 else
                     analisysRequest.Add(new ChatMessage(ChatMessageRole.User, userMessage));
-
+                */
                 var response = await api.Chat.CreateChatCompletionAsync(
                     model: Model.ChatGPTTurbo,
                     messages: (IList<ChatMessage>?)(t == TypeConversation.Communication ? conversation : analisysRequest),

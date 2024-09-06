@@ -30,7 +30,7 @@ appsettings = {
     "connection" => "mongodb://mongodb:27017"
   },
   "Clusters" => {
-    "UrlLLM" => "http://clusters.almaai.unibo.it:11434/api/generate"
+    "UrlLLM" => "http://clusters.almaai.unibo.it:11434/api/chat"
   }
 }
 

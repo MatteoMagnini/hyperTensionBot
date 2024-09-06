@@ -10,54 +10,55 @@ using Telegram.Bot.Types;
 namespace HyperTensionBot.Server.Bot {
     // Manage all predicted intent of ML model. After prediction this class is responsable to workflow
     public static class Context {
-        private static readonly string START = "/start";
 
         public static async Task ControlFlow(TelegramBotClient bot, LLMService llm, Memory memory, Intent context, string message, Chat chat, DateTime date) {
             try {
-                if (message == START)
-                    await SendMessagesExtension.SendStartMessage(bot, chat.Id);
 
                 int idMessage;
-
 
                 switch (context) {
 
                     case Intent.Richiesta:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
-                        var contRe = ManageChat.GetContext(chat.Id, memory.Chat);
-                        await Request.AskConfirmParameters(llm, bot, memory, message, chat.Id, contRe);
+                        await Request.AskConfirmParameters(llm, bot, memory, chat.Id, message);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", "Elaborazione completata");
                         break;
+
                     // ask conferme and storage data 
                     case Intent.PersonalInfo:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         await StorageGeneralData(bot, message, chat, memory);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", "Elaborazione completata");
                         break;
+
                     case Intent.Inserimento:
-                        var cont = ManageChat.GetContext(chat.Id, memory.Chat);
-                        var result = await llm.HandleAskAsync(TypeConversation.Insert, message, context: cont);
+                        var result = await llm.HandleAskAsync(TypeConversation.Insert, message);
                         await StorageData(bot, result, chat, memory, date);
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", "Elaborazione completata");
                         break;
 
                     case Intent.Umore:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
+                        var respLLM = await llm.HandleAskAsync(TypeConversation.Communication, message, comunicationChat: memory.AddMessageLLM(chat));
                         await bot.SendTextMessageAsync(
-                            chat.Id, await llm.HandleAskAsync(TypeConversation.Communication, message,
-                                comunicationChat: memory.AddMessageLLM(chat, message)));
+                            chat.Id, respLLM);
                         if (memory.GetFirstMeasurement(chat.Id).HasValue)
                             await CheckAverage(Request.AverageData(memory, chat.Id, 30, true, false), bot, chat.Id);
 
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
+
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", respLLM);
                         break;
 
-                    // LLM 
                     case Intent.Generale:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
-                        await bot.SendTextMessageAsync(
-                            chat.Id, await llm.HandleAskAsync(TypeConversation.Communication, message, memory.AddMessageLLM(chat, message)));
-
+                        respLLM = await llm.HandleAskAsync(TypeConversation.Communication, message, comunicationChat: memory.AddMessageLLM(chat));
+                        await bot.SendTextMessageAsync(chat.Id, respLLM);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
+
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", respLLM);
                         break;
                 }
             }
