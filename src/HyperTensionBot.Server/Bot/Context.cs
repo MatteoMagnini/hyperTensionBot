@@ -28,9 +28,12 @@ namespace HyperTensionBot.Server.Bot {
                     // ask conferme and storage data 
                     case Intent.PersonalInfo:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
+                        var respLLM = await llm.HandleAskAsync(TypeConversation.Communication, message, comunicationChat: memory.AddMessageLLM(chat));
+                        await bot.SendTextMessageAsync(
+                            chat.Id, respLLM);
                         await StorageGeneralData(bot, message, chat, memory);
                         await SendMessagesExtension.Delete(bot, chat.Id, idMessage);
-                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", "Elaborazione completata");
+                        Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", respLLM);
                         break;
 
                     case Intent.Inserimento:
@@ -41,7 +44,7 @@ namespace HyperTensionBot.Server.Bot {
 
                     case Intent.Umore:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
-                        var respLLM = await llm.HandleAskAsync(TypeConversation.Communication, message, comunicationChat: memory.AddMessageLLM(chat));
+                        respLLM = await llm.HandleAskAsync(TypeConversation.Communication, message, comunicationChat: memory.AddMessageLLM(chat));
                         await bot.SendTextMessageAsync(
                             chat.Id, respLLM);
                         if (memory.GetFirstMeasurement(chat.Id).HasValue)

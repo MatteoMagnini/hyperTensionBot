@@ -128,7 +128,7 @@ namespace HyperTensionBot.Server.Database {
         // getter personal information and measurements
         public List<string> GetGeneralInfo(long id) {
             // get all messages with type = personal messages 
-            var messages = ManageChat.GetMessages(id, Chat, Intent.PersonalInfo.ToString());
+            var messages = ManageChat.GetMessages(id, Chat, type: Intent.PersonalInfo.ToString());
             return messages!.Select(x => x["messages"].AsString).ToList();
         }
 
