@@ -24,12 +24,11 @@ namespace HyperTensionBot.Server.LLM {
         }
         public static List<ChatMessage> RequestContext() {
             return new List<ChatMessage> {
-                new ChatMessage(ChatMessageRole.System, "Identify the three parameters (CONTEXT, TIME SPAN, FORMAT) from the input message and return them in a simple list.Do not provide any explanations or justifications. " +
-                    "CONTEXT should be 'PRESSIONE' if the message explicitly mentions blood pressure or related terms, 'FREQUENZA' if it mentions heart rate or related terms, 'ENTRAMBI' if it mentions both or is a generic request, " +
-                    "'PERSONALE' if it requires personal information. " +
-                    "TIME SPAN should be converted to the exact number of days if the message specifies a time frame, or 1 if no time frame is specified, or - 1 if all available data is requested. " +
-                    "FORMAT should be 'MEDIA' if the message explicitly requests an average or summary, 'GRAFICO' if it requests a graphical representation, 'LISTA' otherwise.If the message is PERSONALE, use LISTA by default. " +
-                    "Use a recursive analysis to ensure accurate parameter extraction and follow the instructions strictly for each parameter. " +
+                new ChatMessage(ChatMessageRole.System, "Identify the three parameters (CONTEXT, TIME SPAN, FORMAT) from the input message and return them in a simple list. Do not provide explanations or justifications. " +
+                    "CONTEXT should be 'PRESSURE' if the message explicitly mentions pressure or related terms, 'FREQUENCY' if it mentions frequency or related terms, 'BOTH' if it mentions both or is a general request, 'PERSONAL' if it asks for personal information. " +
+                    "TIME SPAN should be converted to the exact number of days if the message specifies a time span, or - 1 if all available data is requested or no time is specified. " +
+                    "FORMAT should be 'AVERAGE' if the message asks for an average or similar, 'GRAPHIC' if it asks for a graphical or similar representation, 'LIST' otherwise. If the message is PERSONAL, use LIST by default. " +
+                    "Use recursive analysis to ensure accurate parameter extraction and strictly follow the instructions for each parameter. " +
                     "Example. input message = 'voglio la media della pressione'; output = 'PRESSIONE, -1, MEDIA'."),
                 new ChatMessage(ChatMessageRole.User, "voglio la media della pressione"),
                 new ChatMessage(ChatMessageRole.Assistant, "PRESSIONE -1 MEDIA"),
@@ -43,10 +42,10 @@ namespace HyperTensionBot.Server.LLM {
                 new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI 14 LISTA"),
                 new ChatMessage(ChatMessageRole.User, "Rappresentazione delle misure dell'ultimo mese"),
                 new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI 30 GRAFICO"),
-                new ChatMessage(ChatMessageRole.User, "Grafico"),
-                new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI -1 GRAFICO"),
-                new ChatMessage(ChatMessageRole.User, "Media"),
-                new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI -1 MEDIA"),
+                new ChatMessage(ChatMessageRole.User, "Grafico pressione"),
+                new ChatMessage(ChatMessageRole.Assistant, "PRESSIONE -1 GRAFICO"),
+                new ChatMessage(ChatMessageRole.User, "Media frequenza"),
+                new ChatMessage(ChatMessageRole.Assistant, "FREQUENZA -1 MEDIA"),
                 new ChatMessage(ChatMessageRole.User, "Misurazioni"),
                 new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI -1 LISTA"),
             };
