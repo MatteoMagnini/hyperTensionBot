@@ -74,9 +74,9 @@ namespace HyperTensionBot.Server.LLM {
                 AssignInput(t, ref chatContext, comunicationChat, ref modelName, ref temp, message);
 
                 var context = chatContext.Select(msg => new {
-                            role = msg.Role.ToString().ToLower(), // 'user' o 'assistant'
-                            content = msg.Content
-                        }).ToList();
+                    role = msg.Role.ToString().ToLower(), // 'user' o 'assistant'
+                    content = msg.Content
+                }).ToList();
                 context.Add(new { role = "user", content = message });
 
                 // build payload JSON
