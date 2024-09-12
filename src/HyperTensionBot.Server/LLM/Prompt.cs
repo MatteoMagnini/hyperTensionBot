@@ -25,11 +25,13 @@ namespace HyperTensionBot.Server.LLM {
         public static List<ChatMessage> RequestContext() {
             return new List<ChatMessage> {
                 new ChatMessage(ChatMessageRole.System, "Identify the three parameters (CONTEXT, TIME SPAN, FORMAT) from the input message and return them in a simple list. Do not provide explanations or justifications. " +
-                    "CONTEXT should be 'PRESSIONE' only if the message mentions only terms related to blood pressure like 'pressione' or 'sanguigna'. Use 'FREQUENZA' only if the message mentions only terms related to heart rate like 'frequenza' or 'battiti'. " +
+                    "CONTEXT should be 'PRESSIONE' if the message mentions only terms related to blood pressure like 'pressione' or 'sanguigna', or 'FREQUENZA' if it mentions only terms related to heart rate like 'frequenza' or 'battiti'. " +
                     "Use 'ENTRAMBI' only if both sets of terms are explicitly mentioned or if the message clearly indicates a request for both categories. Use 'PERSONALE' if it asks is explicitly for personal information. " +
                     "TIME SPAN should be converted to the exact number of days if the message specifies a time span, or -1 if all available data is requested or no time is specified. " +
                     "FORMAT should be 'MEDIA' if the message asks for an average or similar, 'GRAFICO' if it asks for a graphical or similar representation, 'LISTA' otherwise. If the message is PERSONALE, use LISTA by default. " +
-                    "Use recursive analysis to ensure accurate parameter extraction and strictly follow the instructions for each parameter. Example. input message = 'voglio la media della pressione'; output = 'PRESSIONE, -1, MEDIA'."),
+                    "Use recursive analysis to ensure accurate parameter extraction and strictly follow the instructions for each parameter. Example ENTRAMBI = 'voglio la media delle misurazioni'; output = 'ENTRAMBI, -1, MEDIA'. " +
+                    "Example PRESSIONE: 'mi dia le misure di pressione dell'ultimo mese'; output = 'PRESSIONE, 30, LISTA'. " +
+                    "Example FREQUENZA: 'mi dia le misure di frequenza dell'ultimo mese'; output = 'FREQUENZA, 30, LISTA'."),
                 new ChatMessage(ChatMessageRole.User, "Ricordami le informazioni personali riferite al dottore"),
                 new ChatMessage(ChatMessageRole.Assistant, "PERSONALE -1 LISTA"),
                 new ChatMessage(ChatMessageRole.User, "Frequenza pressione due settimane"),

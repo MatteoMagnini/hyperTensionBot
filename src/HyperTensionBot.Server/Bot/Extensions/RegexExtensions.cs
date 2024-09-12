@@ -40,13 +40,24 @@ namespace HyperTensionBot.Server.Bot.Extensions {
             return new[] { sistolyc, diastolic, frequence };
         }
 
-        public static string[] ExtractParameters(string message) {
-            var match = Regex.Match(message, @"(?<v1>[A-Z]{2,})[\s\S]*?(?<v2>\d+)[\s\S]*?(?<v3>[A-Z]{2,})");
+        public static string[] ExtractParameters(string outLLM, string message) {
+            var match = Regex.Match(outLLM, @"(?<v1>[A-Z]{2,})[\s\S]*?(?<v2>\d+)[\s\S]*?(?<v3>[A-Z]{2,})");
 
             if (!match.Success) {
                 throw new ArgumentException("L'output non contiene tre parametri.");
             }
-            return new[] { Regex.Replace(match.Groups["v1"].Value, "[^A-Z]+", ""), match.Groups["v2"].Value, Regex.Replace(match.Groups["v3"].Value, "[^A-Z]+", "") };
+            string v1 = Regex.Replace(match.Groups["v1"].Value, "[^A-Z]+", "");
+            string v2 = match.Groups["v2"].Value;
+            string v3 = Regex.Replace(match.Groups["v3"].Value, "[^A-Z]+", "");
+
+            if (v1 == "ENTRAMBI") {
+                if (message.Contains("pressione") && !message.Contains("frequenza"))
+                    v1 = "PRESSIONE";
+                else if (!message.Contains("pressione") && message.Contains("frequenza"))
+                    v1 = "FREQUENZA";
+            }
+
+            return new[] { v1, v2, v3 };
         }
     }
 }
