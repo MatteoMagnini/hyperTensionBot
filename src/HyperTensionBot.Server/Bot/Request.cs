@@ -301,7 +301,7 @@ namespace HyperTensionBot.Server.Bot {
         public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, long id, string message) {
             try {
                 string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message: message);
-                var parameters = RegexExtensions.ExtractParameters(outLLM);
+                var parameters = RegexExtensions.ExtractParameters(outLLM, message);
                 memory.SetTemporaryParametersRequest(id, parameters);
                 await SendMessagesExtension.SendButton(bot, $"Stai facendo richiesta per:\n{SendMessagesExtension.DefineRequestText(parameters)}",
                         id, new string[] { "Sì, esatto!", "yesReq", "No", "noReq" });

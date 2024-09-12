@@ -9,7 +9,7 @@ namespace HyperTensionBot.Server.Database {
     internal static class ManageMeasurement {
 
         internal static List<BsonDocument> GetAllDocuments(IMongoCollection<BsonDocument>? measurements, long id) {
-            return measurements.FindAsync(Memory.GetFilter(id)).Result.ToList();
+            return measurements.Find(Memory.GetFilter(id)).SortBy(doc => doc["Date"]).ToList();
         }
 
         internal static void InsertMeasurement(IMongoCollection<BsonDocument>? measurements, long id, Measurement newMeasurement) {
