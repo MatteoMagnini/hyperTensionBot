@@ -25,17 +25,11 @@ namespace HyperTensionBot.Server.LLM {
         public static List<ChatMessage> RequestContext() {
             return new List<ChatMessage> {
                 new ChatMessage(ChatMessageRole.System, "Identify the three parameters (CONTEXT, TIME SPAN, FORMAT) from the input message and return them in a simple list. Do not provide explanations or justifications. " +
-                    "CONTEXT should be 'PRESSURE' if the message explicitly mentions pressure or related terms, 'FREQUENCY' if it mentions frequency or related terms, 'BOTH' if it mentions both or is a general request, 'PERSONAL' if it asks for personal information. " +
-                    "TIME SPAN should be converted to the exact number of days if the message specifies a time span, or - 1 if all available data is requested or no time is specified. " +
-                    "FORMAT should be 'AVERAGE' if the message asks for an average or similar, 'GRAPHIC' if it asks for a graphical or similar representation, 'LIST' otherwise. If the message is PERSONAL, use LIST by default. " +
-                    "Use recursive analysis to ensure accurate parameter extraction and strictly follow the instructions for each parameter. " +
-                    "Example. input message = 'voglio la media della pressione'; output = 'PRESSIONE, -1, MEDIA'."),
-                new ChatMessage(ChatMessageRole.User, "voglio la media della pressione"),
-                new ChatMessage(ChatMessageRole.Assistant, "PRESSIONE -1 MEDIA"),
-                new ChatMessage(ChatMessageRole.User, "Dammi i dati di frequenza"),
-                new ChatMessage(ChatMessageRole.Assistant, "FREQUENZA 1 LISTA"),
-                new ChatMessage(ChatMessageRole.User, "Forniscimi tutti i dati"),
-                new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI -1 LISTA"),
+                    "CONTEXT should be 'PRESSIONE' only if the message mentions only terms related to blood pressure like 'pressione' or 'sanguigna'. Use 'FREQUENZA' only if the message mentions only terms related to heart rate like 'frequenza' or 'battiti'. " +
+                    "Use 'ENTRAMBI' only if both sets of terms are explicitly mentioned or if the message clearly indicates a request for both categories. Use 'PERSONALE' if it asks is explicitly for personal information. " +
+                    "TIME SPAN should be converted to the exact number of days if the message specifies a time span, or -1 if all available data is requested or no time is specified. " +
+                    "FORMAT should be 'MEDIA' if the message asks for an average or similar, 'GRAFICO' if it asks for a graphical or similar representation, 'LISTA' otherwise. If the message is PERSONALE, use LISTA by default. " +
+                    "Use recursive analysis to ensure accurate parameter extraction and strictly follow the instructions for each parameter. Example. input message = 'voglio la media della pressione'; output = 'PRESSIONE, -1, MEDIA'."),
                 new ChatMessage(ChatMessageRole.User, "Ricordami le informazioni personali riferite al dottore"),
                 new ChatMessage(ChatMessageRole.Assistant, "PERSONALE -1 LISTA"),
                 new ChatMessage(ChatMessageRole.User, "Frequenza pressione due settimane"),
@@ -48,6 +42,12 @@ namespace HyperTensionBot.Server.LLM {
                 new ChatMessage(ChatMessageRole.Assistant, "FREQUENZA -1 MEDIA"),
                 new ChatMessage(ChatMessageRole.User, "Misurazioni"),
                 new ChatMessage(ChatMessageRole.Assistant, "ENTRAMBI -1 LISTA"),
+                new ChatMessage(ChatMessageRole.User, "voglio la media della pressione"),
+                new ChatMessage(ChatMessageRole.Assistant, "PRESSIONE -1 MEDIA"),
+                new ChatMessage(ChatMessageRole.User, "Dammi i dati di frequenza"),
+                new ChatMessage(ChatMessageRole.Assistant, "FREQUENZA 1 LISTA"),
+                new ChatMessage(ChatMessageRole.User, "Forniscimi tutti i dati di pressione"),
+                new ChatMessage(ChatMessageRole.Assistant, "PRESSIONE -1 LISTA"),
             };
         }
 
