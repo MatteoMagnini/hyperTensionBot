@@ -8,6 +8,7 @@ services:
       - "27017:27017"
     volumes:
       - matteo.magnini-volume:/persistent/hyper-tension-bot/data/db
+    command: ["--dbpath", "/persistent/hyper-tension-bot/data/db"]
 
   app:
     image: hyper-tension-bot
