@@ -6,26 +6,26 @@ using System.Text;
 
 namespace HyperTensionBot.Server.LLM {
 
-    // allow ollama service. It used for comunicate with model in the server 
+    // allow ollama service. It used for comunicate with model in the server
     public class OllamaService : ILLMService {
 
         private readonly HttpClient _httpClient = new();
         // URL for LLM
         private readonly string? _llmApiUrl;
 
-        // set names to different model 
-        private readonly string MODEL_COMUNICATION = "llama3";
-        private readonly string MODEL_REQUEST = "llama3";
-        private readonly string MODEL_INSERT = "llama3";
+        // set names to different model
+        private readonly string MODEL_COMUNICATION = "llama3.1";
+        private readonly string MODEL_REQUEST = "llama3.1";
+        private readonly string MODEL_INSERT = "llama3.1";
 
-        // Lists contains requests of insertion and data request. They are used for the context at prompt 
+        // Lists contains requests of insertion and data request. They are used for the context at prompt
         private readonly List<ChatMessage> analysistInsert;
         private readonly List<ChatMessage> analysisRequest;
         private readonly List<ChatMessage> advice;
 
         private ILogger<LLMService>? _logger;
 
-        // Factory costructor 
+        // Factory costructor
         private OllamaService(WebApplicationBuilder builder) {
             _llmApiUrl = ConfigureUrl(builder);
 
@@ -63,7 +63,7 @@ namespace HyperTensionBot.Server.LLM {
 
         public void SetLogger(ILogger<LLMService> logger) { _logger = logger; }
 
-        // connection and interaction with server for request to LLM 
+        // connection and interaction with server for request to LLM
         public async Task<string> AskLLM(TypeConversation t, string message, List<ChatMessage>? comunicationChat = null) {
 
             if (_llmApiUrl != "") {
@@ -85,14 +85,14 @@ namespace HyperTensionBot.Server.LLM {
                     messages = context,
                     stream = false,
                     options = new {
-                        temperature = temp // value for deterministic or creative response 
+                        temperature = temp // value for deterministic or creative response
                     },
                 };
                 string jsonString = JsonConvert.SerializeObject(jsonPayload);
                 await Console.Out.WriteLineAsync($"Payload JSON: {jsonString}");
                 var content = new StringContent(JsonConvert.SerializeObject(jsonPayload), Encoding.UTF8, "application/json");
 
-                // send POST request 
+                // send POST request
                 try {
                     var response = await _httpClient.PostAsync(_llmApiUrl, content);
                     await Console.Out.WriteLineAsync("Richiesta inviata");
