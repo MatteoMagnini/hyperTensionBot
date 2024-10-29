@@ -14,9 +14,9 @@ namespace HyperTensionBot.Server.LLM {
         private readonly string? _llmApiUrl;
 
         // set names to different model
-        private readonly string MODEL_COMUNICATION = "llama3.1";
-        private readonly string MODEL_REQUEST = "llama3.1";
-        private readonly string MODEL_INSERT = "llama3.1";
+        private readonly string MODEL_COMUNICATION = "mixtral";
+        private readonly string MODEL_REQUEST = "mixtral";
+        private readonly string MODEL_INSERT = "mixtral";
 
         // Lists contains requests of insertion and data request. They are used for the context at prompt
         private readonly List<ChatMessage> analysistInsert;
