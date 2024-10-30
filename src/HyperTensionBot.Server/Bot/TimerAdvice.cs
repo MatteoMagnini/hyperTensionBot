@@ -1,3 +1,18 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
@@ -9,7 +24,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace HyperTensionBot.Server.Bot {
-    // timer for advice users when they not send new insertions 
+    // timer for advice users when they not send new insertions
     public class TimerAdvice {
         private readonly System.Timers.Timer _timer;
         private readonly LLMService _llm;
@@ -32,7 +47,7 @@ namespace HyperTensionBot.Server.Bot {
             _timer.Enabled = true;
         }
 
-        // check on the date of last insertion 
+        // check on the date of last insertion
         private async Task AdvicePatients() {
             var patients = _mem.GetAllPatients();
             foreach (var p in patients) {
@@ -45,7 +60,7 @@ namespace HyperTensionBot.Server.Bot {
                 var pUp = await _mem.User!.Find(Memory.GetFilter(p["id"].AsInt64)).FirstOrDefaultAsync();
                 var timeSilence = DateTime.Now - Time.Convert((DateTime)pUp["DateDeactivate"]);
                 if (timeSilence > TimeSpan.FromDays(7)) {
-                    // Check time passed and send mex 
+                    // Check time passed and send mex
                     var timePassed = DateTime.Now - Time.Convert((DateTime)pUp["DateLastMeasurement"]);
                     if (timePassed > TimeSpan.FromDays(2)) {
                         await SendMessagesExtension.SendButton(_bot, await _llm.HandleAskAsync(TypeConversation.Advice, "Genera il messaggio di avviso per il paziente iperteso"),

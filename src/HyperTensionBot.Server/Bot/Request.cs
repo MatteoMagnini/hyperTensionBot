@@ -1,3 +1,18 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
@@ -18,18 +33,18 @@ namespace HyperTensionBot.Server.Bot {
         // set days parameter to search data
         private static int days;
 
-        // The datas in DB are preleved and inserted in list 
+        // The datas in DB are preleved and inserted in list
         private static List<Measurement> measurementsFormatted = new();
 
         // take measurements
         private static string SettingsValue(Memory m, long id, ref bool pressure, ref bool frequence, string x, int d) {
             days = d;
 
-            // first measure and date 
+            // first measure and date
             var firstMeasurement = m.GetFirstMeasurement(id);
             ControlDays(firstMeasurement);
 
-            // info di process Request è la lista di tutte le misurzioni per un utente 
+            // info di process Request è la lista di tutte le misurzioni per un utente
             if (x == "PRESSIONE") {
                 pressure = true;
                 frequence = false;
@@ -62,7 +77,7 @@ namespace HyperTensionBot.Server.Bot {
 
                 var text = SettingsValue(mem, id, ref pressure, ref frequence, parameters[0], int.Parse(parameters[1]));
 
-                // selection right choice with parameters 
+                // selection right choice with parameters
                 if (parameters[0] != "PERSONALE") {
                     switch (parameters[2]) {
                         case "GRAFICO":
@@ -223,7 +238,7 @@ namespace HyperTensionBot.Server.Bot {
                 }
             }
 
-            // Configure legends 
+            // Configure legends
             plotModel.Legends.Add(new Legend {
                 LegendPlacement = LegendPlacement.Outside,
                 LegendPosition = LegendPosition.RightTop,
@@ -234,7 +249,7 @@ namespace HyperTensionBot.Server.Bot {
             return plotModel;
         }
 
-        // Send plot to chat 
+        // Send plot to chat
         private static async Task SendPlot(TelegramBotClient bot, long id, PlotModel plotModel) {
             using (var stream = new MemoryStream()) {
                 var pngExporter = new PngExporter(width: 800, height: 500);
@@ -297,7 +312,7 @@ namespace HyperTensionBot.Server.Bot {
             return average;
         }
 
-        // Ask confirm to extracted parameters. They are extracted by LLM. 
+        // Ask confirm to extracted parameters. They are extracted by LLM.
         public static async Task AskConfirmParameters(LLMService llm, TelegramBotClient bot, Memory memory, long id, string message) {
             try {
                 string outLLM = await llm.HandleAskAsync(TypeConversation.Request, message: message);
@@ -312,12 +327,12 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         internal static async Task ValuteRequest(string resp, long id, TelegramBotClient bot, Memory memory, LLMService llm) {
-            // if LLM correctly extract the parameters by requrest continue, else take it manually by user 
+            // if LLM correctly extract the parameters by requrest continue, else take it manually by user
             if (resp == "yesReq") {
                 await ManageRequest(memory, id, bot, llm, memory.GetParameters(id));
             }
             else if (resp == "noReq") {
-                // Set state to context and send button 
+                // Set state to context and send button
                 await SendMessagesExtension.SendChoiceRequest(bot, memory, id,
                     new string[] {
                             "Pressione", "PRESSIONE", "Frequenza", "FREQUENZA",

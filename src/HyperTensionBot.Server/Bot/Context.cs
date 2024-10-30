@@ -1,3 +1,18 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.Database;
 using HyperTensionBot.Server.LLM;
@@ -25,7 +40,7 @@ namespace HyperTensionBot.Server.Bot {
                         Database.Update.InsertNewMex(memory.Chat, DateTime.Now, chat.Id, "Risposta", "Elaborazione completata");
                         break;
 
-                    // ask conferme and storage data 
+                    // ask conferme and storage data
                     case Intent.PersonalInfo:
                         idMessage = await SendMessagesExtension.Waiting(chat.Id, bot);
                         var respLLM = await llm.HandleAskAsync(TypeConversation.Communication, message, comunicationChat: memory.AddMessageLLM(chat));
@@ -139,7 +154,7 @@ namespace HyperTensionBot.Server.Bot {
         }
 
         public static async Task CheckAverage(int?[] average, TelegramBotClient bot, long id) {
-            // check avarage after new insertion on last month's datas 
+            // check avarage after new insertion on last month's datas
             StringBuilder sb = new();
             sb.Append("Ho analizzato le nuove medie registrate:\n");
             if (average[0] <= 140 && average[1] <= 90)

@@ -1,16 +1,31 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 using OpenAI_API;
 using OpenAI_API.Chat;
 using OpenAI_API.Models;
 
 namespace HyperTensionBot.Server.LLM.Strategy {
-    // Gpt service: configuration and manage request to models 
+    // Gpt service: configuration and manage request to models
     public class GPTService : ILLMService {
         private OpenAIAPI? api;
         private string? gptKey;
         private readonly List<ChatMessage> analisysRequest = new();
         private ILogger<LLMService>? _logger;
 
-        // Configuration 
+        // Configuration
         public GPTService(WebApplicationBuilder builder) {
             ConfigureKey(builder);
             analisysRequest = Prompt.RequestContext();
@@ -24,7 +39,7 @@ namespace HyperTensionBot.Server.LLM.Strategy {
             api = new OpenAIAPI(gptKey);
         }
 
-        // Send text messages to gpt model. It's pèossibile choice model, tokens, temperature ecc.. 
+        // Send text messages to gpt model. It's pèossibile choice model, tokens, temperature ecc..
         public async Task<string> AskLLM(TypeConversation t, string message, List<ChatMessage>? conversation = null) {
             if (api is not null) {
                 /*

@@ -4,7 +4,13 @@
 
 The HyperTension Bot is a Telegram bot that helps the user to keep track of his blood pressure and heart rate.
 It also provides the user with general medical information about hypertension and how to measure blood pressure.
-Instead, it will not answer to questions not related to hypertension or general health.
+Instead, it will not answer questions not related to hypertension or general health.
+
+> This project is provided under the Apache 2.0 license. See the [LICENSE](LICENSE) file for more information.
+
+> Contributors: see the file [CONTRIBUTORS.md](CONTRIBUTORS.md).
+
+> Contributors (code only): see the [github contributors page](https://github.com/MatteoMagnini/hyperTensionBot/graphs/contributors)
 
 ### Reference paper
 

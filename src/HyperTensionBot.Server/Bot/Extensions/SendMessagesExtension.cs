@@ -1,3 +1,18 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 using HyperTensionBot.Server.Database;
 using System.Text;
 using Telegram.Bot;
@@ -36,17 +51,17 @@ Se hai domande o hai bisogno di assistenza, non esitare a chiedere! 🌟");
         }
 
 
-        // manage button 
+        // manage button
         public static async Task SendButton(TelegramBotClient bot, string text, long id, string[] s) {
-            // Check that array is not null 
+            // Check that array is not null
             if (s != null && s.Length % 2 == 0) {
 
                 // List of bot button
                 List<InlineKeyboardButton> buttons = new();
 
-                // add button 
+                // add button
                 for (int i = 0; i < s.Length; i += 2) {
-                    // A Button is added if theres a pair (key, value) to send at user 
+                    // A Button is added if theres a pair (key, value) to send at user
                     if (i + 1 < s.Length) {
                         buttons.Add(new InlineKeyboardButton(s[i]) { CallbackData = s[i + 1] });
                     }
@@ -54,14 +69,14 @@ Se hai domande o hai bisogno di assistenza, non esitare a chiedere! 🌟");
 
                 var inlineKeyboard = new InlineKeyboardMarkup(buttons.ToArray());
 
-                // Send messages with buttons 
+                // Send messages with buttons
                 await bot.SendTextMessageAsync(id, text, replyMarkup: inlineKeyboard);
             }
             else
                 throw new ArgumentException();
         }
 
-        // messages for confermed and refused insert measurement 
+        // messages for confermed and refused insert measurement
         public static async Task HandleConfirmRegisterMeasurement(User from, Chat chat, TelegramBotClient bot, Memory memory) {
             memory.PersistMeasurement(chat.Id);
 

@@ -1,3 +1,18 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 using HyperTensionBot.Server.Bot;
 using HyperTensionBot.Server.Bot.Extensions;
 using HyperTensionBot.Server.LLM;
@@ -12,7 +27,7 @@ using static HyperTensionBot.Server.Bot.ConversationInformation;
 
 namespace HyperTensionBot.Server.Database {
 
-    // Service memory for chatbot. It's defined DB and their collections 
+    // Service memory for chatbot. It's defined DB and their collections
     public class Memory {
 
         public MongoClient Client { get; }
@@ -22,7 +37,7 @@ namespace HyperTensionBot.Server.Database {
         public IMongoCollection<BsonDocument>? Misuration { get; set; }
         public IMongoCollection<BsonDocument>? Chat { get; set; }
 
-        // to speed access 
+        // to speed access
         private readonly ConcurrentDictionary<long, ConversationInformation> _chatMemory = new();
 
         private readonly ILogger<Memory> _logger;
@@ -48,13 +63,13 @@ namespace HyperTensionBot.Server.Database {
 
         }
 
-        // Create the scheme if it not defined, else acquire it. So equals with index 
+        // Create the scheme if it not defined, else acquire it. So equals with index
         private void CreateScheme(IMongoDatabase db) {
 
-            // information as idTelegram, name, surname, last update 
+            // information as idTelegram, name, surname, last update
             User = db.GetCollection<BsonDocument>("User");
 
-            // all misuration of pressure and frequence 
+            // all misuration of pressure and frequence
             Misuration = db.GetCollection<BsonDocument>("Misuration");
 
             // save all mexages in the chat
@@ -66,11 +81,11 @@ namespace HyperTensionBot.Server.Database {
 
         // allow for greater search speed
         private void AddIndexToCollection() {
-            // create index and option of that. 
+            // create index and option of that.
             var index = new CreateIndexOptions();
             var option = Builders<BsonDocument>.IndexKeys.Ascending("id");
 
-            // Add indexes to all my collections 
+            // Add indexes to all my collections
             User?.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(option, index));
             Misuration?.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(option, index));
             Chat?.Indexes.CreateOne(new CreateIndexModel<BsonDocument>(option, index));
@@ -81,10 +96,10 @@ namespace HyperTensionBot.Server.Database {
             return Builders<BsonDocument>.Filter.Eq("id", id);
         }
 
-        // save new information for user 
+        // save new information for user
         public void HandleUpdate(User? from, DateTime date, Intent i, string mex) {
 
-            // update info of User as name,..., Time and number of messages 
+            // update info of User as name,..., Time and number of messages
             if (from != null) {
                 Update.UpdateUser(User, date, i, from, mex, false);
                 _logger.LogTrace("Updated user memory");
@@ -107,7 +122,7 @@ namespace HyperTensionBot.Server.Database {
             return User.FindAsync(new BsonDocument()).Result.ToList();
         }
 
-        // saved measurement in DB 
+        // saved measurement in DB
         public void PersistMeasurement(long id) {
             if (!_chatMemory.TryGetValue(id, out var chatInformation)) {
                 throw new Exception($"Tried persisting measurement but no information available about chat {id}");
@@ -127,7 +142,7 @@ namespace HyperTensionBot.Server.Database {
 
         // getter personal information and measurements
         public List<string> GetGeneralInfo(long id) {
-            // get all messages with type = personal messages 
+            // get all messages with type = personal messages
             var messages = ManageChat.GetMessages(id, Chat, type: Intent.PersonalInfo.ToString());
             return messages!.Select(x => x["messages"].AsString).ToList();
         }
@@ -151,7 +166,7 @@ namespace HyperTensionBot.Server.Database {
             var messages = ManageChat.GetMessages(chat.Id, Chat);
             var chatToLLM = Prompt.GeneralContext();
 
-            // select last 6 message for specific id chat. Not last. 
+            // select last 6 message for specific id chat. Not last.
             if (messages.Count >= 5) {
                 var selection = messages.GetRange(messages.Count - 6, 5);
                 foreach (var mex in selection) {

@@ -1,9 +1,24 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 using Microsoft.ML;
 using Microsoft.ML.Trainers;
 
 namespace HyperTensionBot.Server.ModelML {
 
-    // Responsible of training ML model 
+    // Responsible of training ML model
     public class ModelTrainer {
         private readonly MLContext mlContext;
 
@@ -22,7 +37,7 @@ namespace HyperTensionBot.Server.ModelML {
                 hasHeader: true
             );
 
-            // create pipeline 
+            // create pipeline
             var pipeline = mlContext.Transforms.Text.FeaturizeText(inputColumnName: @"Sentence", outputColumnName: @"Sentence")
                                     .Append(mlContext.Transforms.Concatenate(@"Features", new[] { @"Sentence" }))
                                     .Append(mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: @"Label", inputColumnName: @"Label"))
@@ -30,7 +45,7 @@ namespace HyperTensionBot.Server.ModelML {
                                     .Append(mlContext.MulticlassClassification.Trainers.OneVersusAll(binaryEstimator: mlContext.BinaryClassification.Trainers.LbfgsLogisticRegression(new LbfgsLogisticRegressionBinaryTrainer.Options() { L1Regularization = 0.03125F, L2Regularization = 0.06764677F, LabelColumnName = @"Label", FeatureColumnName = @"Features" }), labelColumnName: @"Label"))
                                     .Append(mlContext.Transforms.Conversion.MapKeyToValue(outputColumnName: @"PredictedLabel", inputColumnName: @"PredictedLabel"));
 
-            // training 
+            // training
             var model = pipeline.Fit(dataView);
 
             // save model

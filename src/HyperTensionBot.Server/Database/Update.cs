@@ -1,3 +1,18 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 using HyperTensionBot.Server.Bot;
 using HyperTensionBot.Server.ModelML;
 using MongoDB.Bson;
@@ -6,7 +21,7 @@ using Telegram.Bot.Types;
 
 namespace HyperTensionBot.Server.Database {
 
-    // Manage database at new messages. 
+    // Manage database at new messages.
     public static class Update {
 
         internal static void UpdateUser(IMongoCollection<BsonDocument>? User, DateTime date, Intent i, User from, string mex, bool adv) {
@@ -24,7 +39,7 @@ namespace HyperTensionBot.Server.Database {
                     }
                     update = update.Set("DateLastMeasurement", date);
                 }
-                // update date of notify 
+                // update date of notify
                 if (adv) {
                     update = update.Set("DateDeactivate", date);
                 }
