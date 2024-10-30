@@ -8,7 +8,7 @@ Instead, it will not answer questions not related to hypertension or general hea
 
 > This project is provided under the Apache 2.0 license. See the [LICENSE](LICENSE) file for more information.
 
-> Contributors: see the file [CONTRIBUTORS.md](CONTRIBUTORS.md).
+> Contributors: see the file [CONTRIBUTING.md](CONTRIBUTING.md).
 
 > Contributors (code only): see the [github contributors page](https://github.com/MatteoMagnini/hyperTensionBot/graphs/contributors)
 
