@@ -14,7 +14,7 @@ Instead, it will not answer questions not related to hypertension or general hea
 
 ### Reference paper
 
-> Sara Montagna, Gianluca Aguzzi, Stefano Ferretti, Martino Francesco Pengo, Lorenz Cuno Klopfenstein, Michelangelo Ungolo, Matteo Magnini. "[LLM-based Solutions for Healthcare Chatbots: a Comparative Analysis]", in: Proceedings of 2024 IEEE International Conference on Pervasive Computing and Communications Workshops and other Affiliated Events (PerCom Workshops).
+> Sara Montagna, Gianluca Aguzzi, Stefano Ferretti, Martino Francesco Pengo, Lorenz Cuno Klopfenstein, Michelangelo Ungolo, Matteo Magnini. "LLM-based Solutions for Healthcare Chatbots: a Comparative Analysis", in: Proceedings of 2024 IEEE International Conference on Pervasive Computing and Communications Workshops and other Affiliated Events (PerCom Workshops).
 
 Bibtex:
 ```bibtex
@@ -31,16 +31,16 @@ Bibtex:
   doi={10.1109/PerComWorkshops59983.2024.10503257}}
 ```
 
+### ✨✨ [Try the bot](https://t.me/uniTiro_bot) ✨✨ 
+
+## About the bot
 
 ### Features
 1. The user can send their measures to the bot. The bot will safely store the data in a database.
 2. When asked, the bot is able to provide statistic information (e.g., mean, maximum, minimum) and display historical the data witt plots.
 3. The bot also sends reminders to the user to measure his blood pressure and heart rate.
 
-### How to use the bot
 Note: [Telegram](https://telegram.org/) is required to use the bot.
-
-The bot is available at the following link: [HyperTension Bot](https://t.me/a_hypertension_bot)
 
 ## For Developers
 
