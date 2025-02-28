@@ -7,7 +7,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - matteo.magnini-volume:/persistent/hyper-tension-bot/data/db
+      - mmagnini:/persistent/hyper-tension-bot/data/db
     command: ["--dbpath", "/persistent/hyper-tension-bot/data/db"]
 
   app:
@@ -23,6 +23,6 @@ services:
       - MONGODB_CONNECTION_STRING=mongodb://mongodb:27017
 
 volumes:
-  matteo.magnini-volume:
+  mmagnini:
     external: true
-    name: matteo.magnini-volume
+    name: mmagnini
