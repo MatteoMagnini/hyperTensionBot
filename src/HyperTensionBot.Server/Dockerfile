@@ -21,6 +21,14 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 COPY --from=build /src/ModelML/trainingData.tsv /app/ModelML/trainingData.tsv
 
-RUN apt-get update && apt-get install -y fonts-dejavu
+RUN apt-get update && apt-get install -y fonts-dejavu gettext
+
+COPY appsettings.json /app/appsettings.json
+
+RUN envsubst < /app/appsettings.json > /app/appsettings.replaced.json
+
+RUN cat /app/appsettings.replaced.json
+
+RUN mv /app/appsettings.replaced.json /app/appsettings.json
 
 ENTRYPOINT ["dotnet", "HyperTensionBot.Server.dll"]
