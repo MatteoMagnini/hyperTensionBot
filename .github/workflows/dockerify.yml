@@ -40,6 +40,7 @@ jobs:
         env:
           SECRET_TELEGRAM_TOKEN: ${{ secrets.SECRET_TELEGRAM_TOKEN }}
           SECRET_KEY_OPENAI: ${{ secrets.SECRET_KEY_OPENAI }}
+          MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
 
       - name: Create Docker Image
         run: |
