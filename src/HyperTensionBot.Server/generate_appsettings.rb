@@ -3,6 +3,7 @@ require 'json'
 # Ottieni i segreti dalle variabili d'ambiente
 telegram_token = ENV['SECRET_TELEGRAM_TOKEN']
 openai_key = ENV['SECRET_KEY_OPENAI']
+mongodb_connection = ENV['MONGODB_CONNECTION_STRING']
 
 # Verifica che i segreti siano stati trovati
 if telegram_token.nil? || openai_key.nil?
@@ -27,7 +28,7 @@ appsettings = {
     "OpenKey" => openai_key
   },
   "MongoDB" => {
-    "connection" => "mongodb://mongodb:27017"
+    "connection" => mongodb_connection
   },
   "Clusters" => {
     "UrlLLM" => "http://clusters.almaai.unibo.it:11434/api/chat"

@@ -7,8 +7,8 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mmagnini:/persistent/hyper-tension-bot/data/db
-    command: ["--dbpath", "/persistent/hyper-tension-bot/data/db"]
+      - mmagnini:/persistent
+    command: ["bash", "-c", "chown -R 999:999 /persistent && exec mongod --dbpath /persistent"]
 
   app:
     image: hyper-tension-bot
@@ -20,7 +20,7 @@ services:
       - mongodb
     environment:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-      - MONGODB_CONNECTION_STRING=mongodb://mongodb:27017
+      - MONGODB_CONNECTION_STRING=${MONGODB_CONNECTION_STRING}
 
 volumes:
   mmagnini:
