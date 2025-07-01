@@ -31,7 +31,15 @@ Bibtex:
   doi={10.1109/PerComWorkshops59983.2024.10503257}}
 ```
 
-### ✨✨ [Try the bot](https://t.me/uniTiro_bot) ✨✨ 
+[//]: # (### ✨✨ [Try the bot]&#40;https://t.me/uniTiro_bot&#41; ✨✨ )
+
+### 🔴 The bot is currently under maintenance
+
+We are planning a major update to the bot, which will include:
+- 🐍 using Python instead of C#
+- 🚀 using a more advanced and fast LLM model
+- 👨‍💻 improving the user experience
+- ✨ adding new features
 
 ## About the bot
 
